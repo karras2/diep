@@ -1,3 +1,4 @@
+let started = false;
 let landingPage = {
   canvas: document.querySelector("canvas"),
   ctx: 0,
@@ -92,10 +93,38 @@ let landingPage = {
     this.ctx.fillStyle = "#000000";
     this.ctx.globalAlpha = 0.5;
     this.ctx.fillRect(0, 0, innerWidth, innerHeight);
+    document.addEventListener("keydown", (event) => {
+      if (event.keyCode === 13) startGame();
+    });
   }
 };
 
 window.onload = function() {
   console.log("Loaded assets.");
   landingPage.init();
+};
+window.addEventListener("resize", () => {
+  if (!started) landingPage.init();
+});
+
+let startGame = () => {
+  started = true;
+  localStorage.setItem("playername", document.getElementById("playernameinput").value || "unnamed");
+  document.body.innerHTML = "";
+  let script = document.createElement("script");
+  script.src = "./game/app.js";
+  let css = document.createElement("link");
+  css.rel = "stylesheet";
+  css.href = "/style.css";
+  let preconnect = document.createElement("link");
+  preconnect.rel = "preconnect";
+  preconnect.href = "https://fonts.gstatic.com/%22%3E";
+  let Ubuntu = document.createElement("link");
+  Ubuntu.rel = "stylesheet";
+  Ubuntu.href = "https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap";
+  document.body.appendChild(script);
+  document.body.appendChild(css);
+  document.body.appendChild(preconnect);
+  document.body.appendChild(Ubuntu);
+  document.body.appendChild(document.createElement("canvas"));
 };
