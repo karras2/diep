@@ -1,22 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Diep</title>
-    
-    <!-- import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/style.css">
-    
-    <!-- import the webpage's javascript file -->
-    <script src="/main.js" defer></script>
-  </head>  
+    <meta charset="utf-8" />
+    <title>Dexamenes.io</title>
+  </head>
   <body>
-    <div style="text-align:center;">
-      <h1 id="mainText">Loading</h1>
-      <input placeholder="This is the tale of..." id="name-input">
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/%22%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    <canvas></canvas>
+    <div id="gameholder">
+      <center>
+        <h1 id="titleText">Loading</h1>
+        <input id="playernameinput" placeholder="This is the tale of..." />
+      </center>
     </div>
+    <script>
+        window.colors = {
+          blue: ["#00b0e1","#0083a8"],
+          red: ["#f04f54","#b33b3f"],
+          green: ["#00e06c","#00a851"],
+          purple: ["#be7ff5","#8f5fb7"],
+          gray:  ["#999999","#727272"],
+          black: ["#4a4a50","#1a1a1a"],
+          white: ["#f2f2f2","#e1e1e1"],
+          pink:  ["#e0bbe4","#957dad"],
+          gold: ["#fcc276","#bd9158"],
+          background: ["#d1d1d1","#c0c0c0"],
+          hit:   ["#d82626","#d82626"],
+          healthBar:    ["#3ae791","#444444"],
+          square: ["#ffe46b","#bfae4e"],
+          triangle: ["#fc7676","#bd585a"],
+          pentagon: ["#768cfc","#5869bd"],
+          crasher: ["#f177dd","#b459a5"],
+        };
+    </script>
+    <script src="./main.js"></script>
   </body>
 </html>

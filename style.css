@@ -2,10 +2,45 @@
 
 body {
   font-family: helvetica, arial, sans-serif;
-  margin: 2em;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
-h1 {
-  font-style: italic;
-  color: #373fff;
+
+#gameholder {
+  width: 20%;
+  height: 60%;
+  border: 5px solid #dddddd;
+  border-radius: 10px;
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  background: #eeeeee;
+}
+
+.selected {
+  cursor: default;
+  color: #FFFFFF;
+  transform: scale(1.05);
+}
+
+#playernameinput {
+  border: 5px solid #dddddd;
+  border-radius: 10px;
+  background: #eeeeee;
+  color: #000000;
+  width: 90%;
+  height: 20%;
+  text-align: center;
+  font: 20px Ubuntu;
+}
+
+#play {
+  border: 5px solid #dddddd;
+  border-radius: 10px;
+  background: #eeeeee;
+  width: 90%;
+  height: 20%;
+  font: 20px Ubuntu;
 }
