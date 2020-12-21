@@ -109,6 +109,9 @@ window.addEventListener("resize", () => {
 
 let startGame = () => {
   started = true;
+  document.removeEventListener("keydown", (event) => {
+    if (event.keyCode === 13) startGame();
+  });
   localStorage.setItem("playername", document.getElementById("playernameinput").value || "unnamed");
   document.body.innerHTML = "";
   let script = document.createElement("script");
