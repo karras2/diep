@@ -7,40 +7,29 @@ body {
   overflow: hidden;
 }
 
+h1 {
+  color: white;
+  font: 100px Ubuntu;
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: black;
+}
 
 #gameholder {
-  width: 20%;
-  height: 60%;
-  border: 5px solid #dddddd;
-  border-radius: 10px;
   position: absolute;
-  top: 20%;
-  left: 40%;
-  background: #eeeeee;
+  top: 30%;
+  left: 35%;
 }
 
-.selected {
-  cursor: default;
-  color: #FFFFFF;
-  transform: scale(1.05);
-}
 
 #playernameinput {
-  border: 5px solid #dddddd;
-  border-radius: 10px;
-  background: #eeeeee;
-  color: #000000;
+  border: 1px solid #000000;
+  color: white;
+  font: 50px Ubuntu;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
   width: 90%;
-  height: 20%;
+  height: 30%;
   text-align: center;
-  font: 20px Ubuntu;
-}
-
-#play {
-  border: 5px solid #dddddd;
-  border-radius: 10px;
-  background: #eeeeee;
-  width: 90%;
-  height: 20%;
-  font: 20px Ubuntu;
+  font: 30px Ubuntu;
+  background: transparent;
 }
