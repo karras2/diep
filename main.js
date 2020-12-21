@@ -14,6 +14,12 @@ let startMenu = {
   loaded: function() {
     clearInterval(this.dotInterval);
     setTimeout(() => document.getElementById("mainText").textContent = "Diep", 500);
+    document.addEventListener("keydown", (event) => {
+      if (event.keyCode === 13) this.startGame();
+    });
+    let canvas = document.getElementById("canvas");
+    canvas.width = innerWidth;
+    canv
   }
 };
 startMenu.init();
