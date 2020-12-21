@@ -26,10 +26,7 @@ let landingPage = {
       let shapes = [
         [4, 17.5, window.colors.square], // Square
         [3, 25, window.colors.triangle], // Triangle
-        [5, 35, window.colors.pentagon], // Pentagon
-        [6, 50, window.colors.gold], // Hexagon
-        [7, 75, window.colors.white], // Hepti
-        [8, 125, window.colors.black], // Octo
+        [5, 35, window.colors.pentagon] // Pentagon
       ];
       let shapeData = shapes[Math.floor(Math.random() * shapes.length)];
       if (shape !== -1) shapeData = shapes[shape];
@@ -53,7 +50,7 @@ let landingPage = {
       return [x, y, shapeData[1]];
     };
     let make = s => {
-      let sizes = [17.5, 25, 35, 50, 75, 125]
+      let sizes = [17.5, 25, 35]
       let clean = true,
         pos = {
           x: 0,
@@ -65,17 +62,21 @@ let landingPage = {
           y: Math.floor(Math.random() * innerHeight)
         };
         for (let position of all) {
-          if (Math.sqrt(Math.pow((p.x - position[0]), 2) + Math.pow((p.y - position[1]), 2)) < (position[2] + sizes[s]) + 10) {
+          var a = p.x - position[0];
+          var b = p.y - position[1];
+          var c = Math.sqrt(a * a + b * b);
+          if (c < 100) {
             clean = false;
           }
         }
         pos = p;
+        if (clean) break;
       }
       if (clean) all.push(shape(pos.x, pos.y), s);
     };
     let k = () => {
       for (let i = 0; i < 50; i++) make(Math.floor(Math.random() * 6));
-      if (all.length < 100) setTimeout(k, 1);
+      if (all.length < 50) setTimeout(k, 1);
     }
     k();
   },
@@ -88,6 +89,9 @@ let landingPage = {
     this.ctx.fillRect(0, 0, innerWidth, innerHeight);
     this.drawGrid();
     this.drawBack();
+    this.ctx.fillStyle = "#000000";
+    this.ctx.globalAlpha = 0.5;
+    this.ctx.fillRect(0, 0, innerWidth, innerHeight);
   }
 };
 
