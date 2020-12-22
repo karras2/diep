@@ -1,6 +1,6 @@
 const s = {
   // reload, recoil, dmg, pene, speed, range, density, spray
-  basic: [50, 1, 1, 1, 3, 300, 150, 1],
+  basic: [50, 1, 10, 10, 3, 300, 150, 1],
   twin: [1.4, 0.8, 0.6, 0.6, 1, 1, 1, 1],
   mach: [0.75, 1.125, 0.7, 0.7, 1, 0.9, 4],
   sniper: [1.125, 1, 0.8, 1.25, 1.5, 1.25, 1, 0.5],
@@ -34,8 +34,8 @@ let square = {
   color: "square",
   shape: 4,
   health: {
-    max: 10,
-    amount: 10
+    max: 1,
+    amount: 1
   },
   xp: 10,
 };
@@ -46,8 +46,8 @@ let triangle = {
   color: "triangle",
   shape: 3,
   health: {
-    max: 20,
-    amount: 20
+    max: 2,
+    amount: 2
   },
   xp: 25,
 };
@@ -58,8 +58,8 @@ let pentagon = {
   color: "pentagon",
   shape: 5,
   health: {
-    max: 150,
-    amount: 150
+    max: 5,
+    amount: 5
   },
   xp: 100,
 };
@@ -70,8 +70,8 @@ let alphaPentagon = {
   color: "pentagon",
   shape: 5,
   health: {
-    max: 500,
-    amount: 500
+    max: 10,
+    amount: 10
   },
   xp: 3000,
 };

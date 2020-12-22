@@ -244,8 +244,12 @@ class Entity {
   kill() {
     this.isDead = true;
     setTimeout(() => {
+      this.ondead();
       entities = entities.filter(r => r !== this);
     }, 1000);
+  }
+  ondead() {
+    
   }
   update() {
     this.range --;
@@ -344,7 +348,7 @@ class Gun {
     o.color = this.source.color;
     o.angle = this.source.angle + this.angle;
     o.range = this.stats.range;
-    o.stats.damage = this.stats.damage * this.source.stats.bDamage;
+    o.stats.damage = this.stats.dmg * this.source.stats.bDamage;
     o.health.max = this.stats.pene * this.source.stats.bPene;
     o.health.amount = this.stats.pene * this.source.stats.bPene;
     o.define(Class[this.ammo]);

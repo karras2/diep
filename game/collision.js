@@ -24,6 +24,7 @@ let basicCollide = (i, o) => {
   o.health.amount -= i.stats.damage;
   if (i.health.amount <= 0) i.kill();
   if (o.health.amount <= 0) o.kill();
+  console.log(i.health, o.health);
 };
 
 export { basicCollide }
