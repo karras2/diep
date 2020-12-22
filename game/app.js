@@ -230,22 +230,14 @@ class Gun {
   shoot() {
     this.reload = this.maxReload;
     let o = new Entity({
-      x: 0,
-      y: 0
+      x: this.source.x,
+      y: this.source.y
     }, this.source);
+    o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size);
+    o.y += Math.sin(this.angle + this.source.angle) * (this.x * this.source.size);
+    o.x += Math.cos(this.angle + this.source.angle) * (this.y * this.source.size);
+    o.y += Math.sin(this.angle + this.source.angle) * (this.y * this.source.size);
     o.size = this.source.size * (this.w / 2);
-    let offset = new Vector2(
-      Math.cos(this.source.angle + this.angle) * ((this.source.size * this.h) - o.size),
-      Math.sin(this.source.angle + this.angle) * ((this.source.size * this.h) - o.size),
-    );
-    o.x = new Vector2((this.source.x) + offset.x, (this.source.y) + offset.y).x;
-    o.y = new Vector2((this.source.x) + offset.x, (this.source.y) + offset.y).y;
-    let perpAngle = (this.source.angle + this.angle) + (Math.PI / 2);
-    let perpVec = new Vector2(Math.cos(perpAngle), Math.sin(perpAngle));
-    perpVec.x *= this.x * this.source.size
-    perpVec.y *= this.x * this.source.size
-    o.x += perpVec.x;
-    o.y += perpVec.y;
     o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
     o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
     o.color = this.source.color;
