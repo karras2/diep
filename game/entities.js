@@ -1,9 +1,9 @@
 const s = {
   // reload, recoil, dmg, pene, speed, range, density, spray
-  basic: [25, 1, 1, 1, 1.5, 100, 150, 1],
+  basic: [50, 1, 1, 1, 1.75, 100, 150, 1],
   twin: [1.4, 0.8, 0.6, 0.6, 1, 1, 1, 1],
   mach: [0.75, 1.125, 0.7, 0.7, 1, 0.9, 2],
-  sniper: [1.125, 1, 0.8, 1.25, 1.25, 1.25, 1, 0.5],
+  sniper: [1.125, 1, 0.8, 1.25, 1.5, 1.25, 1, 0.5],
   flank: [1.1, 1, 0.8, 0.8, 0.9, 1, 1, 1],
   thruster: [1, 1.5, 0.5, 0.5, 0.75, 0.6, 0.5, 1.5]
 };
@@ -31,7 +31,8 @@ let basic = {
     position: [2, 0.75, 1, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic])
-  }]
+  }],
+  upgrades: ["twin", "machine", "sniper", "flank"]
 };
 
 // LvL 15
@@ -45,7 +46,8 @@ let twin = {
     position: [1.9, 0.7, 1, -0.5, 0, 0, 0.5],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin])
-  }]
+  }],
+  upgrades: ["triple", "double"]
 };
 let machine = {
   label: "Machine",

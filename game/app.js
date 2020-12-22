@@ -8,6 +8,7 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 
 let ctx = canvas.getContext("2d");
+ctx.lineJoin = "round";
 
 let game = {
   width: 10000,
@@ -150,6 +151,7 @@ class Entity {
   }
   define(type) {
     this.guns = [];
+    this.upgrades = [];
     for (let key in type) {
       if (key === "guns") {
         for (let gun of type.guns) this.guns.push(new Gun(this, gun));
@@ -159,8 +161,6 @@ class Entity {
     }
   }
   update() {
-    //this.xy *= 0.1;
-    //this.vy *= 0.1;
     this.x += this.vx * this.stats.speed;
     this.y += this.vy * this.stats.speed;
     this.draw();
@@ -248,8 +248,10 @@ class Gun {
 // UI object
 let UI = {
   drawBack: function() {
+    ctx.fillStyle = window.colors.background[1];
+    ctx.fillRect(-1500, -1500, game.width + 1500, game.height + 1500);
     ctx.fillStyle = window.colors.background[0];
-    ctx.fillRect(0, 0, innerWidth, innerHeight);
+    ctx.fillRect(0, 0, game.width, game.height);
     ctx.lineWidth = 3;
     for (let i = 0; i < game.width; i += 50) {
       ctx.beginPath();
