@@ -40,6 +40,7 @@ let player = {
     speed: 0.2
   },
   camera: {
+    ratio: 0,
     x: 0,
     y: 0
   }
@@ -196,13 +197,15 @@ class Entity {
     for (let gun of this.guns) gun.update();
     ctx.save();
     ctx.rotate(this.angle);
-    ctx.beginPath();
-    ctx.arc(0, 0, this.size + 5, 0, Math.PI * 2);
+    ctx.beginPath(); // where are x and y pos
+    // oh then it should be easy... i think
+    // ill make a value called "ratio", which is gonna be what changes the x and y position to fov
+    ctx.arc(0, 0, this.size * player.camera.ratio + 5 * player.camera.ratio, 0, Math.PI * 2);
     ctx.closePath();
     ctx.fillStyle = window.colors[this.color][1];
     ctx.fill();
     ctx.beginPath();
-    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+    ctx.arc(0, 0, this.size * player.camera.ratio, 0, Math.PI * 2);
     ctx.closePath();
     ctx.fillStyle = window.colors[this.color][0];
     ctx.fill();
@@ -292,17 +295,17 @@ let UI = {
     ctx.fillRect(0, 0, game.width, game.height);
     ctx.lineWidth = 3;
     for (let i = 0; i < game.width; i += 50) {
-      ctx.beginPath();
-      ctx.moveTo(i - player.camera.x, 0);
-      ctx.lineTo(i - player.camera.x, game.height);
+      ctx.beginPath();// Bruh, dont do that, beginpath and closepath in for loop would make the game slow, instead, do this. watch
+      ctx.moveTo((i - player.camera.x) * player.camera.ratio + canvas.width / 2, 0);
+      ctx.lineTo((i - player.camera.x) * player.camera.ratio + canvas.width / 2, game.height);
       ctx.closePath();
       ctx.strokeStyle = window.colors.background[1];
       ctx.stroke();
     }
     for (let i = 0; i < game.height; i += 50) {
       ctx.beginPath();
-      ctx.moveTo(0, i - player.camera.y);
-      ctx.lineTo(game.width, i - player.camera.y);
+      ctx.moveTo(0, (i - player.camera.y) * player.camera.ratio + canvas.height / 2);
+      ctx.lineTo(game.width, (i - player.camera.y) * player.camera.ratio);
       ctx.closePath();
       ctx.strokeStyle = window.colors.background[1];
       ctx.stroke();
@@ -470,17 +473,17 @@ let gameLoop = (() => {
   requestAnimationFrame(gameLoop);
   player.camera.x = lerp(player.camera.x, player.body.x, 0.05);
   player.camera.y = lerp(player.camera.y, player.body.y, 0.05);
-  ctx.clearRect(0, 0, innerWidth, innerHeight); // b
-  let res = [player.body.fov,player.body.fov]
-  ctx.save();// ugh ill just copy maxtri code k
-  ctx.scale((canvas.width + canvas.height) / 2, (canvas.width + canvas.height) / 2);
+  ctx.clearRect(0, 0, innerWidth, innerHeight); // this is another method of making fov, its hard but its more efficient, the other method is just.. spaghetti.
+  ctx.save();// no scales.
+  // i wont have to modify ui
+  //ctx.scale(player.body.fov, player.body.fov);
+  player.camera.ratio = (canvas.width * canvas.height) / 400000
   UI.drawBack();
-  ctx.save();
   for (let o of entities) {
-//    ctx.translate((o.x - player.camera.x) + canvas.width / 2, (o.y - player.camera.y) + canvas.height / 2); // commented for restore
-    ctx.translate(canvas.width / 2, canvas.height / 2); // testing purposes
+    ctx.save();
+    ctx.translate((o.x - player.camera.x) * player.camera.ratio + canvas.width / 2, (o.y - player.camera.y) * player.camera.ratio + canvas.height / 2);
     o.update();
-    
+    ctx.restore();
   }
   ctx.restore();
   UI.draw();
