@@ -185,10 +185,14 @@ class Gun {
     this.h = data.position[0];
     this.angle = data.position[5];
     this.open = data.position[2];
+    this.delay = data.position[6];
     this.stats = data.stats;
     this.ammo = data.ammo;
+    this.reload = this.stats.reload * this.delay;
+    this.maxReload = this.stats.reload;
   }
   update() {
+    this.reload --;
     this.draw();
   }
   draw() {
@@ -210,6 +214,9 @@ class Gun {
     ctx.stroke();
     ctx.fill();
     ctx.restore();
+  }
+  shoot() {
+    this.reload = this.maxReload;
   }
 };
 
@@ -296,6 +303,10 @@ gameLoop();
   player.body = o;
 })();
 
+
+
+
+// Console commands
 window["define"] = function(data) {
   if (Class[data]) {
     player.body.define(Class[data]);
@@ -303,4 +314,22 @@ window["define"] = function(data) {
   } else {
     console.log("That tank does not exist!");
   }
-}
+};
+
+window["color"] = function(data) {
+  if (window.colors[data]) {
+    player.body.color = data;
+    console.log("Set your color to " + player.body.color);
+  } else {
+    console.log("That color does not exist!");
+  }
+};
+
+window["size"] = function(data) {
+  if (data > 9 && data < 101) {
+    player.body.size = data;
+    console.log("Set your size to " + data);
+  } else {
+    console.log("Size must be a number between 10 and 100!");
+  }
+};
