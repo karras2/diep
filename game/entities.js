@@ -82,6 +82,13 @@ let bullet = {
   type: "bullet",
   guns: []
 };
+let trap = {
+  label: "Trap",
+  type: "bullet",
+  shape: -3,
+  slows: true,
+  guns: []
+};
 let rocket = {
   label: "Rocket",
   type: "bullet",
@@ -117,21 +124,7 @@ let basic = {
     ammo: "bullet",
     stats: combineStats([s.basic])
   }],
-  upgrades: ["twin", "machine", "sniper", "flank", "removethislater", "arenaCloser"]
-};
-let arenaCloser = {
-  label: "Arena Closer",
-  type: "tank",
-  size: 100,
-  stats: {
-    fov: 2,
-    speed: 10
-  },
-  guns: [{
-    position: [1.65, 1.125, 1, 0, 0, 0, 0],
-    ammo: "bullet",
-    stats: combineStats([s.basic, [0.25, 0, 10, 10, 2, 5, 10, 1]])
-  }]
+  upgrades: ["twin", "machine", "sniper", "flank"]
 };
 
 // LvL 15
@@ -166,7 +159,8 @@ let sniper = {
     position: [2.5, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
-  }]
+  }],
+  upgrades: ["trapper"]
 };
 let flank = {
   label: "Flank Guard",
@@ -180,14 +174,7 @@ let flank = {
     stats: combineStats([s.basic, s.flank, s.thruster])
   }]
 };
-let removethislater = {
-  label: "thicc tank to watch",
-  stats: {
-    fov: 20,
-    speed: 60
-  },
-  guns: []
-};
+
 // LvL 30
 let triple = {
   label: "Triple Shot",
@@ -253,5 +240,14 @@ let gunner = {
     stats: combineStats([s.basic, s.twin, s.gunner])
   }]
 };
+let trapper = {
+  label: "Trapper",
+  guns: [{
+    position: [2, 1, 1, 0, 0, 0, 0],
+    ammo: "trap",
+    stats: combineStats([s.basic])
+  }],
+  upgrades: ["twin", "machine", "sniper", "flank"]
+};
 
-export { square, triangle, pentagon, alphaPentagon, bullet, rocket, missile, basic, twin, machine, sniper, removethislater, arenaCloser, flank, triple, double, destroyer, gunner }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper }

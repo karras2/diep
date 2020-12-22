@@ -131,6 +131,10 @@ class Vector2 {
   }
 }
 
+function lerp(a, b, x) {
+  return a + x * (b - a);
+}
+
 function chooseChance(data) {
   let all = [];
   for (let key in data) {
@@ -176,6 +180,35 @@ let drawPoly = (s, r, c, a = 0) => {
       ctx.fillStyle = c[0];
       ctx.fill();
       break;
+    case s < 0: {
+      ctx.beginPath();
+      r *= 1.25;
+      a += s % 2 ? 0 : Math.PI / s;
+      let dip = 1 - 6 / s / s;
+      s = -s;
+      ctx.moveTo(
+        r * Math.cos(a),
+        r * Math.sin(a)
+      );
+      for (let i = 0; i < s; i++) {
+        var theta = ((i + 1) / s) * 2 * Math.PI;
+        var htheta = ((i + 0.5) / s) * 2 * Math.PI;
+        var c = {
+          x: r * dip * Math.cos(htheta + a),
+          y: r * dip * Math.sin(htheta + a)
+        };
+        var p = {
+          x: r * Math.cos(theta + a),
+          y: r * Math.sin(theta + a)
+        };
+        ctx.quadraticCurveTo(c.x, c.y, p.x, p.y);
+      }
+      ctx.lineWidth = 5 * player.camera.ratio;
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+    break;
     case (s < 17 && s > 2):
       ctx.beginPath();
       let angle = 0;
@@ -272,6 +305,10 @@ class Entity {
   }
   update() {
     this.range --;
+    if (this.slows) {
+      this.vx = lerp(this.vx, 0, 0.1);
+      this.vy = lerp(this.vy, 0, 0.1);
+    }
     if (this.type === "tank") {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
@@ -631,9 +668,6 @@ let UI = {
 };
 
 let gameLoop = (() => {
-  function lerp(a, b, x) {
-    return a + x * (b - a);
-  }
   requestAnimationFrame(gameLoop);
   if (!player.body) return;
   player.camera.x = lerp(player.camera.x, player.body.x, 0.05);
