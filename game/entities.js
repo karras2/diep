@@ -103,7 +103,7 @@ let flank = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank])
   }, {
-    position: [1.5, 1, 1, 0, 0, Math.PI, 0],
+    position: [1.6, 1, 1, 0, 0, Math.PI, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank, s.thruster])
   }]

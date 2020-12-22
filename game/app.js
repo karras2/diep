@@ -66,10 +66,10 @@ document.addEventListener("keydown", (event) => {
       player.inputs.d = true;
       break;
     case 69:
-      player.inputs.e = true;
+      player.inputs.e = !player.inputs.e;
       break;
     case 67:
-      player.inputs.c = false;
+      player.inputs.c = !player.inputs.c;
       break;
     case 75:
       player.inputs.k = true;
@@ -90,12 +90,6 @@ document.addEventListener("keyup", (event) => {
       break;
     case 68: case 39:
       player.inputs.d = false;
-      break;
-    case 69:
-      player.inputs.e = false;
-      break;
-    case 67:
-      player.inputs.c = false;
       break;
     case 75:
       player.inputs.k = false;
@@ -346,6 +340,12 @@ let UI = {
       mockup.x = x + s / 2;
       mockup.y = y + s / 2;
       UI.entity(mockup);
+      ctx.font = "20px Ubuntu";
+      let w = ctx.measureText(Class[up].label).width;
+      ctx.fillStyle = "#ffffff";
+      ctx.strokeStyle = "#000000";
+      ctx.strokeText(Class[up].label, x + (s / 2) - (w / 2), y + s - 10);
+      ctx.fillText(Class[up].label, x + (s / 2) - (w / 2), y + s - 10);
       this.clickables.push({
         type: "upgrade",
         x: x,
@@ -449,7 +449,7 @@ let gameLoop = (() => {
   player.body.vx *= 0.9;
   player.body.vy *= 0.9;
   player.body.angle = Math.atan2((player.mouse.y - canvas.height / 2), (player.mouse.x - canvas.width / 2)) - Math.PI / 2;
-  player.body.shooting = player.mouse.a;
+  player.body.shooting = player.mouse.a || player.inputs.e;
   if (player.inputs.w) player.body.vy = -1;
   if (player.inputs.a) player.body.vx = -1;
   if (player.inputs.s) player.body.vy = 1;
