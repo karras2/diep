@@ -138,11 +138,12 @@ class Entity {
     };
     this.vx = 0;
     this.vy = 0;
+    this.guns = [];
     entities.push(this);
   }
   define(type) {
+    this.guns = [];
     for (let key in type) {
-      this.guns = [];
       if (key === "guns") {
         for (let gun of type.guns) this.guns.push(new Gun(this, gun));
       } else {
@@ -160,7 +161,7 @@ class Entity {
     //this.size += 0.1;
   }
   draw() {
-    for (let gun of this.guns) gun.draw();
+    for (let gun of this.guns) gun.update();
     ctx.save();
     ctx.rotate(this.angle);
     ctx.beginPath();
@@ -197,7 +198,6 @@ class Gun {
     if (this.reload <= 0) {
       this.shoot();
     }
-    this.shoot();
     this.draw();
   }
   draw() {
@@ -222,14 +222,14 @@ class Gun {
   }
   shoot() {
     this.reload = this.maxReload;
-    let x = this.source.x// + ((this.x * this.source.size) * Math.cos(this.master.angle + this.angle));
-    let y = this.source.y// + ((this.y * this.source.size) * Math.sin(this.master.angle + this.angle));
+    let x = this.source.x + ((this.x * this.source.size) * Math.cos(this.source.angle + this.angle));
+    let y = this.source.y + ((this.y * this.source.size) * Math.sin(this.source.angle + this.angle));
     let o = new Entity({ x: x, y: y }, this.source);
-    o.vx = Math.cos(this.master.angle + this.angle) * (this.stats.speed * this.source.stats.bSpeed);
-    o.vy = Math.sin(this.master.angle + this.angle) * (this.stats.speed * this.source.stats.bSpeed);
+    o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
+    o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
     o.color = this.source.color;
+    o.size = this.source.size * (this.w / 2);
     o.define(Class[this.ammo]);
-    console.log(o);
   }
 };
 
