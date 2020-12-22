@@ -9,6 +9,12 @@ canvas.height = innerHeight;
 
 let ctx = canvas.getContext("2d");
 
+let game = {
+  width: 10000,
+  height: 10000,
+  mode: "FFA"
+};
+
 // Player object
 let player = {
   mouse: {
@@ -144,6 +150,8 @@ class Entity {
     }
   }
   update() {
+    this.xy *= 0.9;
+    this.vy *= 0.9;
     this.x += this.vx;
     this.y += this.vy;
     this.draw();
@@ -208,14 +216,20 @@ class Gun {
 // UI object
 let UI = {
   map: function() {
-    let s = 200;
+    let s = 250;
     ctx.save();
-    ctx.globalAlpha = 0.5;
+    ctx.globalAlpha = 0.75;
     ctx.translate((innerWidth * 0.975) - s, (innerHeight * 0.975) - s);
     ctx.fillStyle = window.colors.background[0];
     ctx.strokeStyle = window.colors.background[1];
+    ctx.lineWidth = 5;
     ctx.fillRect(0, 0, s, s);
     ctx.strokeRect(0, 0, s, s);
+    ctx.beginPath();
+    ctx.arc((player.body.x / game.width) / s, (player.body.y / game.height) / s, (s / 50), 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fillStyle = "#000000";
+    ctx.fill();
     ctx.globalAlpha = 1;
     ctx.restore();
   },
