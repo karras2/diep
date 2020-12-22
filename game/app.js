@@ -243,8 +243,8 @@ class Entity {
   }
   kill() {
     this.isDead = true;
+    this.ondead(this.collisionArray);
     setTimeout(() => {
-      this.ondead(this.collisionArray);
       entities = entities.filter(r => r !== this);
     }, 1000);
   }
@@ -253,6 +253,16 @@ class Entity {
       let o = c[0];
       o.master.xp += this.xp;
     }
+    if (this.type === "food") setTimeout(() => {
+      let o = new Entity(game.random());
+      let type = chooseChance({
+        square: 4,
+        triangle: 3,
+        pentagon: 2,
+        alphaPentagon: 1
+      });
+      o.define(Class[type]);
+    }, 5000);
   }
   update() {
     this.range --;
@@ -283,6 +293,11 @@ class Entity {
     ctx.save();
     ctx.rotate(this.angle);
     drawPoly(this.shape, this.size * player.camera.ratio, window.colors[this.color]);
+    ctx.beginPath();
+    ctx.moveTo(-50, 25);
+    ctx.lineTo(50, 25);
+    ctx.closePath();
+    ctx.o = -2;
     ctx.restore();
     ctx.globalAlpha = 1;
   }
