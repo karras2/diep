@@ -290,7 +290,7 @@ let UI = {
   clickables: [],
   mockups: [],
   lb: [{
-    xp: 10000000
+    xp: 1000000
   }],
   spinAngle: 0,
   drawBack: function() {
@@ -358,12 +358,12 @@ let UI = {
     ctx.strokeStyle = "#000000";
     ctx.stroke();
     ctx.beginPath();
-    perCent = (player.body.xp / this.lb[0].xp) * 400;
+    let perCent2 = (player.body.xp / UI.lb[0].xp) * 400;
     ctx.moveTo(-200, -30);
-    ctx.lineTo(-200 + perCent, -30);
+    ctx.lineTo(-200 + perCent2, -30);
     ctx.closePath();
     ctx.lineWidth = 17.5;
-    ctx.strokeStyle = window.colors.healtbar[0];
+    ctx.strokeStyle = window.colors.healthBar[0];
     ctx.stroke();
     ctx.restore();
   },
