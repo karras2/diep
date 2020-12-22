@@ -3,11 +3,9 @@ import * as Class from "/game/entities.js";
 console.log(Class);
 
 // Set up canvas
-let canvas = document.createElement("canvas");
+let canvas = document.getElementById("canvas");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
-
-document.body.appendChild(canvas);
 
 let ctx = canvas.getContext("2d");
 
@@ -139,18 +137,21 @@ class Entity {
   }
   update() {
     this.draw();
+    this.angle += 0.01;
+    this.size += 0.1;
   }
   draw() {
     for (let gun of this.guns) gun.draw();
     ctx.save();
+    ctx.translate(this.x, this.y);
     ctx.rotate(this.angle);
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size + 1, 0, Math.PI * 2);
+    ctx.arc(0, 0, this.size + 5, 0, Math.PI * 2);
     ctx.closePath();
     ctx.fillStyle = window.colors[this.color][1];
     ctx.fill();
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
     ctx.closePath();
     ctx.fillStyle = window.colors[this.color][0];
     ctx.fill();
@@ -163,8 +164,8 @@ class Gun {
     this.source = source;
     this.x = data.position[3];
     this.y = data.position[4];
-    this.w = data.position[0];
-    this.h = data.position[1];
+    this.w = data.position[1];
+    this.h = data.position[0];
     this.angle = data.position[5];
     this.open = data.position[2];
     this.stats = data.stats;
@@ -175,20 +176,21 @@ class Gun {
   }
   draw() {
     ctx.save();
-    ctx.rotate(this.angle + this.source.angle);
-    let x = this.source.x + (this.x * this.source.size);
+    let x = (this.source.x + (this.x * this.source.size)) * Math.cos(this.angle);
     let y = this.source.y + (this.y * this.source.size);
     let w = this.source.size * this.w;
     let h = this.source.size * this.h;
+    ctx.translate(x, y);
+    ctx.rotate(this.angle + this.source.angle);
     ctx.beginPath();
-    ctx.moveTo(x - (w / 2), y);
-    ctx.lineTo(x - (w / 2), y + h);
-    ctx.lineTo(x + (w / 2), y + h);
-    ctx.lineTo(x + (w / 2), y);
+    ctx.moveTo(-(w / 2), 0);
+    ctx.lineTo(-(w / 2), h);
+    ctx.lineTo((w / 2), h);
+    ctx.lineTo((w / 2), 0);
     ctx.closePath();
     ctx.fillStyle = window.colors.gray[0];
     ctx.strokeStyle = window.colors.gray[1];
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 10;
     ctx.stroke();
     ctx.fill();
     ctx.restore();
@@ -197,11 +199,11 @@ class Gun {
 
 let gameLoop = (() => {
   requestAnimationFrame(gameLoop);
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
   for (let o of entities) o.update();
 });
-//gameLoop();
+gameLoop();
 
 let o = new Entity({ x: 150, y: 150 });
-o.define(Class.basic);
+o.define(Class.twin);
 o.size = 10;
-o.update();

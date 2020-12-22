@@ -126,9 +126,12 @@ let startGame = () => {
   let Ubuntu = document.createElement("link");
   Ubuntu.rel = "stylesheet";
   Ubuntu.href = "https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap";
+  let can = document.createElement("canvas");
+  can.id = "canvas";
   document.body.appendChild(script);
   document.body.appendChild(css);
   document.body.appendChild(preconnect);
   document.body.appendChild(Ubuntu);
+  document.body.appendChild(can);
   document.body.appendChild(document.createElement("canvas"));
 };
