@@ -29,8 +29,8 @@ let combineStats = ((stats) => {
 // Shapes
 let square = {
   label: "Square",
-  size: 30,
-  spin: ,
+  size: 50,
+  spin: 2,
   color: "square",
   shape: 4,
   health: {
@@ -41,8 +41,8 @@ let square = {
 };
 let triangle = {
   label: "Triangle",
-  size: 50,
-  spin: 1,
+  size: 60,
+  spin: 2,
   color: "triangle",
   shape: 3,
   health: {
@@ -54,14 +54,26 @@ let triangle = {
 let pentagon = {
   label: "Pentagon",
   size: 75,
-  spin: 1,
+  spin: 2,
   color: "pentagon",
   shape: 5,
   health: {
-    max: 50,
+    max: 150,
     amount: 150
   },
   xp: 100,
+};
+let alphaPentagon = {
+  label: "Alpha Pentagon",
+  size: 300,
+  spin: 2,
+  color: "pentagon",
+  shape: 5,
+  health: {
+    max: 500,
+    amount: 500
+  },
+  xp: 3000,
 };
 
 // Ammo
@@ -242,4 +254,4 @@ let gunner = {
   }]
 };
 
-export { square, triangle, pentagon, bullet, rocket, missile, basic, twin, machine, sniper, removethislater, arenaCloser, flank, triple, double, destroyer, gunner }
+export { square, triangle, pentagon, alphaPentagon, bullet, rocket, missile, basic, twin, machine, sniper, removethislater, arenaCloser, flank, triple, double, destroyer, gunner }

@@ -255,6 +255,7 @@ class Entity {
     this.y += this.vy * this.stats.speed;
     this.draw();
     if (this.spin === 1) this.angle += 0.02;
+    if (this.spin === 2) this.angle += 0.005;
     //this.size += 0.1;
   }
   draw() {
@@ -269,13 +270,13 @@ class Entity {
     ctx.closePath();
     ctx.fillStyle = window.colors[this.color][1];
     ctx.fill();
-    ctx.beginPath();
+    ctx.beginPath(); 
     ctx.arc(0, 0, this.size * player.camera.ratio, 0, Math.PI * 2);
     ctx.closePath();
     ctx.fillStyle = window.colors[this.color][0];
     ctx.fill();*/
     // done!
-    drawPoly(this.shape, this.size * player.camera.ratio, window.colors[this.color]); 
+    drawPoly(this.shape, this.size * player.camera.ratio, window.colors[this.color]);
     ctx.restore();
     ctx.globalAlpha = 1;
   }
@@ -608,7 +609,7 @@ UI.init();
   player.body = o;
   for (let i = 0; i < 100; i ++) {
     let a = new Entity(game.random());
-    let type = ["square", "triangle", "pentagon"][Math.floor(Math.random() * 3)];
+    let type = ["square", "triangle", "pentagon", "alphaPentagon"][Math.floor(Math.random() * 4)];
     a.define(Class[type]);
   }
 })();
