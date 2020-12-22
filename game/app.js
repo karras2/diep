@@ -173,11 +173,11 @@ class Entity {
   update() {
     this.range --;
     if (this.type === "tank") {
-      this.xp += 100;
+      this.xp += 1;
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));
-      //this.fov = 1 + (this.level / 100000);
+      this.fov = 1 + (this.level / 5000);
       this.stats.speed = 5 - (this.level / 20);
     }
     if (this.range === 0) this.kill();
@@ -241,11 +241,11 @@ class Gun {
   }
   draw() {
     ctx.save();
-    let w = this.source.size * this.w;
-    let h = this.source.size * this.h;
+    let w = (this.source.size * this.w) * player.camera.ratio;
+    let h = (this.source.size * this.h) * player.camera.ratio;
     ctx.rotate(this.angle + this.source.angle);
-    let x = (this.x * this.source.size);
-    let y = (this.y * this.source.size);
+    let x = (this.x * this.source.size * player.camera.ratio);
+    let y = (this.y * this.source.size * player.camera.ratio);
     ctx.beginPath();
     ctx.moveTo(x - (w / 2), y);
     ctx.lineTo(x - (w / 2) * this.open, y + h);
@@ -254,7 +254,7 @@ class Gun {
     ctx.closePath();
     ctx.fillStyle = this.color[0];
     ctx.strokeStyle = this.color[1];
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 5 * player.camera.ratio;
     ctx.fill();
     ctx.stroke();
     ctx.restore();
@@ -293,23 +293,21 @@ let UI = {
     ctx.fillRect(-1500, -1500, game.width + 1500, game.height + 1500);
     ctx.fillStyle = window.colors.background[0];
     ctx.fillRect(0, 0, game.width, game.height);
-    ctx.lineWidth = 3;
-    for (let i = 0; i < game.width; i += 50) {
-      ctx.beginPath();// Bruh, dont do that, beginpath and closepath in for loop would make the game slow, instead, do this. watch
+    ctx.lineWidth = 3 * player.camera.ratio;
+    ctx.beginPath();
+    for (let i = 0; i < game.width; i += 50) {// yeah, good
       ctx.moveTo((i - player.camera.x) * player.camera.ratio + canvas.width / 2, 0);
       ctx.lineTo((i - player.camera.x) * player.camera.ratio + canvas.width / 2, game.height);
-      ctx.closePath();
-      ctx.strokeStyle = window.colors.background[1];
-      ctx.stroke();
+//      ctx.closePath(); moved outside
+      ctx.strokeStyle = window.colors.background[1]; // there, did fov for grid
     }
     for (let i = 0; i < game.height; i += 50) {
-      ctx.beginPath();
       ctx.moveTo(0, (i - player.camera.y) * player.camera.ratio + canvas.height / 2);
-      ctx.lineTo(game.width, (i - player.camera.y) * player.camera.ratio);
-      ctx.closePath();
+      ctx.lineTo(game.width, (i - player.camera.y) * player.camera.ratio + canvas.height / 2);
       ctx.strokeStyle = window.colors.background[1];
-      ctx.stroke();
     }
+    ctx.stroke();
+    ctx.closePath();
   },
   map: function() {
     let s = 250;
@@ -473,11 +471,11 @@ let gameLoop = (() => {
   requestAnimationFrame(gameLoop);
   player.camera.x = lerp(player.camera.x, player.body.x, 0.05);
   player.camera.y = lerp(player.camera.y, player.body.y, 0.05);
-  ctx.clearRect(0, 0, innerWidth, innerHeight); // this is another method of making fov, its hard but its more efficient, the other method is just.. spaghetti.
-  ctx.save();// no scales.
-  // i wont have to modify ui
-  //ctx.scale(player.body.fov, player.body.fov);
-  player.camera.ratio = (canvas.width * canvas.height) / 400000
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  ctx.save();
+  player.body.fov = 0.1 * (player.body.size / 5) * player.body.stats.fov;
+  player.camera.ratio = (canvas.width + canvas.height) / 4000 / player.body.fov
+  
   UI.drawBack();
   for (let o of entities) {
     ctx.save();
