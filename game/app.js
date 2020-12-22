@@ -133,6 +133,7 @@ class Entity {
     this.xp = 0;
     this.level = 0;
     this.alpha = 1;
+    this.fov = 1;
     this.health = {
       max: 100,
       amount: 100
@@ -141,7 +142,8 @@ class Entity {
       damage: 5,
       pene: 5,
       speed: 3,
-      bSpeed: 1
+      bSpeed: 1,
+      fov: 1
     };
     this.vx = 0;
     this.vy = 0;
@@ -168,10 +170,12 @@ class Entity {
   }
   update() {
     this.range --;
-    this.xp += 1;
+    this.xp += 100;
     this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
     if (this.level >= 45) this.level = 45;
     this.size = (25 + (this.level));
+    this.size = 1 + (this.level);
+    this.stats.speed = 5 - (this.level / 20);
     if (this.range === 0) this.kill();
     if (this.isDead) {
       this.alpha -= 0.025;
@@ -464,6 +468,8 @@ let gameLoop = (() => {
   player.camera.x = lerp(player.camera.x, player.body.x, 0.05);
   player.camera.y = lerp(player.camera.y, player.body.y, 0.05);
   ctx.clearRect(0, 0, innerWidth, innerHeight);
+  ctx.save();
+  ctx.scale(player.body.fov, player.body.fov);
   UI.drawBack();
   for (let o of entities) {
     ctx.save();
@@ -471,6 +477,7 @@ let gameLoop = (() => {
     o.update();
     ctx.restore();
   }
+  ctx.restore();
   UI.draw();
   player.body.vx *= 0.9;
   player.body.vy *= 0.9;
