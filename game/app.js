@@ -153,7 +153,6 @@ class Entity {
   draw() {
     for (let gun of this.guns) gun.draw();
     ctx.save();
-    ctx.translate(this.x, this.y);
     ctx.rotate(this.angle);
     ctx.beginPath();
     ctx.arc(0, 0, this.size + 5, 0, Math.PI * 2);
@@ -188,7 +187,6 @@ class Gun {
     ctx.save();
     let w = this.source.size * this.w;
     let h = this.source.size * this.h;
-    ctx.translate(this.source.x, this.source.y);
     ctx.rotate(this.angle + this.source.angle);
     let x = (this.x * this.source.size);
     let y = (this.y * this.source.size);
@@ -223,6 +221,8 @@ let gameLoop = (() => {
   }
 });
 gameLoop();
+
+
 
 (() => {
   let o = new Entity({ x: 100, y: 100 });
