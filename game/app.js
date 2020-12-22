@@ -239,6 +239,7 @@ let UI = {
   drawBack: function() {
     ctx.fillStyle = window.colors.background[0];
     ctx.fillRect(0, 0, innerWidth, innerHeight);
+    ctx.lineWidth = 3;
     for (let i = 0; i < game.width; i += 50) {
       ctx.beginPath();
       ctx.moveTo(i - player.camera.x, 0);
