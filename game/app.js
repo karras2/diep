@@ -1,5 +1,5 @@
 // Import utilities
-import Class from "/game/entities.js";
+import * as Class from "/game/entities.js";
 console.log(Class);
 
 // Set up canvas
@@ -100,3 +100,16 @@ document.addEventListener("mouseup", (event) => {
   player.mouse.a = false;
   player.mouse.b = false;
 });
+
+class Entity {
+  constructor(pos, master = this) {
+    this.x = pos.x;
+    this.y = pos.y;
+    this.master = master;
+    this.name = "";
+    this.health = {
+      max: 100,
+      amount: 0
+    };
+  }
+}
