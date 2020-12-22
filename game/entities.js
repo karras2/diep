@@ -38,7 +38,7 @@ let twin = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin])
   }, {
-    position: [1.9, 0.7, 1, -0.5, 0, 0, 0],
+    position: [1.9, 0.7, 1, -0.5, 0, 0, 0.5],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin])
   }]
