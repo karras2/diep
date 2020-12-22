@@ -142,7 +142,7 @@ class Entity {
     this.stats = {
       damage: 5,
       pene: 5,
-      speed: 3,
+      speed: 3,// i dont see anything changed,
       bSpeed: 1,
       fov: 1
     };
@@ -171,12 +171,14 @@ class Entity {
   }
   update() {
     this.range --;
-    this.xp += 100;
-    this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
-    if (this.level >= 45) this.level = 45;
-    this.size = (25 + (this.level));
-    this.size = 1 + (this.level);
-    this.stats.speed = 5 - (this.level / 20);
+    if (this.type === "tank") {
+      this.xp += 100;
+      this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
+      if (this.level >= 45) this.level = 45;
+      this.size = (25 + (this.level));
+      //this.fov = 1 + (this.level / 100000);
+      this.stats.speed = 5 - (this.level / 20);
+    }
     if (this.range === 0) this.kill();
     if (this.isDead) {
       this.alpha -= 0.025;
@@ -468,15 +470,17 @@ let gameLoop = (() => {
   requestAnimationFrame(gameLoop);
   player.camera.x = lerp(player.camera.x, player.body.x, 0.05);
   player.camera.y = lerp(player.camera.y, player.body.y, 0.05);
-  ctx.clearRect(0, 0, innerWidth, innerHeight);
-  ctx.save();
-  ctx.scale(player.body.fov, player.body.fov);
+  ctx.clearRect(0, 0, innerWidth, innerHeight); // b
+  let res = [player.body.fov,player.body.fov]
+  ctx.save();// ugh ill just copy maxtri code k
+  ctx.scale((canvas.width + canvas.height) / 2, (canvas.width + canvas.height) / 2);
   UI.drawBack();
+  ctx.save();
   for (let o of entities) {
-    ctx.save();
-    ctx.translate((o.x - player.camera.x) + canvas.width / 2, (o.y - player.camera.y) + canvas.height / 2);
+//    ctx.translate((o.x - player.camera.x) + canvas.width / 2, (o.y - player.camera.y) + canvas.height / 2); // commented for restore
+    ctx.translate(canvas.width / 2, canvas.height / 2); // testing purposes
     o.update();
-    ctx.restore();
+    
   }
   ctx.restore();
   UI.draw();
@@ -484,10 +488,10 @@ let gameLoop = (() => {
   player.body.vy = lerp(player.body.vy, 0, 0.1);
   player.body.angle = Math.atan2((player.mouse.y - canvas.height / 2), (player.mouse.x - canvas.width / 2)) - Math.PI / 2;
   player.body.shooting = player.mouse.a || player.inputs.e;
-  if (player.inputs.w) player.body.vy -= 1;// why?
-  if (player.inputs.a) player.body.vx -= 1;
-  if (player.inputs.s) player.body.vy += 1;
-  if (player.inputs.d) player.body.vx += 1;
+  if (player.inputs.w) player.body.vy -= 0.1; 
+  if (player.inputs.a) player.body.vx -= 0.1;
+  if (player.inputs.s) player.body.vy += 0.1;// yea, time for fov
+  if (player.inputs.d) player.body.vx += 0.1;
 });
 gameLoop();
 UI.init();

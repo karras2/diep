@@ -28,10 +28,12 @@ let combineStats = ((stats) => {
 
 let bullet = {
   label: "Bullet",
+  type: "bullet",
   guns: []
 };
 let rocket = {
   label: "Rocket",
+  type: "bullet",
   guns: [{
     position: [2, 1, 1.75, 0, 0, Math.PI, 2],
     ammo: "bullet",
@@ -41,6 +43,7 @@ let rocket = {
 };
 let missile = {
   label: "Missile",
+  type: "bullet",
   spin: 1,
   guns: [{
     position: [1.65, 1, 1, 0, 0, 0, 0],
