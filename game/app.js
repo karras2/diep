@@ -222,8 +222,8 @@ class Gun {
   }
   shoot() {
     this.reload = this.maxReload;
-    let x = this.source.x + (Math.cos(this.source.angle + this.angle) * this.x) * this.source.size;//((this.x * this.source.size) * Math.cos(this.source.angle + this.angle));
-    let y = this.source.y + (Math.sin(this.source.angle + this.angle) * this.y) * this.source.size;//((this.y * this.source.size) * Math.sin(this.source.angle + this.angle));
+    let x = this.source.x + (Math.cos(this.source.angle + this.angle) * this.x * this.source.size);//((this.x * this.source.size) * Math.cos(this.source.angle + this.angle));
+    let y = this.source.y + (Math.sin(this.source.angle + this.angle) * this.y * this.source.size);//((this.y * this.source.size) * Math.sin(this.source.angle + this.angle));
     let o = new Entity({ x: x, y: y }, this.source);
     o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
     o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
