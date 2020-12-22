@@ -130,15 +130,22 @@ class Entity {
       }
     }
   }
+  update() {
+    this.draw();
+  }
+  draw() {
+    for (let gun of this.guns) gun.draw();
+    
+  }
 }
 
 class Gun {
   constructor(source, data) {
     this.source = source;
-    this.x = source.x + (data.position[3] * source.size);
-    this.y = source.y + (data.position[4] * source.size);
-    this.w = data.position[0] * source.size;
-    this.h = data.position[1] * source.size;
+    this.x = data.position[3];
+    this.y = data.position[4];
+    this.w = data.position[0];
+    this.h = data.position[1];
     this.angle = data.position[5];
     this.open = data.position[2];
     this.stats = data.stats;
@@ -148,8 +155,22 @@ class Gun {
     this.draw();
   }
   draw() {
+    let x = this.source.x + (this.x * this.source.size);
+    let y = this.source.y + (this.y * this.source.size);
+    let w = this.source.size * this.w;
+    let h = this.source.size * this.h;
     ctx.save();
     ctx.rotate(this.angle + this.source.angle);
+    ctx.beginPath();
+    ctx.moveTo(x - (w / 2), y);
+    ctx.lineTo(x - (w / 2), y + h);
+    ctx.lineTo(x + (w / 2), y + h);
+    ctx.lineTo(x + (w / 2), y);
+    ctx.closePath();
+    ctx.fillStyle = window.colors.gray[0];
+    ctx.strokeStyle = window.colors.gray[1];
+    ctx.stroke();
+    ctx.fill();
     ctx.restore();
   }
 }
