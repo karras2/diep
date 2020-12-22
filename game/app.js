@@ -314,7 +314,24 @@ let UI = {
     ctx.restore();
   },
   leaderboard: function() {},
-  nameplate: function() {},
+  nameplate: function() {
+    ctx.save();
+    ctx.translate(innerWidth / 2, innerHeight - 30);
+    ctx.beginPath();
+    ctx.moveTo(-300, 0);
+    ctx.lineTo(300, 0);
+    ctx.closePath();
+    ctx.lineWidth = 30;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(-300, 0);
+    ctx.lineTo(300, 0);
+    ctx.closePath();
+    ctx.lineWidth = 25;
+    ctx.strokeStyle = "#f1ea59";
+    ctx.stroke();
+    ctx.restore();
+  },
   skills: function() {},
   upgrades: function() {
     let s = 100;
@@ -426,6 +443,7 @@ let UI = {
     this.clickables = [];
     this.map();
     this.upgrades();
+    this.nameplate();
     this.spinAngle += 0.01;
   }
 };
