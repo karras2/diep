@@ -306,8 +306,8 @@ class Entity {
   update() {
     this.range --;
     if (this.slows) {
-      this.vx = lerp(this.vx, 0, 0.1);
-      this.vy = lerp(this.vy, 0, 0.1);
+      this.vx = lerp(this.vx, 0, 0.05);
+      this.vy = lerp(this.vy, 0, 0.05);
     }
     if (this.type === "tank") {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
@@ -374,6 +374,7 @@ class Gun {
     if (this.color === "me") this.color = window.colors[this.source.color];
     this.reload = this.stats.reload * this.delay;
     this.maxReload = this.stats.reload;
+    this.prop = data.prop || false;
   }
   update() {
     this.reload --;
@@ -404,6 +405,7 @@ class Gun {
     ctx.restore();
   }
   shoot() {
+    if (this.prop) return;
     this.reload = this.maxReload;
     let o = new Entity({
       x: this.source.x,
@@ -755,5 +757,14 @@ window["size"] = function(data) {
     console.log("Set your size to " + data);
   } else {
     console.log("Size must be a number between 10 and 100!");
+  }
+};
+
+window["xp"] = function(data) {
+  if (data > -1) {
+    player.body.xp = data;
+    console.log("Set your XP to " + data);
+  } else {
+    console.log("XP must be a number greater than 1!");
   }
 };
