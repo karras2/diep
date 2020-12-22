@@ -252,6 +252,8 @@ class Gun {
 // UI object
 let UI = {
   clickables: [],
+  mockups: [],
+  spinAngle: 0,
   drawBack: function() {
     ctx.fillStyle = window.colors.background[1];
     ctx.fillRect(-1500, -1500, game.width + 1500, game.height + 1500);
@@ -311,6 +313,15 @@ let UI = {
       ctx.strokeRect(0, 0, s, s);
       ctx.globalAlpha = 1;
       ctx.restore();
+      let mockup = this.mockups.find(r => {
+        r.label === Class[up].label
+      });
+      mockup.color = "blue";
+      mockup.size = 20;
+      mockup.angle = this.spinAngle;
+      mockup.x = x + s / 2;
+      mockup.y = y + s / 2;
+      UI.entity(mockup);
       this.clickables.push({
         type: "upgrade",
         x: x,
@@ -340,10 +351,54 @@ let UI = {
       }
     }
   },
+  entity: function(entity) {
+    entity.guns.forEach(gun => {
+      ctx.save();
+      let w = gun.source.size * gun.w;
+      let h = gun.source.size * gun.h;
+      ctx.rotate(gun.angle + gun.source.angle);
+      let x = (gun.x * gun.source.size);
+      let y = (gun.y * gun.source.size);
+      ctx.beginPath();
+      ctx.moveTo(x - (w / 2), y);
+      ctx.lineTo(x - (w / 2) * gun.open, y + h);
+      ctx.lineTo(x + (w / 2) * gun.open, y + h);
+      ctx.lineTo(x + (w / 2), y);
+      ctx.closePath();
+      ctx.fillStyle = window.colors.gray[0];
+      ctx.strokeStyle = window.colors.gray[1];
+      ctx.lineWidth = 5;
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    });
+    ctx.save();
+    ctx.rotate(entity.angle);
+    ctx.beginPath();
+    ctx.arc(0, 0, entity.size + 5, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fillStyle = window.colors[entity.color][1];
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(0, 0, entity.size, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fillStyle = window.colors[entity.color][0];
+    ctx.fill();
+    ctx.restore();
+  },
+  init: function() {
+    let o = new Entity({ x: 0, y: 0 });
+    for (let tank in Class) {
+      o.define(Class[tank]);
+      this.mockups.push(o);
+    }
+    entities = entities.filter(r => r !== o);
+  },
   draw: function() {
     this.clickables = [];
     this.map();
     this.upgrades();
+    this.spinAngle += 0.01;
   }
 };
 
@@ -373,7 +428,7 @@ let gameLoop = (() => {
   if (player.inputs.d) player.body.vx = 1;
 });
 gameLoop();
-
+UI.init();
 
 
 (() => {
