@@ -107,9 +107,49 @@ class Entity {
     this.y = pos.y;
     this.master = master;
     this.name = "";
+    this.size = 10;
     this.health = {
       max: 100,
-      amount: 0
+      amount: 100
     };
+    this.stats = {
+      damage: 5,
+      pene: 5,
+      speed: 5
+    };
+    this.vx = 0;
+    this.vy = 0;
+  }
+  define(type) {
+    for (let key in type) {
+      this.guns = [];
+      if (key === "guns") {
+        this.guns.push(new Gun(this, type[key]))
+      } else {
+        this[key] = type[key];
+      }
+    }
+  }
+}
+
+class Gun {
+  constructor(source, data) {
+    this.source = source;
+    this.x = source.x + (data.position[3] * source.size);
+    this.y = source.y + (data.position[4] * source.size);
+    this.w = data.position[0] * source.size;
+    this.h = data.position[1] * source.size;
+    this.angle = data.position[5];
+    this.open = data.position[2];
+    this.stats = data.stats;
+    this.ammo = data.ammo;
+  }
+  update() {
+    this.draw();
+  }
+  draw() {
+    ctx.save();
+    ctx.rotate(this.angle + this.source.angle);
+    ctx.restore();
   }
 }

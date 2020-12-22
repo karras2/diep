@@ -20,7 +20,7 @@ let combineStats = ((stats) => {
 let basic = {
   label: "Basic",
   guns: [{
-    pos: [2, 0.5, 1, 0, 0, 0, 0],
+    position: [2, 0.5, 1, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic])
   }]
