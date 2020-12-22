@@ -34,8 +34,8 @@ let square = {
   color: "square",
   shape: 4,
   health: {
-    max: 1,
-    amount: 1
+    max: 10,
+    amount: 10
   },
   xp: 10,
 };
@@ -46,8 +46,8 @@ let triangle = {
   color: "triangle",
   shape: 3,
   health: {
-    max: 2,
-    amount: 2
+    max: 20,
+    amount: 20
   },
   xp: 25,
 };
@@ -58,8 +58,8 @@ let pentagon = {
   color: "pentagon",
   shape: 5,
   health: {
-    max: 5,
-    amount: 5
+    max: 50,
+    amount: 50
   },
   xp: 100,
 };
@@ -70,8 +70,8 @@ let alphaPentagon = {
   color: "pentagon",
   shape: 5,
   health: {
-    max: 10,
-    amount: 10
+    max: 100,
+    amount: 100
   },
   xp: 3000,
 };

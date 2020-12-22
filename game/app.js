@@ -244,17 +244,19 @@ class Entity {
   kill() {
     this.isDead = true;
     setTimeout(() => {
-      this.ondead();
+      this.ondead(this.collisionArray);
       entities = entities.filter(r => r !== this);
     }, 1000);
   }
-  ondead() {
-    
+  ondead(c) {
+    if (c.length) {
+      let o = c[0];
+      o.master.xp += this.xp;
+    }
   }
   update() {
     this.range --;
     if (this.type === "tank") {
-      this.xp += 100;
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));

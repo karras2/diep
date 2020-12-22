@@ -1,6 +1,7 @@
 let basicCollide = (i, o) => {
   if (i.collisionArray.includes(o) || o.collisionArray.includes(i)) return;
   if (i === o || i.master === o || o.master === i || o.master === i.master) return;
+  if (i.isDead || o.isDead) return;
   i.collisionArray.push(o);
   o.collisionArray.push(i);
   /*let fasterEntity = o;
