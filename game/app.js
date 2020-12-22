@@ -125,7 +125,7 @@ class Entity {
     this.angle = 0;
     this.color = "blue";
     this.name = "";
-    this.size = 10;
+    this.size = 25;
     this.health = {
       max: 100,
       amount: 100
@@ -150,8 +150,8 @@ class Entity {
     }
   }
   update() {
-    this.xy *= 0.75;
-    this.vy *= 0.75;
+    //this.xy *= 0.1;
+    //this.vy *= 0.1;
     this.x += this.vx * this.stats.speed;
     this.y += this.vy * this.stats.speed;
     this.draw();
@@ -220,16 +220,16 @@ let UI = {
     ctx.fillRect(0, 0, innerWidth, innerHeight);
     for (let i = 0; i < game.width; i += 50) {
       ctx.beginPath();
-      ctx.moveTo(i, 0);
-      ctx.lineTo(i, game.height);
+      ctx.moveTo(i - player.camera.x, 0);
+      ctx.lineTo(i - player.camera.x, game.height);
       ctx.closePath();
       ctx.strokeStyle = window.colors.background[1];
       ctx.stroke();
     }
     for (let i = 0; i < game.height; i += 50) {
       ctx.beginPath();
-      ctx.moveTo(0, i);
-      ctx.lineTo(game.width, i);
+      ctx.moveTo(0, i - player.camera.y);
+      ctx.lineTo(game.width, i - player.camera.y);
       ctx.closePath();
       ctx.strokeStyle = window.colors.background[1];
       ctx.stroke();
@@ -246,7 +246,7 @@ let UI = {
     ctx.fillRect(0, 0, s, s);
     ctx.strokeRect(0, 0, s, s);
     ctx.beginPath();
-    ctx.arc((player.body.x / game.width) / s, (player.body.y / game.height) / s, (s / 50), 0, Math.PI * 2);
+    ctx.arc((player.body.x / game.width) * s, (player.body.y / game.height) * s, (s / 75), 0, Math.PI * 2);
     ctx.closePath();
     ctx.fillStyle = "#000000";
     ctx.fill();
@@ -278,6 +278,8 @@ let gameLoop = (() => {
     ctx.restore();
   }
   UI.draw();
+  player.body.vx *= 0.9;
+  player.body.vy *= 0.9;
   if (player.inputs.w) player.body.vy = -1;
   if (player.inputs.a) player.body.vx = -1;
   if (player.inputs.s) player.body.vy = 1;
