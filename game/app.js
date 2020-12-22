@@ -1,3 +1,8 @@
+// Import utilities
+import Class from "/game/entities.js";
+console.log(Class);
+
+// Set up canvas
 let canvas = document.createElement("canvas");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
@@ -81,4 +86,17 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
-document.addEventListener("mousemove", )
+document.addEventListener("mousemove", (event) => {
+  player.mouse.x = event.clientX;
+  player.mouse.y = event.clientY;
+});
+
+document.addEventListener("mousedown", (event) => {
+  if (event.which === 1) player.mouse.a = true;
+  if (event.which === 3) player.mouse.b = true;
+});
+
+document.addEventListener("mouseup", (event) => {
+  player.mouse.a = false;
+  player.mouse.b = false;
+});

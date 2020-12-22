@@ -116,6 +116,7 @@ let startGame = () => {
   document.body.innerHTML = "";
   let script = document.createElement("script");
   script.src = "./game/app.js";
+  script.type = "module";
   let css = document.createElement("link");
   css.rel = "stylesheet";
   css.href = "/style.css";
