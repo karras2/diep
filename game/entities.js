@@ -6,7 +6,8 @@ const s = {
   sniper: [1.125, 1, 0.8, 1.25, 1.5, 1.25, 1, 0.5],
   flank: [1.1, 1, 0.8, 0.8, 0.9, 1, 1, 1],
   thruster: [1, 1.5, 0.5, 0.5, 0.75, 0.6, 0.5, 1.5],
-  destroy: [4, 2, 2, 3, 1.125, 2, 5, 0.1]
+  destroy: [4, 2, 2, 3, 1.125, 2, 5, 0.1],
+  gunner: [1.25, 0.75, 0.75, 0.8, 1, 1, 2, 1.25]
 };
 
 let combineStats = ((stats) => {
@@ -24,6 +25,14 @@ let combineStats = ((stats) => {
 let bullet = {
   label: "Bullet",
   guns: []
+};
+let rocket = {
+  label: "Rocket",
+  guns: [{
+    position: [2, 1, 1.75, 0, 0, Math.PI, 2],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.mach, s.thruster])
+  }]
 };
 
 let basic = {
@@ -57,7 +66,7 @@ let machine = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.mach])
   }],
-  upgrades: ["destroyer"]
+  upgrades: ["destroyer", "gunner"]
 };
 let sniper = {
   label: "Sniper",
@@ -121,9 +130,29 @@ let destroyer = {
   label: "Destroyer",
   guns: [{
     position: [2, 1.4, 1, 0, 0, 0, 0],
-    ammo: "bullet",
+    ammo: "rocket",
     stats: combineStats([s.basic, s.destroy])
   }]
 };
+let gunner = {
+  label: "Gunner",
+  guns: [{
+    position: [1.75, 0.5, 1, 0.8, 0, 0, 0.25],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin, s.gunner])
+  }, {
+    position: [1.75, 0.5, 1, -0.8, 0, 0, 0.75],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin, s.gunner])
+  }, {
+    position: [2, 0.5, 1, 0.4, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin, s.gunner])
+  }, {
+    position: [2, 0.5, 1, -0.4, 0, 0, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin, s.gunner])
+  }]
+};
 
-export { bullet, basic, twin, machine, sniper, flank, triple, double, destroyer }
+export { bullet, rocket, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner }
