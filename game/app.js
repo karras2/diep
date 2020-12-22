@@ -280,6 +280,7 @@ let gameLoop = (() => {
   UI.draw();
   player.body.vx *= 0.9;
   player.body.vy *= 0.9;
+  player.body.angle = Math.atan2((player.mouse.y - canvas.height / 2), (player.mouse.x - canvas.width / 2)) - Math.PI / 2;
   if (player.inputs.w) player.body.vy = -1;
   if (player.inputs.a) player.body.vx = -1;
   if (player.inputs.s) player.body.vy = 1;
@@ -294,3 +295,12 @@ gameLoop();
   o.define(Class.basic);
   player.body = o;
 })();
+
+window["define"] = function(data) {
+  if (Class[data]) {
+    player.body.define(Class[data]);
+    console.log("Set your tank to " + player.body.label);
+  } else {
+    console.log("That tank does not exist!");
+  }
+}
