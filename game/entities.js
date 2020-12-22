@@ -57,6 +57,7 @@ let missile = {
 
 let basic = {
   label: "Basic",
+  type: "tank",
   guns: [{
     position: [2, 1, 1, 0, 0, 0, 0],
     ammo: "bullet",

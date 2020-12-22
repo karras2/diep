@@ -36,7 +36,8 @@ let player = {
   body: {
     x: 0,
     y: 0,
-    upgrades: []
+    upgrades: [],
+    speed: 0.2
   },
   camera: {
     x: 0,
@@ -479,14 +480,14 @@ let gameLoop = (() => {
   }
   ctx.restore();
   UI.draw();
-  player.body.vx *= 0.9;
-  player.body.vy *= 0.9;
+  player.body.vx = lerp(player.body.vx, 0, 0.1);
+  player.body.vy = lerp(player.body.vy, 0, 0.1);
   player.body.angle = Math.atan2((player.mouse.y - canvas.height / 2), (player.mouse.x - canvas.width / 2)) - Math.PI / 2;
   player.body.shooting = player.mouse.a || player.inputs.e;
-  if (player.inputs.w) player.body.vy = -1;
-  if (player.inputs.a) player.body.vx = -1;
-  if (player.inputs.s) player.body.vy = 1;
-  if (player.inputs.d) player.body.vx = 1;
+  if (player.inputs.w) player.body.vy -= 1;// why?
+  if (player.inputs.a) player.body.vx -= 1;
+  if (player.inputs.s) player.body.vy += 1;
+  if (player.inputs.d) player.body.vx += 1;
 });
 gameLoop();
 UI.init();
