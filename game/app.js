@@ -115,6 +115,13 @@ document.addEventListener("mouseup", (event) => {
   player.mouse.b = false;
 });
 
+class Vector2 {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+
 let entities = [];
 
 class Entity {
@@ -223,13 +230,25 @@ class Gun {
   shoot() {
     this.reload = this.maxReload;
     let o = new Entity({
-      x: this.source.x + (Math.cos(this.source.angle) * this.source.size) * this.x,
-      y: this.source.y + (Math.sin(this.source.angle) * this.source.size) * this.y
+      x: 0,
+      y: 0
     }, this.source);
+    o.size = this.source.size * (this.w / 2);
+    let offset = new Vector2(
+      Math.cos(this.source.angle + this.angle) * ((this.source.size * this.h) - o.size),
+      Math.sin(this.source.angle + this.angle) * ((this.source.size * this.h) - o.size),
+    );
+    o.x = new Vector2((this.source.x) + offset.x, (this.source.y) + offset.y).x;
+    o.y = new Vector2((this.source.x) + offset.x, (this.source.y) + offset.y).y;
+    let perpAngle = (this.source.angle + this.angle) + (Math.PI / 2);
+    let perpVec = new Vector2(Math.cos(perpAngle), Math.sin(perpAngle));
+    perpVec.x *= this.x * this.source.size
+    perpVec.y *= this.x * this.source.size
+    o.x += perpVec.x;
+    o.y += perpVec.y;
     o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
     o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
     o.color = this.source.color;
-    o.size = this.source.size * (this.w / 2);
     o.define(Class[this.ammo]);
   }
 };
@@ -315,7 +334,7 @@ gameLoop();
 
 (() => {
   let o = new Entity({ x: 100, y: 100 });
-  o.define(Class.twin);
+  o.define(Class.basic);
   player.body = o;
 })();
 
