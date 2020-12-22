@@ -13,7 +13,13 @@ ctx.lineJoin = "round";
 let game = {
   width: 6500,
   height: 6500,
-  mode: "FFA"
+  mode: "FFA",
+  random: function() {
+    return {
+      x: Math.floor(Math.random() * game.width),
+      y: Math.floor(Math.random() * game.height)
+    }
+  }
 };
 
 // Player object
@@ -148,7 +154,7 @@ let drawPoly = (s, r, c, a = 0) => {
   } else switch (true) {
     case s === 0:
       ctx.beginPath();
-      ctx.arc(0, 0, r + 5, 0, Math.PI * 2);
+      ctx.arc(0, 0, r + 5 * player.camera.ratio, 0, Math.PI * 2);
       ctx.closePath();
       ctx.fillStyle = c[1];
       ctx.fill();
@@ -192,6 +198,7 @@ class Entity {
     this.xp = 0;
     this.level = 0;
     this.alpha = 1;
+    this.shape = 0;
     this.fov = 1;
     this.health = {
       max: 100,
@@ -268,7 +275,7 @@ class Entity {
     ctx.fillStyle = window.colors[this.color][0];
     ctx.fill();*/
     // done!
-    drawPoly(0, this.size * player.camera.ratio, window.colors[this.color]); 
+    drawPoly(this.shape, this.size * player.camera.ratio, window.colors[this.color]); 
     ctx.restore();
     ctx.globalAlpha = 1;
   }
@@ -596,9 +603,14 @@ UI.init();
 
 
 (() => {
-  let o = new Entity({ x: 100, y: 100 });
+  let o = new Entity(game.random());
   o.define(Class.basic);
   player.body = o;
+  for (let i = 0; i < 100; i ++) {
+    let a = new Entity(game.random());
+    let type = ["square", "triangle", "pentagon"][Math.floor(Math.random() * 3)];
+    a.define(Class[type]);
+  }
 })();
 
 
