@@ -130,6 +130,8 @@ class Entity {
     this.name = "";
     this.size = 25;
     this.range = -10;
+    this.xp = 0;
+    this.level = 0;
     this.alpha = 1;
     this.health = {
       max: 100,
@@ -166,6 +168,10 @@ class Entity {
   }
   update() {
     this.range --;
+    this.xp += 1;
+    this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
+    if (this.level >= 45) this.level = 45;
+    this.size = (25 + (this.level));
     if (this.range === 0) this.kill();
     if (this.isDead) {
       this.alpha -= 0.025;
@@ -322,12 +328,14 @@ let UI = {
     ctx.lineTo(300, 0);
     ctx.closePath();
     ctx.lineWidth = 30;
+    ctx.strokeStyle = "#000000";
     ctx.stroke();
     ctx.beginPath();
+    let perCent = (player.body.level / 45) * 600;
     ctx.moveTo(-300, 0);
-    ctx.lineTo(300, 0);
+    ctx.lineTo(-300 + perCent, 0);
     ctx.closePath();
-    ctx.lineWidth = 25;
+    ctx.lineWidth = 22.5;
     ctx.strokeStyle = "#f1ea59";
     ctx.stroke();
     ctx.restore();
