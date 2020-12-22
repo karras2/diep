@@ -295,21 +295,23 @@ class Entity {
     ctx.rotate(this.angle);
     drawPoly(this.shape, this.size * player.camera.ratio, window.colors[this.color]);
     ctx.restore();
-    ctx.beginPath();
-    ctx.moveTo(-50, 50);
-    ctx.lineTo(50, 50);
-    ctx.closePath();
-    ctx.strokeStyle = "#000000";
-    ctx.lineWidth = 10;
-    ctx.stroke();
-    let perCent = ((this.health.amount / this.health.max) >= 1 ? 1 : (this.health.amount / this.health.max)) * 90;
-    ctx.beginPath();
-    ctx.moveTo(-45, 50);
-    ctx.lineTo(-45 + perCent, 50);
-    ctx.closePath();
-    ctx.strokeStyle = window.colors.healthBar[0];
-    ctx.lineWidth = 7.5;
-    ctx.stroke();
+    if (this.type !== "bullet") {
+      ctx.beginPath();
+      ctx.moveTo(-50 * player.camera.ratio, (this.size + 50) * player.camera.ratio);
+      ctx.lineTo(50 * player.camera.ratio, (this.size + 50) * player.camera.ratio);
+      ctx.closePath();
+      ctx.strokeStyle = "#000000";
+      ctx.lineWidth = 10;
+      ctx.stroke();
+      let perCent = ((this.health.amount / this.health.max) >= 1 ? 1 : ((this.health.amount / this.health.max) <= 0 ? 0 : (this.health.amount / this.health.max))) * 90;
+      ctx.beginPath();
+      ctx.moveTo(-45 * player.camera.ratio, (this.size + 50) * player.camera.ratio);
+      ctx.lineTo((-45 + perCent) * player.camera.ratio, (this.size + 50) * player.camera.ratio);
+      ctx.closePath();
+      ctx.strokeStyle = window.colors.healthBar[0];
+      ctx.lineWidth = 7.5;
+      ctx.stroke(); 
+    }
     ctx.globalAlpha = 1;
   }
 };
@@ -583,6 +585,9 @@ let UI = {
     ctx.restore();
     ctx.restore();
   },
+  drawDead: function() {
+    
+  },
   init: function() {
     for (let tank in Class) {
       let o = new Entity({ x: 0, y: 0 });
@@ -598,6 +603,7 @@ let UI = {
     this.upgrades();
     this.nameplate();
     this.spinAngle += 0.01;
+    if (player.body.isDead) this.drawDead();
   }
 };
 
