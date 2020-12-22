@@ -3,7 +3,9 @@ const s = {
   basic: [25, 1, 1, 1, 1.5, 100, 150, 1],
   twin: [1.4, 0.8, 0.6, 0.6, 1, 1, 1, 1],
   mach: [0.75, 1.125, 0.7, 0.7, 1, 0.9, 2],
-  sniper: [1.125, 1, 0.8, 1.25, 1.25, 1.25, 1, 0.5]
+  sniper: [1.125, 1, 0.8, 1.25, 1.25, 1.25, 1, 0.5],
+  flank: [1.1, 1, 0.8, 0.8, 0.9, 1, 1, 1],
+  thruster: [1, 1.5, 0.5, 0.5, 0.75, 0.6, 0.5, 1.5]
 };
 
 let combineStats = ((stats) => {
@@ -31,6 +33,8 @@ let basic = {
     stats: combineStats([s.basic])
   }]
 };
+
+// LvL 15
 let twin = {
   label: "Twin",
   guns: [{
@@ -59,5 +63,55 @@ let sniper = {
     stats: combineStats([s.basic, s.sniper])
   }]
 };
+let flank = {
+  label: "Flank Guard",
+  guns: [{
+    position: [2, 0.75, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [1.5, 0.75, 1, 0, 0, Math.PI, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank, s.thruster])
+  }]
+};
 
-export { bullet, basic, twin, machine, sniper }
+// LvL 30
+let triple = {
+  label: "Triple Shot",
+  guns: [{
+    position: [1.75, 0.7, 1, -0.25, 0, Math.PI / 10, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [1.75, 0.7, 1, 0.25, 0, -Math.PI / 10, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [2, 0.7, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }]
+};
+let double = {
+  label: "Double Twin",
+  guns: [{
+    position: [1.9, 0.7, 1, 0.5, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [1.9, 0.7, 1, -0.5, 0, 0, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [1.9, 0.7, 1, 0.5, 0, Math.PI, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [1.9, 0.7, 1, -0.5, 0, Math.PI, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }]
+};
+
+export { bullet, basic, twin, machine, sniper, flank, triple, double }

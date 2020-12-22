@@ -140,7 +140,7 @@ class Entity {
     this.stats = {
       damage: 5,
       pene: 5,
-      speed: 5,
+      speed: 3,
       bSpeed: 1
     };
     this.vx = 0;
