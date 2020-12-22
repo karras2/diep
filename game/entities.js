@@ -51,7 +51,7 @@ let twin = {
   upgrades: ["triple", "double"]
 };
 let machine = {
-  label: "Machine",
+  label: "Machine Gun",
   guns: [{
     position: [2, 1, 1.75, 0, 0, 0, 0],
     ammo: "bullet",

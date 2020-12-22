@@ -314,8 +314,8 @@ let UI = {
       ctx.globalAlpha = 1;
       ctx.restore();
       let mockup = this.mockups.find(r => {
-        r.label === Class[up].label
-      });
+        return r.label === Class[up].label
+      }) || this.mockups[0];
       mockup.color = "blue";
       mockup.size = 20;
       mockup.angle = this.spinAngle;
@@ -352,6 +352,8 @@ let UI = {
     }
   },
   entity: function(entity) {
+    ctx.save();
+    ctx.translate(entity.x, entity.y);
     entity.guns.forEach(gun => {
       ctx.save();
       let w = gun.source.size * gun.w;
@@ -385,14 +387,16 @@ let UI = {
     ctx.fillStyle = window.colors[entity.color][0];
     ctx.fill();
     ctx.restore();
+    ctx.restore();
   },
   init: function() {
-    let o = new Entity({ x: 0, y: 0 });
     for (let tank in Class) {
+      let o = new Entity({ x: 0, y: 0 });
       o.define(Class[tank]);
       this.mockups.push(o);
+      entities = entities.filter(r => r !== o);
     }
-    entities = entities.filter(r => r !== o);
+    console.log(this.mockups);
   },
   draw: function() {
     this.clickables = [];
