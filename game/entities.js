@@ -1,7 +1,9 @@
 const s = {
   // reload, recoil, dmg, pene, speed, range, density, spray
   basic: [25, 1, 1, 1, 10, 100, 150, 1],
-  twin: [1.4, 0.8, 0.6, 0.6, 1, 1, 1, 1]
+  twin: [1.4, 0.8, 0.6, 0.6, 1, 1, 1, 1],
+  mach: [0.75, 1.125, 0.7, 0.7, 1, 0.9, 2],
+  sniper: [1.125, 1, 0.8, 1.25, 1.25, 1.25, 1, 0.5]
 };
 
 let combineStats = ((stats) => {
@@ -29,14 +31,30 @@ let basic = {
 let twin = {
   label: "Twin",
   guns: [{
-    position: [2, 0.75, 1, 0.5, 0, 0, 0],
+    position: [1.9, 0.7, 1, 0.5, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin])
   }, {
-    position: [2, 0.75, 1, -0.5, 0, 0, 0],
+    position: [1.9, 0.7, 1, -0.5, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin])
   }]
 };
+let machine = {
+  label: "Machine",
+  guns: [{
+    position: [1.8, 0.75, 1.75, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.mach])
+  }]
+};
+let sniper = {
+  label: "Sniper",
+  guns: [{
+    position: [2.5, 0.7, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }]
+};
 
-export { basic, twin }
+export { basic, twin, machine, sniper }

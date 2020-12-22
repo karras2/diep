@@ -25,6 +25,10 @@ let player = {
     e: false,
     c: false,
     k: false
+  },
+  body: {
+    x: 0,
+    y: 0
   }
 };
 
@@ -136,6 +140,8 @@ class Entity {
     }
   }
   update() {
+    this.x += this.vx;
+    this.y += this.vy;
     this.draw();
     this.angle += 0.01;
     this.size += 0.1;
@@ -176,17 +182,17 @@ class Gun {
   }
   draw() {
     ctx.save();
-    let x = (this.source.x + (this.x * this.source.size)) * Math.cos(this.angle);
-    let y = this.source.y + (this.y * this.source.size);
     let w = this.source.size * this.w;
     let h = this.source.size * this.h;
-    ctx.translate(x, y);
+    ctx.translate(this.source.x, this.source.y);
     ctx.rotate(this.angle + this.source.angle);
+    let x = (this.x * this.source.size);
+    let y = (this.y * this.source.size);
     ctx.beginPath();
-    ctx.moveTo(-(w / 2), 0);
-    ctx.lineTo(-(w / 2), h);
-    ctx.lineTo((w / 2), h);
-    ctx.lineTo((w / 2), 0);
+    ctx.moveTo(x - (w / 2), y);
+    ctx.lineTo(x - (w / 2) * this.open, y + h);
+    ctx.lineTo(x + (w / 2) * this.open, y + h);
+    ctx.lineTo(x + (w / 2), y);
     ctx.closePath();
     ctx.fillStyle = window.colors.gray[0];
     ctx.strokeStyle = window.colors.gray[1];
@@ -204,6 +210,6 @@ let gameLoop = (() => {
 });
 gameLoop();
 
-let o = new Entity({ x: 150, y: 150 });
-o.define(Class.twin);
-o.size = 10;
+{
+  let o = new E
+}
