@@ -228,7 +228,8 @@ class Entity {
     this.upgrades = [];
     entities.push(this);
   }
-  define(type) {
+  define(tank) {
+    let type = JSON.parse(JSON.stringify(tank));
     this.guns = [];
     this.upgrades = [];
     for (let key in type) {
@@ -293,12 +294,22 @@ class Entity {
     ctx.save();
     ctx.rotate(this.angle);
     drawPoly(this.shape, this.size * player.camera.ratio, window.colors[this.color]);
-    ctx.beginPath();
-    ctx.moveTo(-50, 25);
-    ctx.lineTo(50, 25);
-    ctx.closePath();
-    ctx.o = -2;
     ctx.restore();
+    ctx.beginPath();
+    ctx.moveTo(-50, 50);
+    ctx.lineTo(50, 50);
+    ctx.closePath();
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 10;
+    ctx.stroke();
+    let perCent = ((this.health.amount / this.health.max) >= 1 ? 1 : (this.health.amount / this.health.max)) * 90;
+    ctx.beginPath();
+    ctx.moveTo(-45, 50);
+    ctx.lineTo(-45 + perCent, 50);
+    ctx.closePath();
+    ctx.strokeStyle = window.colors.healthBar[0];
+    ctx.lineWidth = 7.5;
+    ctx.stroke();
     ctx.globalAlpha = 1;
   }
 };

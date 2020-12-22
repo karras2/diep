@@ -35,7 +35,7 @@ let square = {
   shape: 4,
   health: {
     max: 10,
-    amount: 10
+    amount: 100
   },
   xp: 10,
 };
