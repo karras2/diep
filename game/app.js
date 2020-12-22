@@ -247,6 +247,7 @@ class Gun {
 
 // UI object
 let UI = {
+  clickables: [],
   drawBack: function() {
     ctx.fillStyle = window.colors.background[1];
     ctx.fillRect(-1500, -1500, game.width + 1500, game.height + 1500);
@@ -291,9 +292,33 @@ let UI = {
   leaderboard: function() {},
   nameplate: function() {},
   skills: function() {},
-  upgrades: function() {},
+  upgrades: function() {
+    let s = 100;
+    let box = (x, y, color) => {
+      ctx.save();
+      ctx.globalAlpha = 0.75;
+      ctx.translate(x, y);
+      ctx.fillStyle = color[0];
+      ctx.fillRect(0, 0, s, s);
+      ctx.fillStyle = color[1];
+      ctx.fillRect(0, s / 2, s, s / 2);
+      ctx.strokeStyle = "#555555";
+      ctx.lineWidth = 5;
+      ctx.strokeRect(0, 0, s, s);
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    };
+    let colors = [window.colors.blue, window.colors.green, window.colors.red, window.colors.purple];
+    let x = 25, y = 25, t = 0;
+    for (let upgrade of player.body.upgrades) {
+      box(x, y, colors[upgrade.indexOf(player.body.upgrades)]);
+      t ++;
+    }
+  },
+  registerClick: function() {},
   draw: function() {
     this.map();
+    this.upgrades();
   }
 };
 
