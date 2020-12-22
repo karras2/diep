@@ -205,6 +205,29 @@ class Gun {
   }
 };
 
+// UI object
+let UI = {
+  map: function() {
+    let s = 200;
+    ctx.save();
+    ctx.globalAlpha = 0.5;
+    ctx.translate((innerWidth * 0.975) - s, (innerHeight * 0.975) - s);
+    ctx.fillStyle = window.colors.background[0];
+    ctx.strokeStyle = window.colors.background[1];
+    ctx.fillRect(0, 0, s, s);
+    ctx.strokeRect(0, 0, s, s);
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  },
+  leaderboard: function() {},
+  nameplate: function() {},
+  skills: function() {},
+  upgrades: function() {},
+  draw: function() {
+    this.map();
+  }
+};
+
 let gameLoop = (() => {
   function lerp(a, b, x) {
     return a + x * (b - a);
@@ -215,10 +238,11 @@ let gameLoop = (() => {
   ctx.clearRect(0, 0, innerWidth, innerHeight);
   for (let o of entities) {
     ctx.save();
-    ctx.translate(o.x - (player.camera.x + canvas.width / 2), o.y - (player.camera.y + canvas.height / 2));
+    ctx.translate((o.x - player.camera.x) + canvas.width / 2, (o.y - player.camera.y) + canvas.height / 2);
     o.update();
     ctx.restore();
   }
+  UI.draw();
 });
 gameLoop();
 
