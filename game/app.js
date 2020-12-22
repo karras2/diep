@@ -137,6 +137,8 @@ class Entity {
     this.color = "blue";
     this.name = "";
     this.size = 25;
+    this.range = -10;
+    this.alpha = 1;
     this.health = {
       max: 100,
       amount: 100
@@ -164,14 +166,27 @@ class Entity {
       }
     }
   }
+  kill() {
+    this.isDead = true;
+    setTimeout(() => {
+      entities = entities.filter(r => r !== this);
+    }, 1000);
+  }
   update() {
+    this.range --;
+    if (this.range === 0) this.kill();
+    if (this.isDead) {
+      this.alpha -= 0.025;
+      this.size += 0.1;
+    }
     this.x += this.vx * this.stats.speed;
     this.y += this.vy * this.stats.speed;
     this.draw();
-    //this.angle += 0.01;
+    if (this.spin === 1) this.angle += 0.02;
     //this.size += 0.1;
   }
   draw() {
+    ctx.globalAlpha = this.alpha;
     for (let gun of this.guns) gun.update();
     ctx.save();
     ctx.rotate(this.angle);
@@ -186,6 +201,7 @@ class Entity {
     ctx.fillStyle = window.colors[this.color][0];
     ctx.fill();
     ctx.restore();
+    ctx.globalAlpha = 1;
   }
 };
 
@@ -201,6 +217,8 @@ class Gun {
     this.delay = data.position[6];
     this.stats = data.stats;
     this.ammo = data.ammo;
+    this.color = data.color || window.colors.gray;
+    if (this.color === "me") this.color = window.colors[this.source.color];
     this.reload = this.stats.reload * this.delay;
     this.maxReload = this.stats.reload;
   }
@@ -224,8 +242,8 @@ class Gun {
     ctx.lineTo(x + (w / 2) * this.open, y + h);
     ctx.lineTo(x + (w / 2), y);
     ctx.closePath();
-    ctx.fillStyle = window.colors.gray[0];
-    ctx.strokeStyle = window.colors.gray[1];
+    ctx.fillStyle = this.color[0];
+    ctx.strokeStyle = this.color[1];
     ctx.lineWidth = 5;
     ctx.fill();
     ctx.stroke();
@@ -245,6 +263,8 @@ class Gun {
     o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
     o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
     o.color = this.source.color;
+    o.angle = this.source.angle + this.angle;
+    o.range = this.stats.range;
     o.define(Class[this.ammo]);
   }
 };

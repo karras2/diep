@@ -5,7 +5,7 @@ const s = {
   mach: [0.75, 1.125, 0.7, 0.7, 1, 0.9, 2],
   sniper: [1.125, 1, 0.8, 1.25, 1.5, 1.25, 1, 0.5],
   flank: [1.1, 1, 0.8, 0.8, 0.9, 1, 1, 1],
-  thruster: [1, 1.5, 0.5, 0.5, 0.75, 0.6, 0.5, 1.5],
+  thruster: [1, 1.5, 0.5, 0.5, 0.75, 0.25, 0.5, 1.5],
   destroy: [4, 2, 2, 3, 1.125, 2, 5, 0.1],
   gunner: [1.25, 0.75, 0.75, 0.8, 1, 1, 2, 1.25]
 };
@@ -19,6 +19,7 @@ let combineStats = ((stats) => {
   let out = {};
   let names = ["reload", "recoil", "dmg", "pene", "speed", "range", "density", "spray"];
   for (let i = 0; i < names.length; i ++) out[names[i]] = baseStats[i];
+  out.range = Math.floor(out.range);
   return out;
 });
 
@@ -31,7 +32,23 @@ let rocket = {
   guns: [{
     position: [2, 1, 1.75, 0, 0, Math.PI, 2],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.mach, s.thruster])
+    stats: combineStats([s.basic, s.mach, s.thruster]),
+    color: "me"
+  }]
+};
+let missile = {
+  label: "Missile",
+  spin: 1,
+  guns: [{
+    position: [1.65, 1, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.mach, s.thruster]),
+    color: "me"
+  }, {
+    position: [1.65, 1, 1, 0, 0, Math.PI, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.mach, s.thruster]),
+    color: "me"
   }]
 };
 
@@ -130,7 +147,7 @@ let destroyer = {
   label: "Destroyer",
   guns: [{
     position: [2, 1.4, 1, 0, 0, 0, 0],
-    ammo: "rocket",
+    ammo: "missile",
     stats: combineStats([s.basic, s.destroy])
   }]
 };
@@ -155,4 +172,4 @@ let gunner = {
   }]
 };
 
-export { bullet, rocket, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner }
+export { bullet, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner }
