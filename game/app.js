@@ -133,7 +133,8 @@ class Entity {
     this.stats = {
       damage: 5,
       pene: 5,
-      speed: 5
+      speed: 5,
+      bSpeed: 1
     };
     this.vx = 0;
     this.vy = 0;
@@ -193,6 +194,10 @@ class Gun {
   }
   update() {
     this.reload --;
+    if (this.reload <= 0) {
+      this.shoot();
+    }
+    this.shoot();
     this.draw();
   }
   draw() {
@@ -217,6 +222,14 @@ class Gun {
   }
   shoot() {
     this.reload = this.maxReload;
+    let x = this.source.x// + ((this.x * this.source.size) * Math.cos(this.master.angle + this.angle));
+    let y = this.source.y// + ((this.y * this.source.size) * Math.sin(this.master.angle + this.angle));
+    let o = new Entity({ x: x, y: y }, this.source);
+    o.vx = Math.cos(this.master.angle + this.angle) * (this.stats.speed * this.source.stats.bSpeed);
+    o.vy = Math.sin(this.master.angle + this.angle) * (this.stats.speed * this.source.stats.bSpeed);
+    o.color = this.source.color;
+    o.define(Class[this.ammo]);
+    console.log(o);
   }
 };
 
@@ -288,6 +301,7 @@ let gameLoop = (() => {
   player.body.vx *= 0.9;
   player.body.vy *= 0.9;
   player.body.angle = Math.atan2((player.mouse.y - canvas.height / 2), (player.mouse.x - canvas.width / 2)) - Math.PI / 2;
+  player.body.shooting = 1;
   if (player.inputs.w) player.body.vy = -1;
   if (player.inputs.a) player.body.vx = -1;
   if (player.inputs.s) player.body.vy = 1;

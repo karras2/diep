@@ -1,6 +1,6 @@
 const s = {
   // reload, recoil, dmg, pene, speed, range, density, spray
-  basic: [25, 1, 1, 1, 10, 100, 150, 1],
+  basic: [25, 1, 1, 1, 1, 100, 150, 1],
   twin: [1.4, 0.8, 0.6, 0.6, 1, 1, 1, 1],
   mach: [0.75, 1.125, 0.7, 0.7, 1, 0.9, 2],
   sniper: [1.125, 1, 0.8, 1.25, 1.25, 1.25, 1, 0.5]
@@ -18,7 +18,10 @@ let combineStats = ((stats) => {
   return out;
 });
 
-
+let bullet = {
+  label: "Bullet",
+  guns: []
+};
 
 let basic = {
   label: "Basic",
@@ -57,4 +60,4 @@ let sniper = {
   }]
 };
 
-export { basic, twin, machine, sniper }
+export { bullet, basic, twin, machine, sniper }
