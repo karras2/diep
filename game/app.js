@@ -127,6 +127,14 @@ class Vector2 {
   }
 }
 
+function chooseChance(data) {
+  let all = [];
+  for (let key in data) {
+    for (let i = 0; i < data[key]; i ++) all.push(key);
+  }
+  return all[Math.floor(Math.random() * all.length)];
+};
+
 let drawPoly = (s, r, c, a = 0) => {
   ctx.save();
   ctx.rotate(a - Math.PI / 2);
@@ -251,6 +259,8 @@ class Entity {
       this.size += 0.075;
       if (this.alpha < 0) this.alpha = 0;
     }
+    if (this.x + this.vx < 0 || this.x + this.vx > game.width) this.vx = 0;
+    if (this.y + this.vy < 0 || this.y + this.vy > game.height) this.vy = 0;
     this.x += this.vx * this.stats.speed;
     this.y += this.vy * this.stats.speed;
     this.draw();
@@ -609,7 +619,12 @@ UI.init();
   player.body = o;
   for (let i = 0; i < 100; i ++) {
     let a = new Entity(game.random());
-    let type = ["square", "triangle", "pentagon", "alphaPentagon"][Math.floor(Math.random() * 4)];
+    let type = chooseChance({
+      square: 4,
+      triangle: 3,
+      pentagon: 2,
+      alphaPentagon: 1
+    });
     a.define(Class[type]);
   }
 })();
