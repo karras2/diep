@@ -37,7 +37,8 @@ let player = {
     x: 0,
     y: 0,
     upgrades: [],
-    speed: 0.2
+    speed: 0.2,
+    stats: {}
   },
   camera: {
     ratio: 0,
@@ -143,7 +144,7 @@ class Entity {
     this.stats = {
       damage: 5,
       pene: 5,
-      speed: 3,// i dont see anything changed,
+      speed: 3,
       bSpeed: 1,
       fov: 1
     };
@@ -159,6 +160,8 @@ class Entity {
     for (let key in type) {
       if (key === "guns") {
         for (let gun of type.guns) this.guns.push(new Gun(this, gun));
+      } else if (key === "stats") {
+        for (let k in type.stats) this.stats[k] = type.stats[k];
       } else {
         this[key] = type[key];
       }
@@ -173,11 +176,10 @@ class Entity {
   update() {
     this.range --;
     if (this.type === "tank") {
-      this.xp += 1;
+      this.xp += 100;
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));
-      this.fov = 1 + (this.level / 5000);
       this.stats.speed = 5 - (this.level / 20);
     }
     if (this.range === 0) this.kill();
@@ -287,6 +289,9 @@ class Gun {
 let UI = {
   clickables: [],
   mockups: [],
+  lb: [{
+    xp: 10000000
+  }],
   spinAngle: 0,
   drawBack: function() {
     ctx.fillStyle = window.colors.background[1];
@@ -345,6 +350,20 @@ let UI = {
     ctx.closePath();
     ctx.lineWidth = 22.5;
     ctx.strokeStyle = "#f1ea59";
+    ctx.stroke();
+    ctx.moveTo(-200, -30);
+    ctx.lineTo(200, -30);
+    ctx.closePath();
+    ctx.lineWidth = 30;
+    ctx.strokeStyle = "#000000";
+    ctx.stroke();
+    ctx.beginPath();
+    perCent = (player.body.xp / this.lb[0].xp) * 400;
+    ctx.moveTo(-200, -30);
+    ctx.lineTo(-200 + perCent, -30);
+    ctx.closePath();
+    ctx.lineWidth = 17.5;
+    ctx.strokeStyle = window.colors.healtbar[0];
     ctx.stroke();
     ctx.restore();
   },
@@ -473,7 +492,7 @@ let gameLoop = (() => {
   player.camera.y = lerp(player.camera.y, player.body.y, 0.05);
   ctx.clearRect(0, 0, innerWidth, innerHeight);
   ctx.save();
-  player.body.fov = 0.1 * (player.body.size / 5) * player.body.stats.fov;
+  player.body.fov = lerp(player.body.fov, 0.1 * (player.body.size / 5) * (player.body.stats.fov || 1), 0.01);
   player.camera.ratio = (canvas.width + canvas.height) / 4000 / player.body.fov
   
   UI.drawBack();

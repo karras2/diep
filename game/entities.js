@@ -1,6 +1,6 @@
 const s = {
   // reload, recoil, dmg, pene, speed, range, density, spray
-  basic: [50, 1, 1, 1, 1.75, 100, 150, 1],
+  basic: [50, 1, 1, 1, 3, 300, 150, 1],
   twin: [1.4, 0.8, 0.6, 0.6, 1, 1, 1, 1],
   mach: [0.75, 1.125, 0.7, 0.7, 1, 0.9, 4],
   sniper: [1.125, 1, 0.8, 1.25, 1.5, 1.25, 1, 0.5],
@@ -94,6 +94,9 @@ let machine = {
 };
 let sniper = {
   label: "Sniper",
+  stats: {
+    fov: 1.1
+  },
   guns: [{
     position: [2.5, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
