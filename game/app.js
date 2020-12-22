@@ -29,6 +29,10 @@ let player = {
   body: {
     x: 0,
     y: 0
+  },
+  camera: {
+    x: 0,
+    y: 0
   }
 };
 
@@ -205,11 +209,20 @@ class Gun {
 
 let gameLoop = (() => {
   requestAnimationFrame(gameLoop);
+  player.camera.x = lerp(player.camera.x, player.body.x, 0.05);
+  player.camera.y = lerp(player.camera.y, player.body.y, 0.05);
   ctx.clearRect(0, 0, innerWidth, innerHeight);
-  for (let o of entities) o.update();
+  for (let o of entities) {
+    ctx.save();
+    ctx.translate(o.x - player.body.x + canvas.width / 2, o.y - player.body.y + canvas.height / 2);
+    o.update();
+    ctx.restore();
+  }
 });
 gameLoop();
 
-{
-  let o = new E
-}
+(() => {
+  let o = new Entity({ x: 100, y: 100 });
+  o.define(Class.basic);
+  player.body = o;
+})();
