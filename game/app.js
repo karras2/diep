@@ -7,6 +7,8 @@ let canvas = document.createElement("canvas");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
+document.body.appendChild(canvas);
+
 let ctx = canvas.getContext("2d");
 
 // Player object
@@ -101,11 +103,15 @@ document.addEventListener("mouseup", (event) => {
   player.mouse.b = false;
 });
 
+let entities = [];
+
 class Entity {
   constructor(pos, master = this) {
     this.x = pos.x;
     this.y = pos.y;
     this.master = master;
+    this.angle = 0;
+    this.color = "blue";
     this.name = "";
     this.size = 10;
     this.health = {
@@ -119,12 +125,13 @@ class Entity {
     };
     this.vx = 0;
     this.vy = 0;
+    entities.push(this);
   }
   define(type) {
     for (let key in type) {
       this.guns = [];
       if (key === "guns") {
-        this.guns.push(new Gun(this, type[key]))
+        for (let gun of type.guns) this.guns.push(new Gun(this, gun));
       } else {
         this[key] = type[key];
       }
@@ -135,9 +142,21 @@ class Entity {
   }
   draw() {
     for (let gun of this.guns) gun.draw();
-    
+    ctx.save();
+    ctx.rotate(this.angle);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size + 1, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fillStyle = window.colors[this.color][1];
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fillStyle = window.colors[this.color][0];
+    ctx.fill();
+    ctx.restore();
   }
-}
+};
 
 class Gun {
   constructor(source, data) {
@@ -155,12 +174,12 @@ class Gun {
     this.draw();
   }
   draw() {
+    ctx.save();
+    ctx.rotate(this.angle + this.source.angle);
     let x = this.source.x + (this.x * this.source.size);
     let y = this.source.y + (this.y * this.source.size);
     let w = this.source.size * this.w;
     let h = this.source.size * this.h;
-    ctx.save();
-    ctx.rotate(this.angle + this.source.angle);
     ctx.beginPath();
     ctx.moveTo(x - (w / 2), y);
     ctx.lineTo(x - (w / 2), y + h);
@@ -169,8 +188,20 @@ class Gun {
     ctx.closePath();
     ctx.fillStyle = window.colors.gray[0];
     ctx.strokeStyle = window.colors.gray[1];
+    ctx.lineWidth = 1;
     ctx.stroke();
     ctx.fill();
     ctx.restore();
   }
-}
+};
+
+let gameLoop = (() => {
+  requestAnimationFrame(gameLoop);
+  for (let o of entities) o.update();
+});
+//gameLoop();
+
+let o = new Entity({ x: 150, y: 150 });
+o.define(Class.basic);
+o.size = 10;
+o.update();
