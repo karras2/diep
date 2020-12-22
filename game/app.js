@@ -35,7 +35,8 @@ let player = {
   },
   body: {
     x: 0,
-    y: 0
+    y: 0,
+    upgrades: []
   },
   camera: {
     x: 0,
@@ -147,6 +148,7 @@ class Entity {
     this.vx = 0;
     this.vy = 0;
     this.guns = [];
+    this.upgrades = [];
     entities.push(this);
   }
   define(type) {
@@ -294,7 +296,7 @@ let UI = {
   skills: function() {},
   upgrades: function() {
     let s = 100;
-    let box = (x, y, color) => {
+    let box = (x, y, color, up) => {
       ctx.save();
       ctx.globalAlpha = 0.75;
       ctx.translate(x, y);
@@ -307,16 +309,33 @@ let UI = {
       ctx.strokeRect(0, 0, s, s);
       ctx.globalAlpha = 1;
       ctx.restore();
+      this.clickables.push({
+        type: "upgrade",
+        x: x,
+        y: y,
+        size: s,
+        upgrade: up
+      });
     };
     let colors = [window.colors.blue, window.colors.green, window.colors.red, window.colors.purple];
-    let x = 25, y = 25, t = 0;
+    let x = 25, y = 25, t = 0, c = 0;
     for (let upgrade of player.body.upgrades) {
-      box(x, y, colors[upgrade.indexOf(player.body.upgrades)]);
-      t ++;
+      x = (s / 4) + (s * c) + ((s / 4) * (c)),
+      y = (s / 4) + (t * s) + ((s / 5) * t);
+      box(x, y, window.colors.blue, upgrade);
+      if (++t % 2 === 0) {
+        c ++;
+        t = 0;
+      }
     }
   },
-  registerClick: function() {},
+  registerClick: function(x, y) {
+    for (let object of this.clickables) {
+      if (object.type === "upgrade")
+    }
+  },
   draw: function() {
+    this.clickables = [];
     this.map();
     this.upgrades();
   }
