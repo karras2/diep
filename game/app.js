@@ -121,6 +121,62 @@ class Vector2 {
   }
 }
 
+let drawPoly = (s, r, c, a = 0) => {
+  ctx.save();
+  ctx.rotate(a - Math.PI / 2);
+  ctx.lineWidth = 5 * player.camera.ratio;
+  ctx.fillStyle = c[0];
+  ctx.strokeStyle = c[1];
+  if (typeof s === "string") {
+    let path = new Path2D(s);
+    ctx.save();
+    ctx.scale(r, r);
+    ctx.lineWidth /= r;
+    ctx.stroke(path);
+    ctx.fill(path);
+    ctx.restore();
+  } else if (s instanceof Array) {
+    ctx.beginPath();
+    for (let point of s) {
+      let x = point[0] * r,
+        y = point[1] * r;
+      ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  } else switch (true) {
+    case s === 0:
+      ctx.beginPath();
+      ctx.arc(0, 0, r + 5, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fillStyle = c[1];
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fillStyle = c[0];
+      ctx.fill();
+      break;
+    case (s < 17 && s > 2):
+      ctx.beginPath();
+      let angle = 0;
+      angle += s % 2 ? 0 : Math.PI / s;
+      for (let i = 0; i < s; i++) {
+        let theta = (i / s) * 2 * Math.PI;
+        let x = r * Math.cos(theta + angle);
+        let y = r * Math.sin(theta + angle);
+        ctx.lineTo(x, y);
+      }
+      ctx.lineWidth = 5 * player.camera.ratio;
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      break;
+  }
+  ctx.restore();
+};
+
 let entities = [];
 
 class Entity {
@@ -199,7 +255,7 @@ class Entity {
     for (let gun of this.guns) gun.update();
     ctx.save();
     ctx.rotate(this.angle);
-    ctx.beginPath(); // where are x and y pos
+    /*ctx.beginPath(); // where are x and y pos
     // oh then it should be easy... i think
     // ill make a value called "ratio", which is gonna be what changes the x and y position to fov
     ctx.arc(0, 0, this.size * player.camera.ratio + 5 * player.camera.ratio, 0, Math.PI * 2);
@@ -210,7 +266,9 @@ class Entity {
     ctx.arc(0, 0, this.size * player.camera.ratio, 0, Math.PI * 2);
     ctx.closePath();
     ctx.fillStyle = window.colors[this.color][0];
-    ctx.fill();
+    ctx.fill();*/
+    // done!
+    drawPoly(0, this.size * player.camera.ratio, window.colors[this.color]); 
     ctx.restore();
     ctx.globalAlpha = 1;
   }

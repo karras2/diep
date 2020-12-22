@@ -79,7 +79,7 @@ let arenaCloser = {
   guns: [{
     position: [1.65, 1.125, 1, 0, 0, 0, 0],
     ammo: "bullet",
-    stats: combineStats([s.basic, [0.5, 0, 10, 10, 2, 5, 10, 3]])
+    stats: combineStats([s.basic, [0.25, 0, 10, 10, 2, 5, 10, 1]])
   }]
 };
 
