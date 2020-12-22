@@ -50,6 +50,12 @@ let player = {
     ratio: 0,
     x: 0,
     y: 0
+  },
+  spawn: function() {
+    let o = new Entity(game.random());
+    o.define(Class.basic);
+    o.score = player.body.score / 3;
+    player.body = o;
   }
 };
 
@@ -82,6 +88,9 @@ document.addEventListener("keydown", (event) => {
       break;
     case 75:
       player.inputs.k = true;
+      break;
+    case 13:
+      if (player.body.isDead) player.spawn();
       break;
   }
 });
@@ -586,7 +595,19 @@ let UI = {
     ctx.restore();
   },
   drawDead: function() {
-    
+    ctx.font = "75px Ubuntu";
+    let texta = "Final Score: " + player.body.xp;
+    let textb = "Level: " + player.body.level;
+    let textc = "Tank: " + player.body.label;
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 4;
+    ctx.strokeText(texta, innerWidth * 0.25, innerHeight * 0.25);
+    ctx.fillText(texta, innerWidth * 0.25, innerHeight * 0.25);
+    ctx.strokeText(textb, innerWidth * 0.25, innerHeight * 0.5);
+    ctx.fillText(textb, innerWidth * 0.25, innerHeight * 0.5);
+    ctx.strokeText(textc, innerWidth * 0.25, innerHeight * 0.75);
+    ctx.fillText(textc, innerWidth * 0.25, innerHeight * 0.75);
   },
   init: function() {
     for (let tank in Class) {
@@ -656,9 +677,7 @@ UI.init();
 
 
 (() => {
-  let o = new Entity(game.random());
-  o.define(Class.basic);
-  player.body = o;
+  player.spawn();
   for (let i = 0; i < 100; i ++) {
     let a = new Entity(game.random());
     let type = chooseChance({
