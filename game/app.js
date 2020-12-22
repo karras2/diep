@@ -289,9 +289,7 @@ class Gun {
 let UI = {
   clickables: [],
   mockups: [],
-  lb: [{
-    xp: 1000000
-  }],
+  lb: [],
   spinAngle: 0,
   drawBack: function() {
     ctx.fillStyle = window.colors.background[1];
@@ -359,19 +357,34 @@ let UI = {
     ctx.strokeStyle = "#000000";
     ctx.stroke();
     ctx.beginPath();
-    let perCent2 = (player.body.xp / UI.lb[0].xp) * 400;
+    let topScore = UI.lb[0] ? UI.lb[0].xp : 1;
+    let perCent2 = ((player.body.xp / topScore) >= 1 ? 1 : (player.body.xp / topScore)) * 400;
     ctx.moveTo(-200, -32.5);
     ctx.lineTo(-200 + perCent2, -32.5);
     ctx.closePath();
     ctx.lineWidth = 17.5;
     ctx.strokeStyle = window.colors.healthBar[0];
     ctx.stroke();
-    ctx.font = "20px Ubuntu";
+    ctx.lineWidth = 4;
+    ctx.font = "25px Ubuntu";
     let w = ctx.measureText("Level " + player.body.level + " " + player.body.label).width;
     ctx.fillStyle = "#ffffff";
     ctx.strokeStyle = "#000000";
-    ctx.strokeText("Level " + player.body.level + " " + player.body.label, -(w / 2), 0);
-    ctx.fillText("Level " + player.body.level + " " + player.body.label, -(w / 2), 0);
+    ctx.strokeText("Level " + player.body.level + " " + player.body.label, -(w / 2), 7);
+    ctx.fillText("Level " + player.body.level + " " + player.body.label, -(w / 2), 7);
+    ctx.font = "17.5px Ubuntu";
+    w = ctx.measureText("XP: " + player.body.xp).width;
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#000000";
+    ctx.strokeText("XP: " + player.body.xp, -(w / 2), -27.5);
+    ctx.fillText("XP: " + player.body.xp, -(w / 2), -27.5);
+    ctx.font = "40px Ubuntu";
+    let name = localStorage.getItem("playername");
+    w = ctx.measureText(name).width;
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#000000";
+    ctx.strokeText(name, -(w / 2), -50);
+    ctx.fillText(name, -(w / 2), -50);
     ctx.restore();
   },
   skills: function() {},
