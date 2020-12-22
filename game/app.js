@@ -11,8 +11,8 @@ let ctx = canvas.getContext("2d");
 ctx.lineJoin = "round";
 
 let game = {
-  width: 10000,
-  height: 10000,
+  width: 6500,
+  height: 6500,
   mode: "FFA"
 };
 
@@ -144,7 +144,7 @@ class Entity {
     this.stats = {
       damage: 5,
       pene: 5,
-      speed: 10,
+      speed: 5,
       bSpeed: 1,
       fov: 1
     };
@@ -180,7 +180,7 @@ class Entity {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));
-      //this.stats.speed = 5 - (this.level / 20);
+      this.stats.speed = 5 - (this.level / 50);
     }
     if (this.range === 0) this.kill();
     if (this.isDead) {
@@ -295,7 +295,7 @@ let UI = {
     ctx.fillStyle = window.colors.background[1];
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = window.colors.background[0];
-    ctx.fillRect(-(player.camera.x * player.camera.ratio) + canvas.width/2, -(player.camera.y * player.camera.ratio) + canvas.height/2, game.width, game.height);
+    ctx.fillRect(-(player.camera.x * player.camera.ratio) + canvas.width/2, -(player.camera.y * player.camera.ratio) + canvas.height/2, game.width * player.camera.ratio, game.height * player.camera.ratio);
     ctx.lineWidth = 3 * player.camera.ratio;
     ctx.beginPath();
     ctx.globalAlpha = 0.05;
