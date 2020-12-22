@@ -144,7 +144,7 @@ class Entity {
     this.stats = {
       damage: 5,
       pene: 5,
-      speed: 3,
+      speed: 10,
       bSpeed: 1,
       fov: 1
     };
@@ -180,7 +180,7 @@ class Entity {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));
-      this.stats.speed = 5 - (this.level / 20);
+      //this.stats.speed = 5 - (this.level / 20);
     }
     if (this.range === 0) this.kill();
     if (this.isDead) {
@@ -293,24 +293,24 @@ let UI = {
   spinAngle: 0,
   drawBack: function() {
     ctx.fillStyle = window.colors.background[1];
-    ctx.fillRect(-1500, -1500, game.width + 1500, game.height + 1500);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = window.colors.background[0];
-    ctx.fillRect(0, 0, game.width, game.height);
+    ctx.fillRect(-(player.camera.x * player.camera.ratio) + canvas.width/2, -(player.camera.y * player.camera.ratio) + canvas.height/2, game.width, game.height);
     ctx.lineWidth = 3 * player.camera.ratio;
     ctx.beginPath();
-    for (let i = 0; i < game.width; i += 50) {// yeah, good
+    ctx.globalAlpha = 0.05;
+    for (let i = -game.width / 2; i < game.width * 1.5; i += 50) {
       ctx.moveTo((i - player.camera.x) * player.camera.ratio + canvas.width / 2, 0);
       ctx.lineTo((i - player.camera.x) * player.camera.ratio + canvas.width / 2, game.height);
-//      ctx.closePath(); moved outside
-      ctx.strokeStyle = window.colors.background[1]; // there, did fov for grid
+      ctx.strokeStyle = "black"; 
     }
-    for (let i = 0; i < game.height; i += 50) {
+    for (let i = -game.height / 2; i < game.height * 1.5; i += 50) {
       ctx.moveTo(0, (i - player.camera.y) * player.camera.ratio + canvas.height / 2);
       ctx.lineTo(game.width, (i - player.camera.y) * player.camera.ratio + canvas.height / 2);
-      ctx.strokeStyle = window.colors.background[1];
     }
     ctx.stroke();
     ctx.closePath();
+    ctx.globalAlpha = 1
   },
   map: function() {
     let s = 250;
