@@ -150,13 +150,13 @@ class Entity {
     }
   }
   update() {
-    this.xy *= 0.9;
-    this.vy *= 0.9;
-    this.x += this.vx;
-    this.y += this.vy;
+    this.xy *= 0.75;
+    this.vy *= 0.75;
+    this.x += this.vx * this.stats.speed;
+    this.y += this.vy * this.stats.speed;
     this.draw();
-    this.angle += 0.01;
-    this.size += 0.1;
+    //this.angle += 0.01;
+    //this.size += 0.1;
   }
   draw() {
     for (let gun of this.guns) gun.draw();
@@ -215,6 +215,26 @@ class Gun {
 
 // UI object
 let UI = {
+  drawBack: function() {
+    ctx.fillStyle = window.colors.background[0];
+    ctx.fillRect(0, 0, innerWidth, innerHeight);
+    for (let i = 0; i < game.width; i += 50) {
+      ctx.beginPath();
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, game.height);
+      ctx.closePath();
+      ctx.strokeStyle = window.colors.background[1];
+      ctx.stroke();
+    }
+    for (let i = 0; i < game.height; i += 50) {
+      ctx.beginPath();
+      ctx.moveTo(0, i);
+      ctx.lineTo(game.width, i);
+      ctx.closePath();
+      ctx.strokeStyle = window.colors.background[1];
+      ctx.stroke();
+    }
+  },
   map: function() {
     let s = 250;
     ctx.save();
@@ -250,6 +270,7 @@ let gameLoop = (() => {
   player.camera.x = lerp(player.camera.x, player.body.x, 0.05);
   player.camera.y = lerp(player.camera.y, player.body.y, 0.05);
   ctx.clearRect(0, 0, innerWidth, innerHeight);
+  UI.drawBack();
   for (let o of entities) {
     ctx.save();
     ctx.translate((o.x - player.camera.x) + canvas.width / 2, (o.y - player.camera.y) + canvas.height / 2);
@@ -257,6 +278,10 @@ let gameLoop = (() => {
     ctx.restore();
   }
   UI.draw();
+  if (player.inputs.w) player.body.vy = -1;
+  if (player.inputs.a) player.body.vx = -1;
+  if (player.inputs.s) player.body.vy = 1;
+  if (player.inputs.d) player.body.vx = 1;
 });
 gameLoop();
 
