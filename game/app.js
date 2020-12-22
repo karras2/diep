@@ -208,13 +208,16 @@ class Gun {
 };
 
 let gameLoop = (() => {
+  function lerp(a, b, x) {
+    return a + x * (b - a);
+  }
   requestAnimationFrame(gameLoop);
   player.camera.x = lerp(player.camera.x, player.body.x, 0.05);
   player.camera.y = lerp(player.camera.y, player.body.y, 0.05);
   ctx.clearRect(0, 0, innerWidth, innerHeight);
   for (let o of entities) {
     ctx.save();
-    ctx.translate(o.x - player.body.x + canvas.width / 2, o.y - player.body.y + canvas.height / 2);
+    ctx.translate(o.x - (player.camera.x + canvas.width / 2), o.y - (player.camera.y + canvas.height / 2));
     o.update();
     ctx.restore();
   }
