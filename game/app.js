@@ -178,8 +178,8 @@ let drawPoly = (s, r, c, a = 0) => {
       angle += s % 2 ? 0 : Math.PI / s;
       for (let i = 0; i < s; i++) {
         let theta = (i / s) * 2 * Math.PI;
-        let x = r * Math.cos(theta + angle);
-        let y = r * Math.sin(theta + angle);
+        let x = (r * 1.25) * Math.cos(theta + angle);
+        let y = (r * 1.25) * Math.sin(theta + angle);
         ctx.lineTo(x, y);
       }
       ctx.lineWidth = 5 * player.camera.ratio;
@@ -218,7 +218,9 @@ class Entity {
       pene: 5,
       speed: 5,
       bSpeed: 1,
-      fov: 1
+      fov: 1,
+      bDamage: 1,
+      bPene: 1
     };
     this.vx = 0;
     this.vy = 0;
@@ -274,19 +276,6 @@ class Entity {
     for (let gun of this.guns) gun.update();
     ctx.save();
     ctx.rotate(this.angle);
-    /*ctx.beginPath(); // where are x and y pos
-    // oh then it should be easy... i think
-    // ill make a value called "ratio", which is gonna be what changes the x and y position to fov
-    ctx.arc(0, 0, this.size * player.camera.ratio + 5 * player.camera.ratio, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.fillStyle = window.colors[this.color][1];
-    ctx.fill();
-    ctx.beginPath(); 
-    ctx.arc(0, 0, this.size * player.camera.ratio, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.fillStyle = window.colors[this.color][0];
-    ctx.fill();*/
-    // done!
     drawPoly(this.shape, this.size * player.camera.ratio, window.colors[this.color]);
     ctx.restore();
     ctx.globalAlpha = 1;
@@ -355,9 +344,9 @@ class Gun {
     o.color = this.source.color;
     o.angle = this.source.angle + this.angle;
     o.range = this.stats.range;
-    o.stats.damage = this.stats.damage * this.source.bDamage;
-    o.health.max = this.stats.pene * this.source.bPene;
-    o.health.amount = this.stats.pene * this.source.bPene;
+    o.stats.damage = this.stats.damage * this.source.stats.bDamage;
+    o.health.max = this.stats.pene * this.source.stats.bPene;
+    o.health.amount = this.stats.pene * this.source.stats.bPene;
     o.define(Class[this.ammo]);
   }
 };
@@ -607,8 +596,8 @@ let gameLoop = (() => {
   for (let o of entities) o.collisionArray = [];
   for (let o of entities) {
     for (let j of entities) {
-      var a = o.x - j.x;
-      var b = o.y - j.y;
+      var a = (o.x + o.vx) - (j.x + j.vx);
+      var b = (o.y + o.vy) - (j.y + j.vy);
       var c = Math.sqrt(a * a + b * b);
       if (c < o.size + j.size) Collision.basicCollide(o, j);
     }
