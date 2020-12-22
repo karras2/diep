@@ -48,6 +48,7 @@ let player = {
 window.addEventListener("resize", () => {
   canvas.width = innerWidth;
   canvas.height = innerHeight;
+  ctx.lineJoin = "round";
 });
 
 document.addEventListener("keydown", (event) => {
@@ -110,6 +111,7 @@ document.addEventListener("mousemove", (event) => {
 document.addEventListener("mousedown", (event) => {
   if (event.which === 1) player.mouse.a = true;
   if (event.which === 3) player.mouse.b = true;
+  UI.registerClick(event.clientX, event.clientY);
 });
 
 document.addEventListener("mouseup", (event) => {
@@ -224,9 +226,9 @@ class Gun {
     ctx.closePath();
     ctx.fillStyle = window.colors.gray[0];
     ctx.strokeStyle = window.colors.gray[1];
-    ctx.lineWidth = 10;
-    ctx.stroke();
+    ctx.lineWidth = 5;
     ctx.fill();
+    ctx.stroke();
     ctx.restore();
   }
   shoot() {
@@ -239,7 +241,7 @@ class Gun {
     o.y += Math.sin(this.angle + this.source.angle) * (this.x * this.source.size);
     o.x += Math.cos(this.angle + this.source.angle) * (this.y * this.source.size);
     o.y += Math.sin(this.angle + this.source.angle) * (this.y * this.source.size);
-    o.size = this.source.size * (this.w / 2);
+    o.size = (this.source.size * (this.w / 2)) * 0.9;
     o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
     o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
     o.color = this.source.color;
@@ -331,7 +333,11 @@ let UI = {
   },
   registerClick: function(x, y) {
     for (let object of this.clickables) {
-      if (object.type === "upgrade")
+      if (object.type === "upgrade") {
+        if (x > object.x && x < (object.x + object.size)) {
+          if (y > object.y && y < (object.y + object.size)) player.body.define(Class[object.upgrade]);
+        }
+      }
     }
   },
   draw: function() {
