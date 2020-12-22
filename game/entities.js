@@ -10,7 +10,7 @@ const s = {
   destroy: [4, 2, 2, 3, 1.125, 2, 5, 0.1],
   gunner: [1.25, 0.75, 0.75, 0.8, 1, 1, 2, 1.25],
   rocketeerRocket: [0.75, 2, 1.25, 1.25, 0.5, 10, 2],
-  skimmerMissile: [0.75, 1, 1.25, 1.25, 0.5, 10, 0.5],
+  skimmerMissile: [0.75, 1, 1.25, 1.25, 1, 10, 0.5],
 };
 
 let combineStats = ((stats) => {
@@ -45,12 +45,12 @@ let missile = {
   guns: [{
     position: [1.65, 1, 1, 0, 0, 0, 0],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.mach, s.thruster, sskimmerMissile]),
+    stats: combineStats([s.basic, s.mach, s.thruster, s.skimmerMissile]),
     color: "me"
   }, {
     position: [1.65, 1, 1, 0, 0, Math.PI, 0],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.mach, s.thruster]),
+    stats: combineStats([s.basic, s.mach, s.thruster, s.skimmerMissile]),
     color: "me"
   }]
 };

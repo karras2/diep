@@ -109,14 +109,12 @@ document.addEventListener("mousemove", (event) => {
 });
 
 document.addEventListener("mousedown", (event) => {
-  if (event.which === 1) player.mouse.a = true;
-  if (event.which === 3) player.mouse.b = true;
+  player.mouse.a = true;
   UI.registerClick(event.clientX, event.clientY);
 });
 
 document.addEventListener("mouseup", (event) => {
   player.mouse.a = false;
-  player.mouse.b = false;
 });
 
 class Vector2 {
@@ -226,7 +224,8 @@ class Gun {
   update() {
     this.reload --;
     if (this.reload <= 0) {
-      this.shoot();
+      if (this.source.shooting) this.shoot();
+      else this.reload = this.stats.reload * this.delay;
     }
     this.draw();
   }
@@ -268,8 +267,8 @@ class Gun {
     o.angle = this.source.angle + this.angle;
     o.range = this.stats.range;
     o.stats.damage = this.stats.damage * this.source.bDamage;
-    o.stats.health.max = this.stats.pene * this.source.bPene;
-    o.stats.health.amount = this.stats.pene * this.source.bPene;
+    o.health.max = this.stats.pene * this.source.bPene;
+    o.health.amount = this.stats.pene * this.source.bPene;
     o.define(Class[this.ammo]);
   }
 };
@@ -450,7 +449,7 @@ let gameLoop = (() => {
   player.body.vx *= 0.9;
   player.body.vy *= 0.9;
   player.body.angle = Math.atan2((player.mouse.y - canvas.height / 2), (player.mouse.x - canvas.width / 2)) - Math.PI / 2;
-  player.body.shooting = 1;
+  player.body.shooting = player.mouse.a;
   if (player.inputs.w) player.body.vy = -1;
   if (player.inputs.a) player.body.vx = -1;
   if (player.inputs.s) player.body.vy = 1;
