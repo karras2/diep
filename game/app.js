@@ -351,20 +351,27 @@ let UI = {
     ctx.lineWidth = 22.5;
     ctx.strokeStyle = "#f1ea59";
     ctx.stroke();
-    ctx.moveTo(-200, -30);
-    ctx.lineTo(200, -30);
+    ctx.beginPath();
+    ctx.moveTo(-200, -32.5);
+    ctx.lineTo(200, -32.5);
     ctx.closePath();
-    ctx.lineWidth = 30;
+    ctx.lineWidth = 25;
     ctx.strokeStyle = "#000000";
     ctx.stroke();
     ctx.beginPath();
     let perCent2 = (player.body.xp / UI.lb[0].xp) * 400;
-    ctx.moveTo(-200, -30);
-    ctx.lineTo(-200 + perCent2, -30);
+    ctx.moveTo(-200, -32.5);
+    ctx.lineTo(-200 + perCent2, -32.5);
     ctx.closePath();
     ctx.lineWidth = 17.5;
     ctx.strokeStyle = window.colors.healthBar[0];
     ctx.stroke();
+    ctx.font = "20px Ubuntu";
+    let w = ctx.measureText("Level " + player.body.level + " " + player.body.label).width;
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#000000";
+    ctx.strokeText("Level " + player.body.level + " " + player.body.label, -(w / 2), 0);
+    ctx.fillText("Level " + player.body.level + " " + player.body.label, -(w / 2), 0);
     ctx.restore();
   },
   skills: function() {},
