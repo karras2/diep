@@ -1,6 +1,6 @@
 // Import utilities
 import * as Class from "/game/entities.js";
-console.log(Class);
+import * as Collision from "/game/collision.js";
 
 // Set up canvas
 let canvas = document.getElementById("canvas");
@@ -208,6 +208,7 @@ class Entity {
     this.alpha = 1;
     this.shape = 0;
     this.fov = 1;
+    this.collisionArray = [];
     this.health = {
       max: 100,
       amount: 100
@@ -259,8 +260,8 @@ class Entity {
       this.size += 0.075;
       if (this.alpha < 0) this.alpha = 0;
     }
-    if (this.x + this.vx < 0 || this.x + this.vx > game.width) this.vx = 0;
-    if (this.y + this.vy < 0 || this.y + this.vy > game.height) this.vy = 0;
+    if (this.x + this.vx < 0 || this.x + this.vx > game.width) this.vx *= -0.5;
+    if (this.y + this.vy < 0 || this.y + this.vy > game.height) this.vy *= -0.5;
     this.x += this.vx * this.stats.speed;
     this.y += this.vy * this.stats.speed;
     this.draw();
@@ -600,6 +601,20 @@ let gameLoop = (() => {
   }
   ctx.restore();
   UI.draw();
+  
+  
+  // Collision update
+  for (let o of entities) o.collisionArray = [];
+  for (let o of entities) {
+    for (let j of entities) {
+      var a = o.x - j.x;
+      var b = o.y - j.y;
+      var c = Math.sqrt(a * a + b * b);
+      if (c < o.size + j.size) Collision.basicCollide(o, j);
+    }
+  }
+  
+  
   player.body.vx = lerp(player.body.vx, 0, 0.1);
   player.body.vy = lerp(player.body.vy, 0, 0.1);
   player.body.angle = Math.atan2((player.mouse.y - canvas.height / 2), (player.mouse.x - canvas.width / 2)) - Math.PI / 2;
