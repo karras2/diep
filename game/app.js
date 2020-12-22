@@ -22,6 +22,8 @@ let game = {
   }
 };
 
+let UPGRADETIERS = [15, 30, 45];
+
 // Player object
 let player = {
   mouse: {
@@ -39,13 +41,6 @@ let player = {
     c: false,
     k: false
   },
-  body: {
-    x: 0,
-    y: 0,
-    upgrades: [],
-    speed: 0.2,
-    stats: {}
-  },
   camera: {
     ratio: 0,
     x: 0,
@@ -54,7 +49,7 @@ let player = {
   spawn: function() {
     let o = new Entity(game.random());
     o.define(Class.basic);
-    o.score = player.body.score / 3;
+    o.xp = player.body ? Math.floor((player.body.xp > 23500 ? 23500 / 3 : player.body.xp / 3)) : 0;
     player.body = o;
   }
 };
@@ -211,6 +206,7 @@ class Entity {
     this.color = "blue";
     this.name = "";
     this.size = 25;
+    this.tier = 0;
     this.range = -10;
     this.xp = 0;
     this.level = 0;
@@ -499,7 +495,10 @@ let UI = {
   skills: function() {},
   upgrades: function() {
     let s = 100;
+    let canUpgrade = false;
+    if (player.body.level >= UPGRADETIERS[player.body.tier]) canUpgrade = true;
     let box = (x, y, color, up) => {
+      if (!canUpgrade) return;
       ctx.save();
       ctx.globalAlpha = 0.75;
       ctx.translate(x, y);
@@ -551,7 +550,10 @@ let UI = {
     for (let object of this.clickables) {
       if (object.type === "upgrade") {
         if (x > object.x && x < (object.x + object.size)) {
-          if (y > object.y && y < (object.y + object.size)) player.body.define(Class[object.upgrade]);
+          if (y > object.y && y < (object.y + object.size)) {
+            player.body.define(Class[object.upgrade]);
+            player.body.tier ++;
+          }
         }
       }
     }
@@ -633,6 +635,7 @@ let gameLoop = (() => {
     return a + x * (b - a);
   }
   requestAnimationFrame(gameLoop);
+  if (!player.body) return;
   player.camera.x = lerp(player.camera.x, player.body.x, 0.05);
   player.camera.y = lerp(player.camera.y, player.body.y, 0.05);
   ctx.clearRect(0, 0, innerWidth, innerHeight);
