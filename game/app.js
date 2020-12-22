@@ -177,7 +177,8 @@ class Entity {
     if (this.range === 0) this.kill();
     if (this.isDead) {
       this.alpha -= 0.025;
-      this.size += 0.1;
+      this.size += 0.075;
+      if (this.alpha < 0) this.alpha = 0;
     }
     this.x += this.vx * this.stats.speed;
     this.y += this.vy * this.stats.speed;
@@ -260,11 +261,15 @@ class Gun {
     o.x += Math.cos(this.angle + this.source.angle) * (this.y * this.source.size);
     o.y += Math.sin(this.angle + this.source.angle) * (this.y * this.source.size);
     o.size = (this.source.size * (this.w / 2)) * 0.9;
-    o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
-    o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2)) * (this.stats.speed * this.source.stats.bSpeed);
+    let spray = (Math.floor(Math.random() * (this.stats.spray * 2)) - this.stats.spray) / 10;
+    o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);
+    o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);
     o.color = this.source.color;
     o.angle = this.source.angle + this.angle;
     o.range = this.stats.range;
+    o.stats.damage = this.stats.damage * this.source.bDamage;
+    o.stats.health.max = this.stats.pene * this.source.bPene;
+    o.stats.health.amount = this.stats.pene * this.source.bPene;
     o.define(Class[this.ammo]);
   }
 };
