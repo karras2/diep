@@ -413,8 +413,8 @@ class Gun {
     }, this.source);
     o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size);
     o.y += Math.sin(this.angle + this.source.angle) * (this.x * this.source.size);
-    o.x += Math.cos(this.angle + this.source.angle) * (this.y * this.source.size);
-    o.y += Math.sin(this.angle + this.source.angle) * (this.y * this.source.size);
+    o.x += Math.cos(this.angle + this.source.angle) * (0 * this.source.size);
+    o.y += Math.sin(this.angle + this.source.angle) * (0 * this.source.size);
     o.size = (this.source.size * (this.w / 2)) * 0.9;
     let spray = (Math.floor(Math.random() * (this.stats.spray * 2)) - this.stats.spray) / 10;
     o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);

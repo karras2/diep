@@ -11,7 +11,7 @@ const s = {
   gunner: [1.25, 0.75, 0.75, 0.8, 1, 1, 2, 1.25],
   rocketeerRocket: [0.75, 2, 1.25, 1.25, 0.5, 10, 2],
   skimmerMissile: [0.75, 1, 1.25, 1.25, 1, 10, 0.5],
-  trapper: [1, 1, 1, 4, 2, 2, 10, 2],
+  trapper: [1, 1, 0.1, 4, 2, 2, 10, 2],
 };
 
 let combineStats = ((stats) => {
@@ -32,11 +32,12 @@ let square = {
   label: "Square",
   size: 50,
   spin: 2,
+  type: "food",
   color: "square",
   shape: 4,
   health: {
-    max: 10,
-    amount: 10
+    max: 25,
+    amount: 25
   },
   xp: 10,
 };
@@ -44,11 +45,12 @@ let triangle = {
   label: "Triangle",
   size: 60,
   spin: 2,
+  type: "food",
   color: "triangle",
   shape: 3,
   health: {
-    max: 20,
-    amount: 20
+    max: 50,
+    amount: 50
   },
   xp: 25,
 };
@@ -56,11 +58,12 @@ let pentagon = {
   label: "Pentagon",
   size: 75,
   spin: 2,
+  type: "food",
   color: "pentagon",
   shape: 5,
   health: {
-    max: 50,
-    amount: 50
+    max: 100,
+    amount: 100
   },
   xp: 100,
 };
@@ -68,11 +71,12 @@ let alphaPentagon = {
   label: "Alpha Pentagon",
   size: 300,
   spin: 2,
+  type: "food",
   color: "pentagon",
   shape: 5,
   health: {
-    max: 100,
-    amount: 100
+    max: 500,
+    amount: 500
   },
   xp: 3000,
 };
