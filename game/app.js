@@ -116,8 +116,8 @@ document.addEventListener("mousemove", (event) => {
 });
 
 document.addEventListener("mousedown", (event) => {
+  if (UI.registerClick(event.clientX, event.clientY)) return;
   player.mouse.a = true;
-  UI.registerClick(event.clientX, event.clientY);
 });
 
 document.addEventListener("mouseup", (event) => {
@@ -380,7 +380,7 @@ class Gun {
   update() {
     this.reload --;
     if (this.reload <= 0) {
-      if (this.source.shooting) this.shoot();
+      if (this.source.shooting || this.source.type === "bullet") this.shoot();
       else this.reload = this.stats.reload * this.delay;
     }
     this.draw();
@@ -411,7 +411,7 @@ class Gun {
     let o = new Entity({
       x: this.source.x,
       y: this.source.y
-    }, this.source);
+    }, this.source.master.master.master);
     o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size);
     o.y += Math.sin(this.angle + this.source.angle) * (this.x * this.source.size);
     o.x += Math.cos(this.angle + this.source.angle) * (0 * this.source.size);
@@ -593,10 +593,12 @@ let UI = {
           if (y > object.y && y < (object.y + object.size)) {
             player.body.define(Class[object.upgrade]);
             player.body.tier ++;
+            return 1;
           }
         }
       }
     }
+    return 0;
   },
   entity: function(entity) {
     ctx.save();

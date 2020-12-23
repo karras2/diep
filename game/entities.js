@@ -9,8 +9,8 @@ const s = {
   rocketeerRocket: [0.75, 2, 1.25, 1.25, 0.5, 10, 2],
   destroy: [4, 2, 3, 3, 1.125, 2, 5, 0.1],
   gunner: [1.25, 0.75, 0.75, 0.8, 1, 1, 2, 1.25],
-  rocketeerRocket: [0.75, 2, 1.25, 1.25, 0.5, 10, 2],
-  skimmerMissile: [0.75, 1, 1.25, 1.25, 1, 10, 0.5],
+  rocketeerRocket: [0.5, 2, 1.25, 1.25, 0.25, 0.6, 10, 5],
+  skimmerMissile: [0.75, 1, 1.25, 1.25, 1, 0.5, 10, 0.5],
   trapper: [1, 1, 0.1, 4, 2, 2, 10, 2],
   anni: [1.25, 2, 1.5, 1.5, 0.8, 1.5, 2, 0.1]
 };
@@ -102,7 +102,7 @@ let rocket = {
   label: "Rocket",
   type: "bullet",
   guns: [{
-    position: [2, 1, 1.75, 0, 0, Math.PI, 2],
+    position: [1.5, 1, 1.75, 0, 0, Math.PI, 2],
     ammo: "bullet",
     stats: combineStats([s.basic, s.mach, s.thruster, s.rocketeerRocket]),
     color: "me"
@@ -401,9 +401,14 @@ let anni = {
 let skimmer = {
   label: "Skimmer",
   guns: [{
-    position: [2, 1.4, 1, 0, 0, 0, 0],
+    position: [0.5, 1.4, 1., 0, 0, 0, 0],
     ammo: "missile",
     stats: combineStats([s.basic, s.destroy])
+  }, {
+    position: [2, 1.4, 1, 0, 0, 0, 0],
+    ammo: "missile",
+    stats: combineStats([s.basic, s.destroy]),
+    prop: true
   }]
 };
 let rocketeer = {
