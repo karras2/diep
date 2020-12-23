@@ -393,7 +393,7 @@ spreadshot.guns.push({
 let anni = {
   label: "Annihilator",
   guns: [{
-    position: [2, 1.75, 1, 0, 0, 0, 0],
+    position: [2, 2, 1, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.destroy, s.anni])
   }]
@@ -401,11 +401,11 @@ let anni = {
 let skimmer = {
   label: "Skimmer",
   guns: [{
-    position: [0.5, 1.4, 1., 0, 0, 0, 0],
+    position: [0.25, 1.2, 1.1, 0, 1.8, 0, 0],
     ammo: "missile",
     stats: combineStats([s.basic, s.destroy])
   }, {
-    position: [2, 1.4, 1, 0, 0, 0, 0],
+    position: [1.8, 1.4, 1, 0, 0, 0, 0],
     ammo: "missile",
     stats: combineStats([s.basic, s.destroy]),
     prop: true
@@ -414,9 +414,14 @@ let skimmer = {
 let rocketeer = {
   label: "Rocketeer",
   guns: [{
-    position: [2, 1.4, 1, 0, 0, 0, 0],
+    position: [0.25, 1.05, 1.1, 0, 1.8, 0, 0],
     ammo: "rocket",
     stats: combineStats([s.basic, s.destroy])
+  }, {
+    position: [1.8, 1.4, 0.75, 0, 0, 0, 0],
+    ammo: "rocket",
+    stats: combineStats([s.basic, s.destroy]),
+    prop: true
   }]
 };
 
