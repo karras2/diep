@@ -257,8 +257,9 @@ class Entity {
       speed: 5,
       bSpeed: 1,
       fov: 1,
-      bDamage: 1,
-      bPene: 1
+      bDamage: 2,
+      bPene: 2,
+      reload: 0.5
     };
     this.vx = 0;
     this.vy = 0;
@@ -372,8 +373,8 @@ class Gun {
     this.ammo = data.ammo;
     this.color = data.color || window.colors.gray;
     if (this.color === "me") this.color = window.colors[this.source.color];
-    this.reload = this.stats.reload * this.delay;
-    this.maxReload = this.stats.reload;
+    this.reload = (this.stats.reload * this.source.stats.reload) * this.delay;
+    this.maxReload = (this.stats.reload * this.source.stats.reload);
     this.prop = data.prop || false;
   }
   update() {

@@ -1,6 +1,6 @@
 const s = {
   // reload, recoil, dmg, pene, speed, range, density, spray
-  basic: [50, 1, 10, 10, 3, 300, 150, 1],
+  basic: [50, 1, 10, 10, 3, 150, 150, 1],
   twin: [1.4, 0.8, 0.6, 0.6, 1, 1, 1, 1],
   mach: [0.75, 1.125, 0.7, 0.7, 1, 0.9, 4],
   sniper: [1.125, 1, 0.8, 1.25, 1.5, 1.25, 1, 0.5],
@@ -36,8 +36,8 @@ let square = {
   color: "square",
   shape: 4,
   health: {
-    max: 25,
-    amount: 25
+    max: 50,
+    amount: 50
   },
   xp: 10,
 };
@@ -49,8 +49,8 @@ let triangle = {
   color: "triangle",
   shape: 3,
   health: {
-    max: 50,
-    amount: 50
+    max: 75,
+    amount: 75
   },
   xp: 25,
 };
@@ -62,8 +62,8 @@ let pentagon = {
   color: "pentagon",
   shape: 5,
   health: {
-    max: 100,
-    amount: 100
+    max: 150,
+    amount: 150
   },
   xp: 100,
 };
@@ -75,8 +75,11 @@ let alphaPentagon = {
   color: "pentagon",
   shape: 5,
   health: {
-    max: 500,
-    amount: 500
+    max: 1000,
+    amount: 1000
+  },
+  stats: {
+    damage: 10
   },
   xp: 3000,
 };
@@ -294,7 +297,7 @@ let quad = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank])
   }, {
-    position: [1.6, 1, 1, 0, 0, Math.PI, 0],
+    position: [2, 1, 1, 0, 0, Math.PI, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank])
   }, {
@@ -302,7 +305,7 @@ let quad = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank])
   }, {
-    position: [1.6, 1, 1, 0, 0, -Math.PI / 2, 0],
+    position: [2, 1, 1, 0, 0, -Math.PI / 2, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank])
   }]
@@ -314,15 +317,56 @@ let tri = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank])
   }, {
-    position: [1.6, 1, 1, 0, 0, Math.PI + (Math.PI / 8), 0],
+    position: [1.65, 0.9, 1, -0.1, 0, Math.PI + (Math.PI / 6), 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank, s.thruster])
   }, {
-    position: [2, 1, 1, 0, 0, Math.PI - (Math.PI / 8), 0],
+    position: [1.65, 0.9, 1, 0.1, 0, Math.PI - (Math.PI / 6), 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank, s.thruster])
   }]
 };
 
+// LvL 45
+let triplet = {
+  label: "Triplet",
+  guns: [{
+    position: [1.675, 0.9, 1, -0.5, 0, 0, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [1.675, 0.9, 1, 0.5, 0, 0, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [2, 0.9, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }]
+};
+let penta = {
+  label: "Penta Shot",
+  guns: [{
+    position: [1.6, 0.9, 1, -0.3, 0, Math.PI / 5, 0.75],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [1.6, 0.9, 1, 0.3, 0, -Math.PI / 5, 0.75],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [1.8, 0.9, 1, -0.25, 0, Math.PI / 10, 0.4],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [1.8, 0.9, 1, 0.25, 0, -Math.PI / 10, 0.4],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [2, 0.9, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }]
+};
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta }
