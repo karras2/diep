@@ -19,10 +19,10 @@ let basicCollide = (i, o) => {
     i.vx = v.x;
     i.vy = v.y;
   }*/
-  i.vx *= -0.25;
-  i.vy *= -0.25;
-  o.vx *= -0.25;
-  o.vy *= -0.25;
+  //i.vx *= -0.25;
+  //i.vy *= -0.25;
+  //o.vx *= -0.25;
+  //o.vy *= -0.25;
   if (o.type === "food" && i.type === "food") return;
   i.health.amount -= o.stats.damage;
   o.health.amount -= i.stats.damage;

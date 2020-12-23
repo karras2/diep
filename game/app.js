@@ -48,7 +48,7 @@ let player = {
   },
   spawn: function() {
     let o = new Entity(game.random());
-    o.define(Class.spreadshot);
+    o.define(Class.basic);
     o.xp = player.body ? Math.floor((player.body.xp > 23500 ? 23500 / 3 : player.body.xp / 3)) : 0;
     player.body = o;
   }
@@ -236,7 +236,7 @@ class Entity {
     this.y = pos.y;
     this.master = master;
     this.angle = 0;
-    this.color = "blue";
+    this.color = ["blue", "red", "green", "purple"][Math.floor(Math.random()* 4)];
     this.name = "";
     this.size = 25;
     this.tier = 0;

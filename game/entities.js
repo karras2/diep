@@ -12,6 +12,7 @@ const s = {
   rocketeerRocket: [0.75, 2, 1.25, 1.25, 0.5, 10, 2],
   skimmerMissile: [0.75, 1, 1.25, 1.25, 1, 10, 0.5],
   trapper: [1, 1, 0.1, 4, 2, 2, 10, 2],
+  anni: [1.25, 2, 1.5, 1.5, 0.8, 1.5, 2, 0.1]
 };
 
 let combineStats = ((stats) => {
@@ -199,7 +200,8 @@ let triple = {
     position: [2, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin])
-  }]
+  }],
+  upgrades: ["triplet", "penta", "spreadshot"]
 };
 let double = {
   label: "Double Twin",
@@ -227,7 +229,8 @@ let destroyer = {
     position: [2, 1.4, 1, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.destroy])
-  }]
+  }],
+  upgrades: ["anni", "skimmer", "rocketeer"]
 };
 let gunner = {
   label: "Gunner",
@@ -373,15 +376,43 @@ let spreadshot = {
   label: "Spredshot",
   guns: []
 };
-for (let i = 0; i < 5; i ++) spreadshot.guns.push({
-  position: [1.8 - (0.05 * i), 0.6, 1, 0, 0, (Math.PI / 10) * (i + 1), 1 / i],
+for (let i = 5; i > 0; i --) spreadshot.guns.push({
+  position: [1.9 - (0.05 * i), 0.6, 1, 0, 0, (Math.PI / 10) * ((i + 1) * 0.9) - (Math.PI / 10), 1 - (0.2 * i)],
   ammo: "bullet",
   stats: combineStats([s.basic, s.twin])
 }, {
-  position: [1.8 - (0.05 * i), 0.6, 1, 0, 0, -(Math.PI / 10) * (i + 1), 1 / i],
+  position: [1.9 - (0.05 * i), 0.6, 1, 0, 0, -(Math.PI / 10) * ((i + 1) * 0.9) + (Math.PI / 10), 1 - (0.2 * i)],
   ammo: "bullet",
   stats: combineStats([s.basic, s.twin])
 });
-spreadshot.guns.push
+spreadshot.guns.push({
+  position: [2.1, 1, 1, 0, 0, 0, 0],
+  ammo: "bullet",
+  stats: combineStats([s.basic, s.twin])
+});
+let anni = {
+  label: "Annihilator",
+  guns: [{
+    position: [2, 1.75, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.destroy, s.anni])
+  }]
+};
+let skimmer = {
+  label: "Skimmer",
+  guns: [{
+    position: [2, 1.4, 1, 0, 0, 0, 0],
+    ammo: "missile",
+    stats: combineStats([s.basic, s.destroy])
+  }]
+};
+let rocketeer = {
+  label: "Rocketeer",
+  guns: [{
+    position: [2, 1.4, 1, 0, 0, 0, 0],
+    ammo: "rocket",
+    stats: combineStats([s.basic, s.destroy])
+  }]
+};
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, anni, skimmer, rocketeer }
