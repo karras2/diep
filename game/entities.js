@@ -374,13 +374,14 @@ let spreadshot = {
   guns: []
 };
 for (let i = 0; i < 5; i ++) spreadshot.guns.push({
-  position: [1.6, 0.6, 1, -0.3, (Math.PI / i), 1 / i],
+  position: [1.8 - (0.05 * i), 0.6, 1, 0, 0, (Math.PI / 10) * (i + 1), 1 / i],
   ammo: "bullet",
   stats: combineStats([s.basic, s.twin])
 }, {
-  position: [1.6, 0.6, 1, 0.3, -(Math.PI / i), 1 / i],
+  position: [1.8 - (0.05 * i), 0.6, 1, 0, 0, -(Math.PI / 10) * (i + 1), 1 / i],
   ammo: "bullet",
   stats: combineStats([s.basic, s.twin])
 });
+spreadshot.guns.push
 
 export { square, triangle, pentagon, alphaPentagon, bullet, trap, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot }

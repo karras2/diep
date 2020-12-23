@@ -48,7 +48,7 @@ let player = {
   },
   spawn: function() {
     let o = new Entity(game.random());
-    o.define(Class.basic);
+    o.define(Class.spreadshot);
     o.xp = player.body ? Math.floor((player.body.xp > 23500 ? 23500 / 3 : player.body.xp / 3)) : 0;
     player.body = o;
   }
