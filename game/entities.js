@@ -30,7 +30,7 @@ let combineStats = ((stats) => {
 // Shapes
 let square = {
   label: "Square",
-  size: 50,
+  size: 30,
   spin: 2,
   type: "food",
   color: "square",
@@ -43,7 +43,7 @@ let square = {
 };
 let triangle = {
   label: "Triangle",
-  size: 60,
+  size: 45,
   spin: 2,
   type: "food",
   color: "triangle",
@@ -56,7 +56,7 @@ let triangle = {
 };
 let pentagon = {
   label: "Pentagon",
-  size: 75,
+  size: 60,
   spin: 2,
   type: "food",
   color: "pentagon",
@@ -69,7 +69,7 @@ let pentagon = {
 };
 let alphaPentagon = {
   label: "Alpha Pentagon",
-  size: 300,
+  size: 225,
   spin: 2,
   type: "food",
   color: "pentagon",
@@ -165,7 +165,7 @@ let sniper = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }],
-  upgrades: ["trapper"]
+  upgrades: ["assassin", "hunter", "trapper"]
 };
 let flank = {
   label: "Flank Guard",
@@ -177,7 +177,8 @@ let flank = {
     position: [1.6, 1, 1, 0, 0, Math.PI, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank, s.thruster])
-  }]
+  }],
+  upgrades: ["quad", "tri"]
 };
 
 // LvL 30
@@ -259,5 +260,69 @@ let trapper = {
   }],
   upgrades: ["twin", "machine", "sniper", "flank"]
 };
+let assassin = {
+  label: "Assassin",
+  stats: {
+    fov: 1.3
+  },
+  guns: [{
+    position: [3, 0.9, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }],
+  upgrades: ["trapper"]
+};
+let hunter = {
+  label: "Hunter",
+  stats: {
+    fov: 1.1
+  },
+  guns: [{
+    position: [2.3, 0.9, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }, {
+    position: [2, 1.2, 1, 0, 0, 0, 0.25],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }]
+};
+let quad = {
+  label: "Quad Tank",
+  guns: [{
+    position: [2, 1, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [1.6, 1, 1, 0, 0, Math.PI, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [2, 1, 1, 0, 0, Math.PI / 2, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [1.6, 1, 1, 0, 0, -Math.PI / 2, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }]
+};
+let tri = {
+  label: "Tri-Angle",
+  guns: [{
+    position: [2, 1, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [1.6, 1, 1, 0, 0, Math.PI + (Math.PI / 8), 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank, s.thruster])
+  }, {
+    position: [2, 1, 1, 0, 0, Math.PI - (Math.PI / 8), 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank, s.thruster])
+  }]
+};
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper }
+
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter }
