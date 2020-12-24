@@ -11,8 +11,8 @@ let ctx = canvas.getContext("2d");
 ctx.lineJoin = "round";
 
 let game = {
-  width: 6500,
-  height: 6500,
+  width: 10000,
+  height: 10000,
   mode: "FFA",
   random: function() {
     return {
