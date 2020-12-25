@@ -266,8 +266,8 @@ class Entity {
     this.guns = [];
     this.upgrades = [];
     this.target = {
-      x: 0,
-      y: 0
+      x: 5000,
+      y: 5000
     };
     entities.push(this);
   }
@@ -320,7 +320,11 @@ class Entity {
       this.size = (25 + (this.level));
       this.stats.speed = 5 - (this.level / 50);
     } else if (this.moveToMasterTarget) {
-      let vx = this.
+      let vx = this.target.x - this.x,
+          vy = this.target.y - this.x,
+          dist = Math.sqrt(vx * vx + vy * vy);
+      this.vx = (vx / dist);
+      this.vy = (vy / dist);
     }
     if (this.range === 0) this.kill();
     if (this.isDead) {
@@ -419,10 +423,10 @@ class Gun {
       y: this.source.y
     }, this.source.master.master.master);
     o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size);
-    o.y += Math.sin(this.angle + this.source.angle) * (this.x * this.source.size);
-    o.x += Math.cos(this.angle + this.source.angle) * (0 * this.source.size);
-    o.y += Math.sin(this.angle + this.source.angle) * (0 * this.source.size);
-    o.size = (this.source.size * (this.w / 2)) * 0.9;
+    o.y += Math.sin(this.angle + this.source.angle) * (this.y * this.source.size);
+    o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size); // The 0 used to be this.y, but that broke.
+    o.y += Math.sin(this.angle + this.source.angle) * (this.y * this.source.size); // this is weird, hm
+    o.size = (this.source.size * (this.w / 2)) * 0.9; // Try trapper. that uses y variables.
     let spray = (Math.floor(Math.random() * (this.stats.spray * 2)) - this.stats.spray) / 10;
     o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);
     o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);
@@ -717,7 +721,7 @@ let gameLoop = (() => {
   player.body.shooting = player.mouse.a || player.inputs.e;
   if (player.inputs.w) player.body.vy -= 0.1; 
   if (player.inputs.a) player.body.vx -= 0.1;
-  if (player.inputs.s) player.body.vy += 0.1;// yea, time for fov
+  if (player.inputs.s) player.body.vy += 0.1;
   if (player.inputs.d) player.body.vx += 0.1;
 });
 gameLoop();
