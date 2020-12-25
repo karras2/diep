@@ -48,7 +48,7 @@ let player = {
   },
   spawn: function() {
     let o = new Entity(game.random());
-    o.define(Class.basic);
+    o.define(Class.overseer);
     o.xp = player.body ? Math.floor((player.body.xp > 23500 ? 23500 / 3 : player.body.xp / 3)) : 0;
     player.body = o;
   }
@@ -314,6 +314,7 @@ class Entity {
       this.vx = lerp(this.vx, 0, 0.05);
       this.vy = lerp(this.vy, 0, 0.05);
     }
+    this.target.x = player
     if (this.type === "tank") {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
@@ -419,14 +420,16 @@ class Gun {
     if (this.prop) return;
     this.reload = this.maxReload;
     let o = new Entity({
-      x: this.source.x,
-      y: this.source.y
-    }, this.source.master.master.master);
-    o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size);
+      x: this.source.x, // nvm
+      y: this.source.y // moveToMasterTarget
+    }, this.source.master.master.master); // what?
+    o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size); 
     o.y += Math.sin(this.angle + this.source.angle) * (this.y * this.source.size);
-    o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size); // The 0 used to be this.y, but that broke.
-    o.y += Math.sin(this.angle + this.source.angle) * (this.y * this.source.size); // this is weird, hm
-    o.size = (this.source.size * (this.w / 2)) * 0.9; // Try trapper. that uses y variables.
+    o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size); 
+    o.y += Math.sin(this.angle + this.source.angle) * (this.y * this.source.size);
+    // thats the offset? hm
+    // why does it add it 2 times was gonna go for y. yeah
+    o.size = (this.source.size * (this.w / 2)) * 0.9;
     let spray = (Math.floor(Math.random() * (this.stats.spray * 2)) - this.stats.spray) / 10;
     o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);
     o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);
