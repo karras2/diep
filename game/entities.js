@@ -98,6 +98,13 @@ let trap = {
   slows: true,
   guns: []
 };
+let drone = {
+  label: "Drone",
+  type: "bullet",
+  moveToMasterTarget: true,
+  shape: 3,
+  guns: []
+};
 let rocket = {
   label: "Rocket",
   type: "bullet",
@@ -332,9 +339,13 @@ let tri = {
 let overseer = {
   label: "Overseer",
   guns: [{
-    position: [1.75, 1.25, 1.3, 0, 0, Math.PI / 2, 1],
+    position: [1.5, 1, 1.5, 0, 0, Math.PI / 2, 1],
     ammo: "drone",
-    stats
+    stats: combineStats([s.basic])
+  }, {
+    position: [1.5, 1, 1.5, 0, 0, -Math.PI / 2, 1],
+    ammo: "drone",
+    stats: combineStats([s.basic])
   }]
 };
 
@@ -433,4 +444,4 @@ let rocketeer = {
   }]
 };
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, anni, skimmer, rocketeer }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, anni, skimmer, rocketeer, overseer }

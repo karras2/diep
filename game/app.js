@@ -212,7 +212,7 @@ let drawPoly = (s, r, c, a = 0) => {
     case (s < 17 && s > 2):
       ctx.beginPath();
       let angle = 0;
-      angle += s % 2 ? 0 : Math.PI / s;
+      angle += (s % 2 ? 0 : Math.PI / s) - Math.PI;
       for (let i = 0; i < s; i++) {
         let theta = (i / s) * 2 * Math.PI;
         let x = (r * 1.25) * Math.cos(theta + angle);
@@ -265,6 +265,10 @@ class Entity {
     this.vy = 0;
     this.guns = [];
     this.upgrades = [];
+    this.target = {
+      x: 0,
+      y: 0
+    };
     entities.push(this);
   }
   define(tank) {
@@ -315,6 +319,8 @@ class Entity {
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));
       this.stats.speed = 5 - (this.level / 50);
+    } else if (this.moveToMasterTarget) {
+      let vx = this.
     }
     if (this.range === 0) this.kill();
     if (this.isDead) {
