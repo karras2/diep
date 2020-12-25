@@ -329,6 +329,14 @@ let tri = {
     stats: combineStats([s.basic, s.flank, s.thruster])
   }]
 };
+let overseer = {
+  label: "Overseer",
+  guns: [{
+    position: [1.75, 1.25, 1.3, 0, 0, Math.PI / 2, 1],
+    ammo: "drone",
+    stats
+  }]
+};
 
 // LvL 45
 let triplet = {
