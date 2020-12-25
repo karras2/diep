@@ -314,19 +314,21 @@ class Entity {
       this.vx = lerp(this.vx, 0, 0.05);
       this.vy = lerp(this.vy, 0, 0.05);
     }
-    this.target.x = player
     if (this.type === "tank") {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));
       this.stats.speed = 5 - (this.level / 50);
     } else if (this.moveToMasterTarget) {
-      let vx = this.target.x - this.x,
-          vy = this.target.y - this.x,
-          dist = Math.sqrt(vx * vx + vy * vy);
-      this.vx = (vx / dist);
-      this.vy = (vy / dist);
-    }
+      
+      let angleToGo = Math.atan2(this.master.y - this.y + player.mouse.y - canvas.height/2, this.master.x - this.x + player.mouse.x - canvas.width/2, );
+      let newVelocity = {x: Math.cos(angleToGo)*this.stats.speed, y: Math.sin(angleToGo)*this.stats.speed, }
+      this.target.x = this.master.x + player.mouse.x - canvas.width / 2;
+      this.target.y = this.master.y + player.mouse.y - canvas.height / 2;
+      this.vx = lerp(this.vx, newVelocity.x, 0.1);
+      this.vy = lerp(this.vy, newVelocity.y, 0.1);
+      this.angle = Math.atan2(this.master.y - this.y, )
+    };
     if (this.range === 0) this.kill();
     if (this.isDead) {
       this.alpha -= 0.025;
