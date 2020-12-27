@@ -48,7 +48,7 @@ let player = {
   },
   spawn: function() {
     let o = new Entity(game.random());
-    o.define(Class.overseer);
+    o.define(Class.basic);
     o.xp = player.body ? Math.floor((player.body.xp > 23500 ? 23500 / 3 : player.body.xp / 3)) : 0;
     player.body = o;
   }
@@ -320,7 +320,6 @@ class Entity {
       this.size = (25 + (this.level));
       this.stats.speed = 5 - (this.level / 50);
     } else if (this.moveToMasterTarget) {
-      
       let angleToGo = Math.atan2(this.master.y - this.y + player.mouse.y - canvas.height/2, this.master.x - this.x + player.mouse.x - canvas.width/2);
       let newVelocity = {
         x: Math.cos(angleToGo) * this.stats.speed, 
@@ -328,9 +327,9 @@ class Entity {
       };
       this.target.x = this.master.x + player.mouse.x - canvas.width / 2;
       this.target.y = this.master.y + player.mouse.y - canvas.height / 2;
-      this.vx = lerp(this.vx, newVelocity.x, 0.1);
-      this.vy = lerp(this.vy, newVelocity.y, 0.1);
-      this.angle = angleToGo
+      
+      this.vx = 0;
+      this.angle = angleToGo;
     };
     if (this.range === 0) this.kill();
     if (this.isDead) {
