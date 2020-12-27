@@ -325,8 +325,8 @@ class Entity {
         x: Math.cos(angleToGo) * this.stats.speed, 
         y: Math.sin(angleToGo) * this.stats.speed
       };
-      this.target.x = this.master.x + player.mouse.x - canvas.width / 2;
-      this.target.y = this.master.y + player.mouse.y - canvas.height / 2;
+      this.target.x = this.master.x + (player.mouse.x - canvas.width / 2) * (this.master.size * this.master.fov);
+      this.target.y = this.master.y + (player.mouse.y - canvas.height / 2) * (this.master.size * this.master.fov);
       let vx = this.target.x - this.x,
           vy = this.target.y - this.y,
           dist = Math.sqrt(vx * vx + vy * vy);
