@@ -598,17 +598,37 @@ let UI = {
     toDraw.sort(function(a, b) { return b.xp - a.xp });
     if (toDraw.length > 10) toDraw.length = 10;
     UI.lb = toDraw;
+    ctx.save();
+    ctx.translate((innerWidth * 0.975) - 200, (innerHeight * 0.1));
     for (let i = 0; i < UI.lb.length; i ++) {
       ctx.save();
-      ctx.translate(innerWidth - 50, (innerHeight * 0.15) * i + 1);
+      ctx.translate(0, (20 * i) + (5 * i));
+      let user = UI.lb[i];
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.lineTo(-200, 0);
+      ctx.lineTo(200, 0);
       ctx.closePath();
-      ctx.lineWidth = 10;
+      ctx.lineWidth = 20;
+      ctx.strokeStyle = window.colors["healthBar"][1];
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      let xx = 200 * (user.xp / UI.lb[0].xp);
+      ctx.lineTo(xx, 0);
+      ctx.closePath();
+      ctx.lineWidth = 15;
+      ctx.strokeStyle = window.colors["healthBar"][0];
+      ctx.stroke();
+      ctx.font = "10px Ubuntu";
+      let text = user.name + " - " + user.xp + " - " + user.tank;
+      let w = ctx.measureText(text).width;
+      ctx.fillStyle = "#ffffff";
       ctx.strokeStyle = "#000000";
-      //ctx.stroke();
+      ctx.strokeText(text, 100 - (w / 2), 0);
+      ctx.fillText(text, 100 - (w / 2), 0);
+      ctx.restore();
     }
+    ctx.restore();
   },
   nameplate: function() {
     ctx.save();
