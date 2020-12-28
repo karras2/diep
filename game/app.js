@@ -310,13 +310,14 @@ class Entity {
   ondead(c) {
     if (c.length) {
       let o = c[0];
-      o.master.xp += Math.floor(this.);
+      o.master.xp += Math.floor(this.xp / 3);
     }
     if (this.isBot) setTimeout(() => {
       let o = new Entity(game.random());
       o.define(Class.basic);
       o.color = this.color;
       o.xp = Math.floor((this.xp > 23500 ? 23500 / 3 : this.xp / 3));
+      o.isBot = true;
     }, 5000);
     if (this.type === "food") setTimeout(() => {
       let o = new Entity(game.random());
@@ -825,9 +826,7 @@ let gameLoop = (() => {
       //if (c < o.size + j.size) Collision.firmCollide(o, j);
     }
   }
-  let bots = 0;
-  for (let o of entities) if (o.isBot) bots ++;
-  if (bots < 10) window.bots(1);
+  if (Math.random() > 0.975) window.boss();
   
   player.body.vx = lerp(player.body.vx, 0, 0.1);
   player.body.vy = lerp(player.body.vy, 0, 0.1);
@@ -858,6 +857,7 @@ UI.init();
     });
     a.define(Class[type]);
   }
+  setTimeout(() => window.bots(10), 1000);
 })();
 
 
@@ -901,6 +901,9 @@ window["xp"] = function(data) {
 };
 
 window["boss"] = function() {
+  let bossAlive = false;
+  for (let o of entities) if (o.boss) bossAlive = true;
+  if (bossAlive) return;
   let o = new Entity(game.random());
   o.define(Class.summoner);
 };
@@ -911,11 +914,5 @@ window["bots"] = function(data) {
     o.define(Class.basic);
     o.color = "red";
     o.isBot = true;
-    let bossAlive = false;
-    for (let o of entities) if (o.boss) bossAlive = true;
-    if (Math.random() > 0.975 && !bossAlive) {
-      o.isBot = false;
-      o.define(Class.summoner);
-    }
   }
 }

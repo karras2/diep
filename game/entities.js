@@ -294,8 +294,7 @@ let assassin = {
     position: [3, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
-  }],
-  upgrades: ["trapper"]
+  }]
 };
 let hunter = {
   label: "Hunter",
@@ -310,7 +309,8 @@ let hunter = {
     position: [2, 1.2, 1, 0, 0, 0, 0.25],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
-  }]
+  }],
+  upgrades: ["stream", "preda"]
 };
 let quad = {
   label: "Quad Tank",
@@ -626,5 +626,51 @@ let summoner = {
     stats: combineStats([s.basic, s.summoner])
   }]
 };
+let stream = {
+  label: "Stream",
+  stats: {
+    fov: 1.3
+  },
+  guns: [{
+    position: [3, 0.9, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }, {
+    position: [2.8, 0.9, 1, 0, 0, 0, 0.2],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }, {
+    position: [2.6, 0.9, 1, 0, 0, 0, 0.4],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }, {
+    position: [2.4, 0.9, 1, 0, 0, 0, 0.6],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }, {
+    position: [2.2, 0.9, 1, 0, 0, 0, 0.8],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }]
+};
+let preda = {
+  label: "Predator",
+  stats: {
+    fov: 1.2
+  },
+  guns: [{
+    position: [2.3, 0.9, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }, {
+    position: [2, 1.2, 1, 0, 0, 0, 0.125],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }, {
+    position: [1.7, 1.5, 1, 0, 0, 0, 0.25],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }]
+};
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, octo, battleship, summoner }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, octo, battleship, summoner, preda, stream }
