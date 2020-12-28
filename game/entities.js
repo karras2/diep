@@ -1,7 +1,7 @@
 const s = {
-  // reload, recoil, dmg, pene, speed, range, density, spray
+  // reload, recoil, size, dmg, pene, speed, range, density, spray
   basic: [50, 1, 1, 10, 10, 3, 150, 150, 1],
-  drone: [4, 0, 1, 1, 3, 1.5, -10, 10, 0.1],
+  drone: [4, 0, 1, 1, 3, 1, -10, 10, 0.1],
   twin: [1.4, 0.8, 1, 0.6, 0.6, 1, 1, 1, 1],
   mach: [0.75, 1.125, 1, 0.7, 0.7, 1, 0.9, 4],
   sniper: [1.125, 1, 1,  0.8, 1.25, 1.5, 1.25, 1, 0.5],
@@ -103,10 +103,14 @@ let trap = {
 let drone = {
   label: "Drone",
   type: "bullet",
+  view: 25,
   moveToTarget: true,
   shape: 3,
   guns: []
 };
+let swarm = JSON.parse(JSON.stringify(drone));
+swarm.label = "Swarm";
+swarm.view = 50;
 let rocket = {
   label: "Rocket",
   type: "bullet",
@@ -178,7 +182,7 @@ let sniper = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }],
-  upgrades: ["assassin", "hunter", "trapper"]
+  upgrades: ["assassin", "hunter", "trapper", "overseer"]
 };
 let flank = {
   label: "Flank Guard",
@@ -345,12 +349,15 @@ let overseer = {
   guns: [{
     position: [1.5, 1, 1.5, 0, 0, Math.PI / 2, 1],
     ammo: "drone",
+    maxChildren: 4,
     stats: combineStats([s.basic, s.drone])
   }, {
     position: [1.5, 1, 1.5, 0, 0, -Math.PI / 2, 1],
     ammo: "drone",
+    maxChildren: 4,
     stats: combineStats([s.basic, s.drone])
-  }]
+  }],
+  upgrades: ["overlord", "battleship"]
 };
 
 // LvL 45
@@ -435,6 +442,19 @@ let anni = {
     stats: combineStats([s.basic, s.destroy, s.anni])
   }]
 };
+let hybrid = {
+  label: "Hybrid",
+  guns: [{
+    position: [2, 1.4, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.destroy])
+  }, {
+    position: [1.5, 1, 1.5, 0, 0, Math.PI, 1],
+    ammo: "drone",
+    maxChildren: 3,
+    stats: combineStats([s.basic, s.drone])
+  }]
+};
 let skimmer = {
   label: "Skimmer",
   guns: [{
@@ -501,21 +521,45 @@ let battleship = {
   label: "Battleship",
   guns: [{
     position: [1.55, 0.9, 0.6, 0.45, 0, Math.PI / 2, 0],
-    ammo: "drone",
+    ammo: "swarm",
     stats: combineStats([s.basic, s.battle])
   }, {
     position: [1.55, 0.9, 0.6, -0.45, 0, Math.PI / 2, 0.5],
-    ammo: "drone",
+    ammo: "swarm",
     stats: combineStats([s.basic, s.battle])
   }, {
     position: [1.55, 0.9, 0.6, 0.45, 0, -Math.PI / 2, 0],
-    ammo: "drone",
+    ammo: "swarm",
     stats: combineStats([s.basic, s.battle])
   }, {
     position: [1.55, 0.9, 0.6, -0.45, 0, -Math.PI / 2, 0.5],
-    ammo: "drone",
+    ammo: "swarm",
     stats: combineStats([s.basic, s.battle])
   }]
 };
+let overlord = {
+  label: "Overlord",
+  guns: [{
+    position: [1.5, 1, 1.5, 0, 0, 0, 1],
+    ammo: "drone",
+    maxChildren: 2,
+    stats: combineStats([s.basic, s.drone])
+  }, {
+    position: [1.5, 1, 1.5, 0, 0, Math.PI, 1],
+    ammo: "drone",
+    maxChildren: 2,
+    stats: combineStats([s.basic, s.drone])
+  }, {
+    position: [1.5, 1, 1.5, 0, 0, Math.PI / 2, 1],
+    ammo: "drone",
+    maxChildren: 2,
+    stats: combineStats([s.basic, s.drone])
+  }, {
+    position: [1.5, 1, 1.5, 0, 0, -Math.PI / 2, 1],
+    ammo: "drone",
+    maxChildren: 2,
+    stats: combineStats([s.basic, s.drone])
+  }]
+};
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, skimmer, rocketeer, overseer, octo, battleship }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, octo, battleship }

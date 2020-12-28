@@ -374,7 +374,7 @@ class Entity {
       var b = (o.y + o.vy) - (this.y + this.vy);
       var c = Math.sqrt(a * a + b * b);
       if (!o.isDead && o !== this.master && o !== this)
-        if (o.type === "food" && c < (50 * this.master.size)) list.push(o);
+        if (o.type === "food" && c < (this.view * this.master.size)) list.push(o);
     }
     let body = this;
     if (list.length > 1) list.sort(function(a, b) {
@@ -429,12 +429,14 @@ class Gun {
     this.open = data.position[2];
     this.delay = data.position[6];
     this.stats = data.stats;
+    this.maxChildren = data.maxChildren || false;
     this.ammo = data.ammo;
     this.color = data.color || window.colors.gray;
     if (this.color === "me") this.color = window.colors[this.source.color];
     this.reload = (this.stats.reload * this.source.stats.reload) * this.delay;
     this.maxReload = (this.stats.reload * this.source.stats.reload);
     this.prop = data.prop || false;
+    this.gunID = `${entities.indexOf(this.source)}-${this.source.guns.indexOf(this)}`;
   }
   update() {
     this.reload --;
@@ -466,11 +468,15 @@ class Gun {
   }
   shoot() {
     if (this.prop) return;
+    let children = [];
+    for (let o of entities) if (o.master === this.source && o.gunSourceID === this.gunID && o.label === "Drone") children.push(o);
+    if (this.maxChildren) if (children.length >= this.maxChildren) return;
     this.reload = this.maxReload;
     let o = new Entity({
       x: this.source.x, // nvm
       y: this.source.y // moveToMasterTarget
     }, this.source.master.master.master); // what?
+    o.gunSourceID = this.gunID;
     o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size); 
     o.y += Math.sin(this.angle + this.source.angle) * (this.x * this.source.size);
     o.x += Math.cos(this.angle + this.source.angle) * (0 * this.source.size); 
