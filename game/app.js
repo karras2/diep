@@ -320,7 +320,7 @@ class Entity {
       this.size = (25 + (this.level));
       this.stats.speed = 5 - (this.level / 50);
     } else if (this.moveToMasterTarget) {
-      let angleToGo = Math.atan2(this.master.y - this.y + player.mouse.y - (innerHeight * player.body.fov) / 2, this.master.x - this.x + player.mouse.x - (innerWidth * player.body.fov) / 2);
+      let angleToGo = Math.atan2(this.master.y - (this.y + this.master.target.y), this.master.x - (this.x + this.master.target.x));//Math.atan2(this.master.y - this.y + player.mouse.y - canvas.height / 2, this.master.x - this.x + player.mouse.x - canvas.width / 2);
       let newVelocity = {
         x: Math.cos(angleToGo) * this.stats.speed, 
         y: Math.sin(angleToGo) * this.stats.speed
@@ -724,6 +724,10 @@ let gameLoop = (() => {
   player.body.vy = lerp(player.body.vy, 0, 0.1);
   player.body.angle = Math.atan2((player.mouse.y - canvas.height / 2), (player.mouse.x - canvas.width / 2)) - Math.PI / 2;
   player.body.shooting = player.mouse.a || player.inputs.e;
+  player.body.target = {
+    x: (player.mouse.x - canvas.width / 2),
+    y: (player.mouse.y - canvas.height / 2)
+  };
   if (player.inputs.w) player.body.vy -= 0.1; 
   if (player.inputs.a) player.body.vx -= 0.1;
   if (player.inputs.s) player.body.vy += 0.1;
