@@ -781,7 +781,7 @@ let UI = {
       ctx.closePath();
       ctx.fillStyle = window.colors.gray[0];
       ctx.strokeStyle = window.colors.gray[1];
-      ctx.lineWidth = 5;
+      ctx.lineWidth = entity.size * 0.25;
       ctx.fill();
       ctx.stroke();
       ctx.restore();
@@ -789,7 +789,7 @@ let UI = {
     ctx.save();
     ctx.rotate(entity.angle);
     ctx.beginPath();
-    ctx.arc(0, 0, entity.size * 1.1, 0, Math.PI * 2);
+    ctx.arc(0, 0, entity.size * 1.25, 0, Math.PI * 2);
     ctx.closePath();
     ctx.fillStyle = window.colors[entity.color][1];
     ctx.fill();
