@@ -242,6 +242,7 @@ class Entity {
     this.x = pos.x;
     this.y = pos.y;
     this.master = master;
+    this.view = 50;
     this.angle = 0;
     this.color = ["blue", "red", "green", "purple"][Math.floor(Math.random()* 4)];
     this.name = "";
@@ -274,7 +275,9 @@ class Entity {
     this.upgrades = [];
     this.target = {
       x: 5000,
-      y: 5000
+      y: 5000,
+      vx: 0,
+      vy: 0
     };
     entities.push(this);
   }
@@ -325,18 +328,32 @@ class Entity {
       this.vx = lerp(this.vx, 0, 0.05);
       this.vy = lerp(this.vy, 0, 0.05);
     }
-    if (this.type === "tank" && !this.boss) {
+    if (this.type === "tank" && !this.boss && !this.isBot) {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));
       this.stats.speed = 5 - (this.level / 50);
     } else if (this.boss || this.isBot) {
+      this.vx = this.vy = 0;
       this.findTarget();
-      if (this.x < this.target.x) this.vx = 1;
-      if (this.x > this.target.x) this.vx = -1;
-      if (this.y < this.target.y) this.vy = 1;
-      if (this.y > this.target.y) this.vy = -1;
-      if (!this.spin) this.angle = Math.atan2((this.target.y))
+      if (this.x < (this.target.x - this.size + this.target.size * 1.5)) this.vx = 1;
+      if (this.x > (this.target.x + this.size + this.target.size * 1.5)) this.vx = -1;
+      if (this.y < (this.target.y - this.size + this.target.size * 1.5)) this.vy = 1;
+      if (this.y > (this.target.y + this.size + this.target.size * 1.5)) this.vy = -1;
+      if (this.isBot) this.angle = Math.atan2((this.target.y + this.target.vy) - this.y, (this.target.x + this.target.vx) - this.x) - Math.PI / 2;
+      this.shooting = true;
+      if (this.isBot) {
+        this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
+        if (this.level >= 45) this.level = 45;
+        this.size = (25 + (this.level));
+        this.stats.speed = 5 - (this.level / 50);
+      }
+      let canUpgrade = false;
+      if (this.level >= UPGRADETIERS[this.tier]) canUpgrade = true;
+      if (canUpgrade) {
+        this.tier ++;
+        this.define(Class[this.upgrades[Math.floor(Math.random() * this.upgrades.length)]]);
+      }
     } else if (this.moveToMasterTarget) {
       let angleToGo = Math.atan2(this.master.y - (this.y + this.master.target.y), this.master.x - (this.x + this.master.target.x));//Math.atan2(this.master.y - this.y + player.mouse.y - canvas.height / 2, this.master.x - this.x + player.mouse.x - canvas.width / 2);
       let newVelocity = {
@@ -792,7 +809,9 @@ let gameLoop = (() => {
       //if (c < o.size + j.size) Collision.firmCollide(o, j);
     }
   }
-  
+  let bots = 0;
+  for (let o of entities) if (o.isBot) bots ++;
+  if (bots < 10) 
   
   player.body.vx = lerp(player.body.vx, 0, 0.1);
   player.body.vy = lerp(player.body.vy, 0, 0.1);
