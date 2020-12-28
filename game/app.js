@@ -49,6 +49,7 @@ let player = {
   spawn: function() {
     let o = new Entity(game.random());
     o.define(Class.basic);
+    o.color = "blue";
     o.xp = player.body ? Math.floor((player.body.xp > 23500 ? 23500 / 3 : player.body.xp / 3)) : 0;
     player.body = o;
   }
@@ -350,9 +351,11 @@ class Entity {
       }
       let canUpgrade = false;
       if (this.level >= UPGRADETIERS[this.tier]) canUpgrade = true;
-      if (canUpgrade) {
+      if (canUpgrade && this.upgrades.length) {
         this.tier ++;
-        this.define(Class[this.upgrades[Math.floor(Math.random() * this.upgrades.length)]]);
+        let i = Math.floor(Math.random() * this.upgrades.length);
+        let upgrade = this.upgrades[i];
+        this.define(Class[upgrade]);
       }
     } else if (this.moveToMasterTarget) {
       let angleToGo = Math.atan2(this.master.y - (this.y + this.master.target.y), this.master.x - (this.x + this.master.target.x));//Math.atan2(this.master.y - this.y + player.mouse.y - canvas.height / 2, this.master.x - this.x + player.mouse.x - canvas.width / 2);
@@ -811,7 +814,7 @@ let gameLoop = (() => {
   }
   let bots = 0;
   for (let o of entities) if (o.isBot) bots ++;
-  if (bots < 10) 
+  if (bots < 10) window.bots(1);
   
   player.body.vx = lerp(player.body.vx, 0, 0.1);
   player.body.vy = lerp(player.body.vy, 0, 0.1);
@@ -893,6 +896,13 @@ window["bots"] = function(data) {
   for (let i = 0; i < data; i ++) {
     let o = new Entity(game.random());
     o.define(Class.basic);
+    o.color = "red";
     o.isBot = true;
+    let bossAlive = false;
+    for (let o of entities) if (o.boss) bossAlive = true;
+    if (Math.random() > 0.975 && !bossAlive) {
+      o.isBot = false;
+      o.define(Class.summoner);
+    }
   }
 }
