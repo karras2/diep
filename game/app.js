@@ -287,6 +287,10 @@ class Entity {
         for (let gun of type.guns) this.guns.push(new Gun(this, gun));
       } else if (key === "stats") {
         for (let k in type.stats) this.stats[k] = type.stats[k];
+      } else if (key === "moveToTarget") {
+        setTimeout(() => {
+          this[key] = type[key];
+        }, 500);
       } else {
         this[key] = type[key];
       }
