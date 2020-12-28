@@ -330,6 +330,12 @@ class Entity {
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));
       this.stats.speed = 5 - (this.level / 50);
+    } else if (this.boss) {
+      this.findTarget();
+      if (this.x < this.target.x) this.vx = 1;
+      if (this.x > this.target.x) this.vx = -1;
+      if (this.y < this.target.y) this.vy = 1;
+      if (this.y > this.target.y) this.vy = -1;
     } else if (this.moveToMasterTarget) {
       let angleToGo = Math.atan2(this.master.y - (this.y + this.master.target.y), this.master.x - (this.x + this.master.target.x));//Math.atan2(this.master.y - this.y + player.mouse.y - canvas.height / 2, this.master.x - this.x + player.mouse.x - canvas.width / 2);
       let newVelocity = {
@@ -374,7 +380,7 @@ class Entity {
       var b = (o.y + o.vy) - (this.y + this.vy);
       var c = Math.sqrt(a * a + b * b);
       if (!o.isDead && o !== this.master && o !== this)
-        if (o.type === "food" && c < (this.view * this.master.size)) list.push(o);
+        if ((o.type === "food" || (o.type === "tank" && o !== this.master)) && c < (this.view * this.master.size)) list.push(o);
     }
     let body = this;
     if (list.length > 1) list.sort(function(a, b) {
@@ -385,10 +391,6 @@ class Entity {
       this.target = list[0];
       return;
     }
-    this.target = {
-      x: this.master.x + (Math.cos(Math.random() * Math.PI * 2) * (this.master.size)),
-      y: this.master.y + (Math.sin(Math.random() * Math.PI * 2) * (this.master.size))
-    };
   }
   draw() {
     ctx.globalAlpha = this.alpha;
@@ -539,6 +541,14 @@ let UI = {
     ctx.closePath();
     ctx.fillStyle = "#000000";
     ctx.fill();
+    for (let o of entities) if (o.type === "tank" || o.boss) {
+      if (o === player.body) continue;
+      ctx.beginPath();
+      ctx.arc((o.x / game.width) * s, (o.y / game.height) * s, (s / 75), 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fillStyle = window.colors[o.color][0];
+      ctx.fill();
+    }
     ctx.globalAlpha = 1;
     ctx.restore();
   },
@@ -842,4 +852,9 @@ window["xp"] = function(data) {
   } else {
     console.log("XP must be a number greater than 1!");
   }
+};
+
+window["boss"] = function() {
+  let o = new Entity(game.random());
+  o.define(Class.summoner);
 };

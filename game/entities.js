@@ -16,7 +16,7 @@ const s = {
   anni: [1.25, 2, 1, 1.5, 1.5, 0.8, 1.5, 2, 0.1],
   battle: [0.5, 1, 0.75, 0.25, 0.25, 2, 1, 10, 2],
   necro: [2, 1, 1, 1, 1.5, 1.25, -10, 10, 2],
-  summoner: [0.5, 1, 1, 0.5, 0.5, 1, -10, 10, 5]
+  summoner: [0.75, 1, 0.65, 0.15, 0.15, 1, -10, 10, 5]
 };
 
 let combineStats = ((stats) => {
@@ -588,29 +588,39 @@ let necromancer = {
 
 let summoner = {
   label: "Summoner",
-  maxChildren: 24,
+  maxChildren: 32,
   color: "square",
   boss: true,
   xp: 500000,
   shape: 4,
-  size: 100,
+  view: 1000,
+  spin: 2,
+  health: {
+    max: 1000,
+    amount: 1000
+  },
+  stats: {
+    speed: 2,
+    fov: 0.75
+  },
+  size: 150,
   guns: [{
-    position: [1.3, 1, 1.5, 0, 0, 0, 1],
+    position: [1.15, 1, 1.5, 0, 0, 0, 1],
     ammo: "necroDrone",
     autoShoot: 2,
     stats: combineStats([s.basic, s.summoner])
   }, {
-    position: [1.3, 1, 1.5, 0, 0, Math.PI, 1],
+    position: [1.15, 1, 1.5, 0, 0, Math.PI, 1],
     ammo: "necroDrone",
     autoShoot: 2,
     stats: combineStats([s.basic, s.summoner])
   }, {
-    position: [1.3, 1, 1.5, 0, 0, Math.PI / 2, 1],
+    position: [1.15, 1, 1.5, 0, 0, Math.PI / 2, 1],
     ammo: "necroDrone",
     autoShoot: 2,
     stats: combineStats([s.basic, s.summoner])
   }, {
-    position: [1.3, 1, 1.5, 0, 0, -Math.PI / 2, 1],
+    position: [1.15, 1, 1.5, 0, 0, -Math.PI / 2, 1],
     ammo: "necroDrone",
     autoShoot: 2,
     stats: combineStats([s.basic, s.summoner])
