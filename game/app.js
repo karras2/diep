@@ -626,6 +626,15 @@ let UI = {
       ctx.strokeStyle = "#000000";
       ctx.strokeText(text, 100 - (w / 2), 0);
       ctx.fillText(text, 100 - (w / 2), 0);
+      let mockup = this.mockups.find(r => {
+        return r.label === user.tank;
+      }) || this.mockups[0];
+      mockup.color = user.color;
+      mockup.size = 5;
+      mockup.angle = Math.PI - (Math.PI / 4);
+      mockup.x = -25;
+      mockup.y = 0;
+      UI.entity(mockup);
       ctx.restore();
     }
     ctx.restore();
@@ -780,7 +789,7 @@ let UI = {
     ctx.save();
     ctx.rotate(entity.angle);
     ctx.beginPath();
-    ctx.arc(0, 0, entity.size + 5, 0, Math.PI * 2);
+    ctx.arc(0, 0, entity.size * 1.1, 0, Math.PI * 2);
     ctx.closePath();
     ctx.fillStyle = window.colors[entity.color][1];
     ctx.fill();
