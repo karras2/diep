@@ -768,7 +768,7 @@ let gameLoop = (() => {
       var b = (o.y + o.vy) - (j.y + j.vy);
       var c = Math.sqrt(a * a + b * b);
       if (c < o.size + j.size) Collision.basicCollide(o, j);
-      if (c < o.size + j.size) Collision.firmCollide(o, j);
+      //if (c < o.size + j.size) Collision.firmCollide(o, j);
     }
   }
   
