@@ -386,12 +386,12 @@ class Entity {
       this.findTarget();
       let angleToGo = Math.atan2(this.target.y - this.y, this.target.x - this.x);
       let newVelocity = {
-        x: Math.cos(angleToGo) * this.stats.speed, 
-        y: Math.sin(angleToGo) * this.stats.speed
+        x: Math.cos(angleToGo) * this.stats.speed * 0.5, 
+        y: Math.sin(angleToGo) * this.stats.speed * 0.5
       };
       this.vx = lerp(this.vx, newVelocity.x, 0.1);
       this.vy = lerp(this.vy, newVelocity.y, 0.1);
-      this.angle = angleToGo;
+      this.angle = angleToGo - Math.PI / 2;
     };
     if (this.range === 0) this.kill();
     if (this.isDead) {
@@ -858,8 +858,10 @@ let gameLoop = (() => {
       var a = (o.x + o.vx) - (j.x + j.vx);
       var b = (o.y + o.vy) - (j.y + j.vy);
       var c = Math.sqrt(a * a + b * b);
-      if (c < o.size + j.size) Collision.basicCollide(o, j);
-      //if (c < o.size + j.size) Collision.firmCollide(o, j);
+      if (c < o.size + j.size) {
+        if (o.type === "food" && j.type === "food") Collision.firmCollide(o, j);
+        Collision.basicCollide(o, j);
+      }
     }
   }
   if (Math.random() > 0.975) window.boss();
@@ -893,7 +895,7 @@ UI.init();
     });
     a.define(Class[type]);
   }
-  setTimeout(() => window.bots(10), 1000);
+  setTimeout(() => window.bots(5), 1000);
 })();
 
 

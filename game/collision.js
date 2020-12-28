@@ -9,14 +9,14 @@ let basicCollide = (i, o) => {
   if (Math.abs(i.vx + i.vy)> Math.abs(o.vx + o.vy)) fasterEntity = i;
   if (fasterEntity === i) {
     let v = JSON.parse(JSON.stringify({ x: i.vx, y: i.vy }));
-    i.vx *= -0.5;
-    i.vy *= -0.5;
+    i.vx *= 0.75;
+    i.vy *= 0.75;
     o.vx = v.x * 0.1;
     o.vy = v.y * 0.1;
   } else {
     let v = JSON.parse(JSON.stringify({ x: o.vx, y: o.vy }));
-    o.vx *= -0.5;
-    o.vy *= -0.5;
+    o.vx *= 0.75;
+    o.vy *= 0.75;
     i.vx = v.x * 0.1;
     i.vy = v.y * 0.1;
   };

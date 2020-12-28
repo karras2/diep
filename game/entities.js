@@ -121,6 +121,18 @@ swarm.view = 50;
 let necroDrone = JSON.parse(JSON.stringify(drone));
 necroDrone.label = "Drone";
 necroDrone.shape = 4;
+let minion = {
+  label: "Minion",
+  type: "bullet",
+  view: 25,
+  minion: true,
+  moveToTarget: true,
+  guns: [{
+    position: [2, 1, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }]
+};
 let rocket = {
   label: "Rocket",
   type: "bullet",
@@ -368,7 +380,7 @@ let overseer = {
     autoShoot: 4,
     stats: combineStats([s.basic, s.drone])
   }],
-  upgrades: ["overlord", "battleship"]
+  upgrades: ["overlord", "battleship", "necromancer", "factory"]
 };
 
 // LvL 45
@@ -590,6 +602,17 @@ let necromancer = {
     stats: combineStats([s.basic, s.necro])
   }]
 };
+let factory = {
+  label: "Factory",
+  maxChildren: 6,
+  shape: 4,
+  guns: [{
+    position: [1.3, 1, 1.5, 0, 0, 0, 0.5],
+    ammo: "minion",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.drone])
+  }]
+};
 
 let stream = {
   label: "Stream",
@@ -723,4 +746,4 @@ let fallenOverlord = {
   }]
 };
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, octo, battleship, summoner, fallenOverlord, preda, stream }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream }
