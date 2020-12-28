@@ -152,7 +152,7 @@ function getDist(a, b) {
   return c;
 };
 
-let drawPoly = (s, r, c, a = 0) => {
+let drawPoly = (s, r, c, a = 0, ui = false) => {
   ctx.save();
   ctx.rotate(a - Math.PI / 2);
   ctx.lineWidth = 5 * player.camera.ratio;
@@ -179,7 +179,7 @@ let drawPoly = (s, r, c, a = 0) => {
   } else switch (true) {
     case s === 0:
       ctx.beginPath();
-      ctx.arc(0, 0, r + 5, 0, Math.PI * 2);
+      ctx.arc(0, 0, ui ? r * 1.25 : (r + 5 * player.camera.ratio), 0, Math.PI * 2);
       ctx.closePath();
       ctx.fillStyle = c[1];
       ctx.fill();
@@ -212,7 +212,7 @@ let drawPoly = (s, r, c, a = 0) => {
         };
         ctx.quadraticCurveTo(c.x, c.y, p.x, p.y);
       }
-      ctx.lineWidth = r * 0.25 * player.camera.ratio;
+      ctx.lineWidth = ui ? r * 0.25 : (5 * player.camera.ratio);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
@@ -228,7 +228,7 @@ let drawPoly = (s, r, c, a = 0) => {
         let y = (r * 1.25) * Math.sin(theta + angle);
         ctx.lineTo(x, y);
       }
-      ctx.lineWidth = r * 0.25 * player.camera.ratio;
+      ctx.lineWidth = ui ? r * 0.25 : (5 * player.camera.ratio);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
@@ -791,7 +791,7 @@ let UI = {
     });
     ctx.save();
     ctx.rotate(entity.angle);
-    drawPoly(entity.shape, entity.size, window.colors[entity.color]);
+    drawPoly(entity.shape, entity.size, window.colors[entity.color], 0, true);
     ctx.restore();
     ctx.restore();
   },
@@ -941,7 +941,8 @@ window["boss"] = function() {
   for (let o of entities) if (o.boss) bossAlive = true;
   if (bossAlive) return;
   let o = new Entity(game.random());
-  o.define(Class.summoner);
+  let bosses = [Class.summoner, Class.fallenOverlord];
+  o.define(bosses[Math.floor(Math.random() * bosses.length)]);
 };
 
 window["bots"] = function(data) {

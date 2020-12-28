@@ -586,46 +586,6 @@ let necromancer = {
   }]
 };
 
-let summoner = {
-  label: "Summoner",
-  maxChildren: 32,
-  color: "square",
-  boss: true,
-  xp: 500000,
-  shape: 4,
-  view: 10000,
-  spin: 2,
-  health: {
-    max: 10000,
-    amount: 10000
-  },
-  stats: {
-    speed: 1.5,
-    fov: 0.75
-  },
-  size: 150,
-  guns: [{
-    position: [1.15, 1, 1.5, 0, 0, 0, 1],
-    ammo: "necroDrone",
-    autoShoot: 2,
-    stats: combineStats([s.basic, s.summoner])
-  }, {
-    position: [1.15, 1, 1.5, 0, 0, Math.PI, 1],
-    ammo: "necroDrone",
-    autoShoot: 2,
-    stats: combineStats([s.basic, s.summoner])
-  }, {
-    position: [1.15, 1, 1.5, 0, 0, Math.PI / 2, 1],
-    ammo: "necroDrone",
-    autoShoot: 2,
-    stats: combineStats([s.basic, s.summoner])
-  }, {
-    position: [1.15, 1, 1.5, 0, 0, -Math.PI / 2, 1],
-    ammo: "necroDrone",
-    autoShoot: 2,
-    stats: combineStats([s.basic, s.summoner])
-  }]
-};
 let stream = {
   label: "Stream",
   stats: {
@@ -673,4 +633,89 @@ let preda = {
   }]
 };
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, octo, battleship, summoner, preda, stream }
+// Bosses
+let summoner = {
+  label: "Summoner",
+  maxChildren: 32,
+  type: "tank",
+  name: "Summoner",
+  color: "square",
+  boss: true,
+  xp: 500000,
+  shape: 4,
+  view: 10000,
+  spin: 2,
+  health: {
+    max: 10000,
+    amount: 10000
+  },
+  stats: {
+    speed: 1.5,
+    fov: 0.75
+  },
+  size: 150,
+  guns: [{
+    position: [1.15, 1, 1.5, 0, 0, 0, 1],
+    ammo: "necroDrone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.summoner])
+  }, {
+    position: [1.15, 1, 1.5, 0, 0, Math.PI, 1],
+    ammo: "necroDrone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.summoner])
+  }, {
+    position: [1.15, 1, 1.5, 0, 0, Math.PI / 2, 1],
+    ammo: "necroDrone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.summoner])
+  }, {
+    position: [1.15, 1, 1.5, 0, 0, -Math.PI / 2, 1],
+    ammo: "necroDrone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.summoner])
+  }]
+};
+let fallenOverlord = {
+  label: "Fallen Overlord",
+  maxChildren: 32,
+  type: "tank",
+  name: "Fallen Overlord",
+  color: "grey",
+  boss: true,
+  xp: 500000,
+  view: 10000,
+  spin: 2,
+  health: {
+    max: 10000,
+    amount: 10000
+  },
+  stats: {
+    speed: 1.5,
+    fov: 0.75
+  },
+  size: 150,
+  guns: [{
+    position: [1.5, 1, 1.5, 0, 0, 0, 1],
+    ammo: "drone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.drone])
+  }, {
+    position: [1.5, 1, 1.5, 0, 0, Math.PI, 1],
+    ammo: "drone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.drone])
+  }, {
+    position: [1.5, 1, 1.5, 0, 0, Math.PI / 2, 1],
+    ammo: "drone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.drone])
+  }, {
+    position: [1.5, 1, 1.5, 0, 0, -Math.PI / 2, 1],
+    ammo: "drone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.drone])
+  }]
+};
+
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, octo, battleship, summoner, fallenOverlord, preda, stream }
