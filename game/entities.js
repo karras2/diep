@@ -13,7 +13,8 @@ const s = {
   rocketeerRocket: [0.5, 2, 1.25, 1.25, 0.25, 0.6, 10, 5],
   skimmerMissile: [0.75, 1, 1.25, 1.25, 1, 0.5, 10, 0.5],
   trapper: [1, 1, 0.1, 4, 2, 2, 10, 2],
-  anni: [1.25, 2, 1.5, 1.5, 0.8, 1.5, 2, 0.1]
+  anni: [1.25, 2, 1.5, 1.5, 0.8, 1.5, 2, 0.1],
+  battle: [0.5, 1, 0.25, 0.25, 1.5, 1, 10, 2]
 };
 
 let combineStats = ((stats) => {
@@ -230,7 +231,7 @@ let double = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin])
   }],
-  upgrades: ["tripleTwin"]
+  upgrades: ["tripleTwin", "battleship"]
 };
 let destroyer = {
   label: "Destroyer",
@@ -496,5 +497,25 @@ let octo = {
     stats: combineStats([s.basic, s.flank])
   }]
 };
+let battleship = {
+  label: "Battleship",
+  guns: [{
+    position: [1.55, 0.9, 0.6, 0.5, 0, Math.PI / 2, 0],
+    ammo: "drone",
+    stats: combineStats([s.basic, s.battle])
+  }, {
+    position: [1.55, 0.9, 0.6, -0.5, 0, Math.PI / 2, 0.5],
+    ammo: "drone",
+    stats: combineStats([s.basic, s.battle])
+  }, {
+    position: [1.55, 0.9, 0.6, 0.5, 0, -Math.PI / 2, 0],
+    ammo: "drone",
+    stats: combineStats([s.basic, s.battle])
+  }, {
+    position: [1.55, 0.9, 0.6, -0.5, 0, -Math.PI / 2, 0.5],
+    ammo: "drone",
+    stats: combineStats([s.basic, s.battle])
+  }]
+};
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, skimmer, rocketeer, overseer, octo }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, skimmer, rocketeer, overseer, octo, battleship }

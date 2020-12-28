@@ -144,9 +144,9 @@ function chooseChance(data) {
 };
 
 function getDist(a, b) {
-  var a = a.x - b.x;
-  var b = a.y - b.y;
-  var c = Math.sqrt(a * a + b * b);
+  var d = a.x - b.x;
+  var e = a.y - b.y;
+  var c = Math.sqrt(d * d + e * e);
   return c;
 };
 
@@ -371,8 +371,9 @@ class Entity {
       if (!o.isDead && o !== this.master && o !== this)
         if (o.type === "food" && c < (100 * this.master.size)) list.push(o);
     }
-    list = list.sort(function(a, b) {
-      return getDist(a, this)
+    let body = this;
+    if (list.length > 1) list.sort(function(a, b) {
+      return getDist(a, body) - getDist(b, body);
     });
     if (list.length) {
       if (this.target.type) if (list.includes(this.target)) return;
