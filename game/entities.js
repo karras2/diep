@@ -16,7 +16,7 @@ const s = {
   anni: [1.25, 2, 1, 1.5, 1.5, 0.8, 1.5, 2, 0.1],
   battle: [0.5, 1, 0.75, 0.25, 0.25, 2, 1, 10, 2],
   necro: [2, 1, 1, 1, 1.5, 1.25, -10, 10, 2],
-  summoner: [0.75, 1, 0.65, 0.15, 0.15, 1, -10, 10, 5]
+  summoner: [0.5, 1, 0.7, 0.2, 0.2, 1, -10, 10, 5]
 };
 
 let combineStats = ((stats) => {
@@ -593,11 +593,11 @@ let summoner = {
   boss: true,
   xp: 500000,
   shape: 4,
-  view: 1000,
+  view: 10000,
   spin: 2,
   health: {
-    max: 7500,
-    amount: 7500
+    max: 10000,
+    amount: 10000
   },
   stats: {
     speed: 1.5,

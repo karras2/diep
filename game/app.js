@@ -179,7 +179,7 @@ let drawPoly = (s, r, c, a = 0) => {
   } else switch (true) {
     case s === 0:
       ctx.beginPath();
-      ctx.arc(0, 0, r + 5 * player.camera.ratio, 0, Math.PI * 2);
+      ctx.arc(0, 0, r + 5, 0, Math.PI * 2);
       ctx.closePath();
       ctx.fillStyle = c[1];
       ctx.fill();
@@ -212,7 +212,7 @@ let drawPoly = (s, r, c, a = 0) => {
         };
         ctx.quadraticCurveTo(c.x, c.y, p.x, p.y);
       }
-      ctx.lineWidth = 5 * player.camera.ratio;
+      ctx.lineWidth = r * 0.25 * player.camera.ratio;
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
@@ -228,7 +228,7 @@ let drawPoly = (s, r, c, a = 0) => {
         let y = (r * 1.25) * Math.sin(theta + angle);
         ctx.lineTo(x, y);
       }
-      ctx.lineWidth = 5 * player.camera.ratio;
+      ctx.lineWidth = r * 0.25 * player.camera.ratio;
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
@@ -591,7 +591,7 @@ let UI = {
   },
   leaderboard: function() {
     let toDraw = [];
-    for (let o of entities) if (o.type === "tank") toDraw.push({
+    for (let o of entities) if (o.type === "tank" || o.boss) toDraw.push({
       name: o.name,
       xp: o.xp,
       color: o.color,
@@ -604,7 +604,7 @@ let UI = {
     ctx.translate((innerWidth * 0.975) - 200, (innerHeight * 0.1));
     for (let i = 0; i < UI.lb.length; i ++) {
       ctx.save();
-      ctx.translate(0, (20 * i) + (5 * i));
+      ctx.translate(0, (20 * i) + (10 * i));
       let user = UI.lb[i];
       ctx.beginPath();
       ctx.moveTo(0, 0);
@@ -633,9 +633,9 @@ let UI = {
         return r.label === user.tank;
       }) || this.mockups[0];
       mockup.color = user.color;
-      mockup.size = 5;
+      mockup.size = 7.5;
       mockup.angle = Math.PI - (Math.PI / 4);
-      mockup.x = -25;
+      mockup.x = -40;
       mockup.y = 0;
       UI.entity(mockup);
       ctx.restore();
@@ -791,16 +791,7 @@ let UI = {
     });
     ctx.save();
     ctx.rotate(entity.angle);
-    ctx.beginPath();
-    ctx.arc(0, 0, entity.size * 1.25, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.fillStyle = window.colors[entity.color][1];
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(0, 0, entity.size, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.fillStyle = window.colors[entity.color][0];
-    ctx.fill();
+    drawPoly(entity.shape, entity.size, window.colors[entity.color]);
     ctx.restore();
     ctx.restore();
   },
