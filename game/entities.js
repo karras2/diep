@@ -229,7 +229,8 @@ let double = {
     position: [1.9, 0.9, 1, -0.5, 0, Math.PI, 0.5],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin])
-  }]
+  }],
+  upgrades: ["tripleTwin"]
 };
 let destroyer = {
   label: "Destroyer",
@@ -410,6 +411,20 @@ spreadshot.guns.push({
   ammo: "bullet",
   stats: combineStats([s.basic, s.twin])
 });
+let tripleTwin = {
+  label: "Triple Twin",
+  guns: []
+};
+for (let i = 0; i < 3; i ++) 
+  tripleTwin.guns.push({
+    position: [1.9, 0.9, 1, 0.5, 0, Math.PI / 1.5 * i, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  }, {
+    position: [1.9, 0.9, 1, -0.5, 0, Math.PI / 1.5 * i, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin])
+  });
 let anni = {
   label: "Annihilator",
   guns: [{
@@ -445,4 +460,4 @@ let rocketeer = {
   }]
 };
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, anni, skimmer, rocketeer, overseer }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, skimmer, rocketeer, overseer }

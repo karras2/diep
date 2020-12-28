@@ -426,9 +426,9 @@ class Gun {
       y: this.source.y // moveToMasterTarget
     }, this.source.master.master.master); // what?
     o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size); 
-    o.y += Math.sin(this.angle + this.source.angle) * (this.y * this.source.size);
+    o.y += Math.sin(this.angle + this.source.angle) * (0 * this.source.size);
     o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size); 
-    o.y += Math.sin(this.angle + this.source.angle) * (this.y * this.source.size);
+    o.y += Math.sin(this.angle + this.source.angle) * (0 * this.source.size);
     // thats the offset? hm
     // why does it add it 2 times was gonna go for y. yeah
     o.size = (this.source.size * (this.w / 2)) * 0.9;
@@ -725,8 +725,8 @@ let gameLoop = (() => {
   player.body.angle = Math.atan2((player.mouse.y - canvas.height / 2), (player.mouse.x - canvas.width / 2)) - Math.PI / 2;
   player.body.shooting = player.mouse.a || player.inputs.e;
   player.body.target = {
-    x: (player.mouse.x - canvas.width / 2),
-    y: (player.mouse.y - canvas.height / 2)
+    x: -(player.mouse.x - canvas.width / 2) * (player.body.size - 10),
+    y: -(player.mouse.y - canvas.height / 2) * (player.body.size - 10)
   };
   if (player.inputs.w) player.body.vy -= 0.1; 
   if (player.inputs.a) player.body.vx -= 0.1;
