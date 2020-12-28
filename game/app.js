@@ -589,13 +589,26 @@ let UI = {
   },
   leaderboard: function() {
     let toDraw = [];
-    for (let o of entities) if (o.type === "tank" && toDraw.length < 10) toDraw.push({
+    for (let o of entities) if (o.type === "tank") toDraw.push({
       name: o.name,
       xp: o.xp,
       color: o.color,
       tank: o.label
     });
+    toDraw.sort(function(a, b) { return b.xp - a.xp });
+    if (toDraw.length > 10) toDraw.length = 10;
     UI.lb = toDraw;
+    for (let i = 0; i < UI.lb.length; i ++) {
+      ctx.save();
+      ctx.translate(innerWidth - 50, (innerHeight * 0.15) * i + 1);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(-200, 0);
+      ctx.closePath();
+      ctx.lineWidth = 10;
+      ctx.strokeStyle = "#000000";
+      //ctx.stroke();
+    }
   },
   nameplate: function() {
     ctx.save();

@@ -44,7 +44,7 @@ let square = {
     max: 50,
     amount: 50
   },
-  xp: 10,
+  xp: 30,
 };
 let triangle = {
   label: "Triangle",
@@ -57,7 +57,7 @@ let triangle = {
     max: 75,
     amount: 75
   },
-  xp: 25,
+  xp: 75,
 };
 let pentagon = {
   label: "Pentagon",
@@ -70,7 +70,7 @@ let pentagon = {
     max: 150,
     amount: 150
   },
-  xp: 100,
+  xp: 300,
 };
 let alphaPentagon = {
   label: "Alpha Pentagon",
@@ -86,7 +86,7 @@ let alphaPentagon = {
   stats: {
     damage: 10
   },
-  xp: 3000,
+  xp: 9000,
 };
 
 // Ammo
@@ -636,19 +636,19 @@ let stream = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }, {
-    position: [2.8, 0.9, 1, 0, 0, 0, 0.2],
+    position: [2.7, 0.9, 1, 0, 0, 0, 0.2],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }, {
-    position: [2.6, 0.9, 1, 0, 0, 0, 0.4],
+    position: [2.4, 0.9, 1, 0, 0, 0, 0.4],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }, {
-    position: [2.4, 0.9, 1, 0, 0, 0, 0.6],
+    position: [2.1, 0.9, 1, 0, 0, 0, 0.6],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }, {
-    position: [2.2, 0.9, 1, 0, 0, 0, 0.8],
+    position: [1.8, 0.9, 1, 0, 0, 0, 0.8],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }]
