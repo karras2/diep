@@ -320,7 +320,8 @@ let quad = {
     position: [2, 1, 1, 0, 0, -Math.PI / 2, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank])
-  }]
+  }],
+  upgrades: ["octo"]
 };
 let tri = {
   label: "Tri-Angle",
@@ -459,5 +460,41 @@ let rocketeer = {
     prop: true
   }]
 };
+let octo = {
+  label: "Octo Tank",
+  guns: [{
+    position: [2, 1, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [2, 1, 1, 0, 0, Math.PI, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [2, 1, 1, 0, 0, Math.PI / 2, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [2, 1, 1, 0, 0, -Math.PI / 2, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [2, 1, 1, 0, 0, Math.PI / 4, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [2, 1, 1, 0, 0, Math.PI + Math.PI / 4, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [2, 1, 1, 0, 0, Math.PI / 2 + Math.PI / 4, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [2, 1, 1, 0, 0, -Math.PI / 2 + Math.PI / 4, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }]
+};
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, skimmer, rocketeer, overseer }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, skimmer, rocketeer, overseer, octo }

@@ -328,6 +328,16 @@ class Entity {
       this.vx = lerp(this.vx, newVelocity.x, 0.1);
       this.vy = lerp(this.vy, newVelocity.y, 0.1);
       this.angle = angleToGo;
+    } else if (this.moveToTarget) {
+      this.findTarget();
+      let angleToGo = Math.atan2(this.target.y - this.y, this.target.x - this.x);
+      let newVelocity = {
+        x: Math.cos(angleToGo) * this.stats.speed, 
+        y: Math.sin(angleToGo) * this.stats.speed
+      };
+      this.vx = lerp(this.vx, newVelocity.x, 0.1);
+      this.vy = lerp(this.vy, newVelocity.y, 0.1);
+      this.angle = angleToGo;
     };
     if (this.range === 0) this.kill();
     if (this.isDead) {
@@ -344,6 +354,7 @@ class Entity {
     if (this.spin === 2) this.angle += 0.005;
     //this.size += 0.1;
   }
+  findTarget() {}
   draw() {
     ctx.globalAlpha = this.alpha;
     for (let gun of this.guns) gun.update();
