@@ -310,8 +310,14 @@ class Entity {
   ondead(c) {
     if (c.length) {
       let o = c[0];
-      o.master.xp += this.xp;
+      o.master.xp += Math.floor(this.);
     }
+    if (this.isBot) setTimeout(() => {
+      let o = new Entity(game.random());
+      o.define(Class.basic);
+      o.color = this.color;
+      o.xp = Math.floor((this.xp > 23500 ? 23500 / 3 : this.xp / 3));
+    }, 5000);
     if (this.type === "food") setTimeout(() => {
       let o = new Entity(game.random());
       let type = chooseChance({
@@ -329,10 +335,14 @@ class Entity {
       this.vx = lerp(this.vx, 0, 0.05);
       this.vy = lerp(this.vy, 0, 0.05);
     }
+    if (this.type === "tank" && this.health.amount < this.health.max) this.health.amount += 0.1;
     if (this.type === "tank" && !this.boss && !this.isBot) {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));
+      let oldHP = JSON.parse(JSON.stringify(this.health));
+      this.health.max = (100 + (this.level * 10));
+      if (oldHP.max < this.health.max) this.health.amount += this.health.max - oldHP.max;
       this.stats.speed = 5 - (this.level / 50);
     } else if (this.boss || this.isBot) {
       this.vx = this.vy = 0;
@@ -347,6 +357,9 @@ class Entity {
         this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
         if (this.level >= 45) this.level = 45;
         this.size = (25 + (this.level));
+        let oldHP = JSON.parse(JSON.stringify(this.health));
+        this.health.max = (100 + (this.level * 10));
+        if (oldHP.max < this.health.max) this.health.amount += this.health.max - oldHP.max;
         this.stats.speed = 5 - (this.level / 50);
       }
       let canUpgrade = false;
