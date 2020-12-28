@@ -14,7 +14,9 @@ const s = {
   skimmerMissile: [0.75, 1, 1, 1.25, 1.25, 1, 0.5, 10, 0.5],
   trapper: [1, 1, 1, 0.1, 4, 2, 2, 10, 2],
   anni: [1.25, 2, 1, 1.5, 1.5, 0.8, 1.5, 2, 0.1],
-  battle: [0.5, 1, 0.75, 0.25, 0.25, 2, 1, 10, 2]
+  battle: [0.5, 1, 0.75, 0.25, 0.25, 2, 1, 10, 2],
+  necro: [2, 1, 1, 1, 1.5, 1.25, -10, 10, 2],
+  summoner: [0.5, 1, 1, 0.5, 0.5, 1, -10, 10, 5]
 };
 
 let combineStats = ((stats) => {
@@ -111,6 +113,9 @@ let drone = {
 let swarm = JSON.parse(JSON.stringify(drone));
 swarm.label = "Swarm";
 swarm.view = 50;
+let necroDrone = JSON.parse(JSON.stringify(drone));
+necroDrone.label = "Drone";
+necroDrone.shape = 4;
 let rocket = {
   label: "Rocket",
   type: "bullet",
@@ -564,5 +569,52 @@ let overlord = {
     stats: combineStats([s.basic, s.drone])
   }]
 };
+let necromancer = {
+  label: "Necromancer",
+  maxChildren: 16,
+  shape: 4,
+  guns: [{
+    position: [1.3, 1, 1.5, 0, 0, Math.PI / 2, 1],
+    ammo: "necroDrone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.necro])
+  }, {
+    position: [1.3, 1, 1.5, 0, 0, -Math.PI / 2, 1],
+    ammo: "necroDrone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.necro])
+  }]
+};
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, octo, battleship }
+let summoner = {
+  label: "Summoner",
+  maxChildren: 24,
+  color: "square",
+  boss: true,
+  xp: 500000,
+  shape: 4,
+  size: 100,
+  guns: [{
+    position: [1.3, 1, 1.5, 0, 0, 0, 1],
+    ammo: "necroDrone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.summoner])
+  }, {
+    position: [1.3, 1, 1.5, 0, 0, Math.PI, 1],
+    ammo: "necroDrone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.summoner])
+  }, {
+    position: [1.3, 1, 1.5, 0, 0, Math.PI / 2, 1],
+    ammo: "necroDrone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.summoner])
+  }, {
+    position: [1.3, 1, 1.5, 0, 0, -Math.PI / 2, 1],
+    ammo: "necroDrone",
+    autoShoot: 2,
+    stats: combineStats([s.basic, s.summoner])
+  }]
+};
+
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, octo, battleship, summoner }

@@ -325,7 +325,7 @@ class Entity {
       this.vx = lerp(this.vx, 0, 0.05);
       this.vy = lerp(this.vy, 0, 0.05);
     }
-    if (this.type === "tank") {
+    if (this.type === "tank" && !this.boss) {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));
