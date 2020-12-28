@@ -50,6 +50,7 @@ let player = {
     let o = new Entity(game.random());
     o.define(Class.basic);
     o.color = "blue";
+    o.name = localStorage.getItem("playername");
     o.xp = player.body ? Math.floor((player.body.xp > 23500 ? 23500 / 3 : player.body.xp / 3)) : 0;
     player.body = o;
   }
@@ -316,6 +317,7 @@ class Entity {
       let o = new Entity(game.random());
       o.define(Class.basic);
       o.color = this.color;
+      o.name = this.name;
       o.xp = Math.floor((this.xp > 23500 ? 23500 / 3 : this.xp / 3));
       o.isBot = true;
     }, 5000);
@@ -619,13 +621,14 @@ let UI = {
       ctx.lineWidth = 15;
       ctx.strokeStyle = window.colors["healthBar"][0];
       ctx.stroke();
-      ctx.font = "10px Ubuntu";
+      ctx.font = "15px Ubuntu";
       let text = user.name + " - " + user.xp + " - " + user.tank;
       let w = ctx.measureText(text).width;
       ctx.fillStyle = "#ffffff";
       ctx.strokeStyle = "#000000";
-      ctx.strokeText(text, 100 - (w / 2), 0);
-      ctx.fillText(text, 100 - (w / 2), 0);
+      ctx.lineWidth = 3;
+      ctx.strokeText(text, 100 - (w / 2), 5);
+      ctx.fillText(text, 100 - (w / 2), 5);
       let mockup = this.mockups.find(r => {
         return r.label === user.tank;
       }) || this.mockups[0];
@@ -954,6 +957,8 @@ window["bots"] = function(data) {
   for (let i = 0; i < data; i ++) {
     let o = new Entity(game.random());
     o.define(Class.basic);
+    let names = ['Alice', 'Bob', 'Carmen', 'David', 'Edith', 'Freddy', 'Gustav', 'Helga', 'Janet', 'Lorenzo', 'Mary', 'Nora', 'Olivia', 'Peter', 'Queen', 'Roger', 'Suzanne', 'Tommy', 'Ursula', 'Vincent', 'Wilhelm', 'Xerxes', 'Yvonne', 'Zachary'];
+    o.name = "[BOT] " + names[Math.floor(Math.random() * names.length)];
     o.color = "red";
     o.isBot = true;
   }

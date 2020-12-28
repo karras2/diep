@@ -663,11 +663,11 @@ let preda = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }, {
-    position: [2, 1.2, 1, 0, 0, 0, 0.125],
+    position: [2, 1.2, 1, 0, 0, 0, 0.25],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }, {
-    position: [1.7, 1.5, 1, 0, 0, 0, 0.25],
+    position: [1.7, 1.5, 1, 0, 0, 0, 0.5],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }]
