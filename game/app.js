@@ -320,13 +320,11 @@ class Entity {
       this.size = (25 + (this.level));
       this.stats.speed = 5 - (this.level / 50);
     } else if (this.moveToMasterTarget) {
-      let angleToGo = Math.atan2(this.master.y - this.y + player.mouse.y - canvas.height/2, this.master.x - this.x + player.mouse.x - canvas.width/2);
+      let angleToGo = Math.atan2(this.master.y - this.y + player.mouse.y - (innerHeight * player.body.fov) / 2, this.master.x - this.x + player.mouse.x - (innerWidth * player.body.fov) / 2);
       let newVelocity = {
         x: Math.cos(angleToGo) * this.stats.speed, 
         y: Math.sin(angleToGo) * this.stats.speed
       };
-      //this.target.x = this.master.x + player.mouse.x - canvas.width / 2;
-      //this.target.y = this.master.y + player.mouse.y - canvas.height / 2;
       this.vx = lerp(this.vx, newVelocity.x, 0.1);
       this.vy = lerp(this.vy, newVelocity.y, 0.1);
       this.angle = angleToGo;
