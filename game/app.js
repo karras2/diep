@@ -143,6 +143,13 @@ function chooseChance(data) {
   return all[Math.floor(Math.random() * all.length)];
 };
 
+function getDist(a, b) {
+  var a = a.x - b.x;
+  var b = a.y - b.y;
+  var c = Math.sqrt(a * a + b * b);
+  return c;
+};
+
 let drawPoly = (s, r, c, a = 0) => {
   ctx.save();
   ctx.rotate(a - Math.PI / 2);
@@ -354,7 +361,29 @@ class Entity {
     if (this.spin === 2) this.angle += 0.005;
     //this.size += 0.1;
   }
-  findTarget() {}
+  findTarget() {
+    let target = false;
+    let list = [];
+    for (let o of entities) {
+      var a = (o.x + o.vx) - (this.x + this.vx);
+      var b = (o.y + o.vy) - (this.y + this.vy);
+      var c = Math.sqrt(a * a + b * b);
+      if (!o.isDead && o !== this.master && o !== this)
+        if (o.type === "food" && c < (100 * this.master.size)) list.push(o);
+    }
+    list = list.sort(function(a, b) {
+      return getDist(a, this)
+    });
+    if (list.length) {
+      if (this.target.type) if (list.includes(this.target)) return;
+      this.target = list[0];
+      return;
+    }
+    this.target = {
+      x: this.master.x + (Math.cos(Math.PI * 2) * (this.master.size * 1.5)),
+      y: this.master.y + (Math.sin(Math.PI * 2) * (this.master.size * 1.5))
+    };
+  }
   draw() {
     ctx.globalAlpha = this.alpha;
     for (let gun of this.guns) gun.update();

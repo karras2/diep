@@ -102,7 +102,7 @@ let trap = {
 let drone = {
   label: "Drone",
   type: "bullet",
-  moveToMasterTarget: true,
+  moveToTarget: true,
   shape: 3,
   guns: []
 };
