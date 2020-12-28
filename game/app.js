@@ -472,7 +472,7 @@ class Gun {
     o.y += Math.sin(this.angle + this.source.angle) * (0 * this.source.size);
     // thats the offset? hm
     // why does it add it 2 times was gonna go for y. yeah
-    o.size = (this.source.size * (this.w / 2)) * 0.9;
+    o.size = ((this.source.size * (this.w / 2)) * 0.9) * this.stats.size;
     let spray = (Math.floor(Math.random() * (this.stats.spray * 2)) - this.stats.spray) / 10;
     o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);
     o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);

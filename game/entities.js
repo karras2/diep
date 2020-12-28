@@ -1,20 +1,20 @@
 const s = {
   // reload, recoil, dmg, pene, speed, range, density, spray
-  basic: [50, 1, 10, 10, 3, 150, 150, 1],
-  drone: [4, 0, 1, 3, 1.5, -10, 10, 0.1],
-  twin: [1.4, 0.8, 0.6, 0.6, 1, 1, 1, 1],
-  mach: [0.75, 1.125, 0.7, 0.7, 1, 0.9, 4],
-  sniper: [1.125, 1, 0.8, 1.25, 1.5, 1.25, 1, 0.5],
-  flank: [1.1, 1, 0.8, 0.8, 0.9, 1, 1, 1],
-  thruster: [1, 1.5, 0.5, 0.5, 0.75, 0.5, 0.5, 1.5],
-  rocketeerRocket: [0.75, 2, 1.25, 1.25, 0.5, 10, 2],
-  destroy: [4, 2, 3, 3, 1.125, 2, 5, 0.1],
-  gunner: [1.25, 0.75, 0.75, 0.8, 1, 1, 2, 1.25],
-  rocketeerRocket: [0.5, 2, 1.25, 1.25, 0.25, 0.6, 10, 5],
-  skimmerMissile: [0.75, 1, 1.25, 1.25, 1, 0.5, 10, 0.5],
-  trapper: [1, 1, 0.1, 4, 2, 2, 10, 2],
-  anni: [1.25, 2, 1.5, 1.5, 0.8, 1.5, 2, 0.1],
-  battle: [0.5, 1, 0.25, 0.25, 1.5, 1, 10, 2]
+  basic: [50, 1, 1, 10, 10, 3, 150, 150, 1],
+  drone: [4, 0, 1, 1, 3, 1.5, -10, 10, 0.1],
+  twin: [1.4, 0.8, 1, 0.6, 0.6, 1, 1, 1, 1],
+  mach: [0.75, 1.125, 1, 0.7, 0.7, 1, 0.9, 4],
+  sniper: [1.125, 1, 1,  0.8, 1.25, 1.5, 1.25, 1, 0.5],
+  flank: [1.1, 1, 1, 0.8, 0.8, 0.9, 1, 1, 1],
+  thruster: [1, 1.5, 1, 0.5, 0.5, 0.75, 0.5, 0.5, 1.5],
+  rocketeerRocket: [0.75, 2, 1, 1.25, 1.25, 0.5, 10, 2],
+  destroy: [4, 2, 1, 3, 3, 1.125, 2, 5, 0.1],
+  gunner: [1.25, 0.75, 1, 0.75, 0.8, 1, 1, 2, 1.25],
+  rocketeerRocket: [0.5, 2, 1, 1.25, 1.25, 0.25, 0.6, 10, 5],
+  skimmerMissile: [0.75, 1, 1, 1.25, 1.25, 1, 0.5, 10, 0.5],
+  trapper: [1, 1, 1, 0.1, 4, 2, 2, 10, 2],
+  anni: [1.25, 2, 1, 1.5, 1.5, 0.8, 1.5, 2, 0.1],
+  battle: [0.5, 1, 0.75, 0.25, 0.25, 2, 1, 10, 2]
 };
 
 let combineStats = ((stats) => {
@@ -24,7 +24,7 @@ let combineStats = ((stats) => {
     for (let i = 0; i < stat.length; i ++) baseStats[i] *= stat[i];
   }
   let out = {};
-  let names = ["reload", "recoil", "dmg", "pene", "speed", "range", "density", "spray"];
+  let names = ["reload", "recoil", "size", "dmg", "pene", "speed", "range", "density", "spray"];
   for (let i = 0; i < names.length; i ++) out[names[i]] = baseStats[i];
   out.range = Math.floor(out.range);
   return out;
@@ -500,19 +500,19 @@ let octo = {
 let battleship = {
   label: "Battleship",
   guns: [{
-    position: [1.55, 0.9, 0.6, 0.5, 0, Math.PI / 2, 0],
+    position: [1.55, 0.9, 0.6, 0.45, 0, Math.PI / 2, 0],
     ammo: "drone",
     stats: combineStats([s.basic, s.battle])
   }, {
-    position: [1.55, 0.9, 0.6, -0.5, 0, Math.PI / 2, 0.5],
+    position: [1.55, 0.9, 0.6, -0.45, 0, Math.PI / 2, 0.5],
     ammo: "drone",
     stats: combineStats([s.basic, s.battle])
   }, {
-    position: [1.55, 0.9, 0.6, 0.5, 0, -Math.PI / 2, 0],
+    position: [1.55, 0.9, 0.6, 0.45, 0, -Math.PI / 2, 0],
     ammo: "drone",
     stats: combineStats([s.basic, s.battle])
   }, {
-    position: [1.55, 0.9, 0.6, -0.5, 0, -Math.PI / 2, 0.5],
+    position: [1.55, 0.9, 0.6, -0.45, 0, -Math.PI / 2, 0.5],
     ammo: "drone",
     stats: combineStats([s.basic, s.battle])
   }]
