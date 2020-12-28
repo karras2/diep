@@ -346,15 +346,16 @@ let tri = {
 };
 let overseer = {
   label: "Overseer",
+  maxChildren: 8,
   guns: [{
     position: [1.5, 1, 1.5, 0, 0, Math.PI / 2, 1],
     ammo: "drone",
-    maxChildren: 4,
+    autoShoot: 4,
     stats: combineStats([s.basic, s.drone])
   }, {
     position: [1.5, 1, 1.5, 0, 0, -Math.PI / 2, 1],
     ammo: "drone",
-    maxChildren: 4,
+    autoShoot: 4,
     stats: combineStats([s.basic, s.drone])
   }],
   upgrades: ["overlord", "battleship"]
@@ -444,6 +445,7 @@ let anni = {
 };
 let hybrid = {
   label: "Hybrid",
+  maxChildren: 3,
   guns: [{
     position: [2, 1.4, 1, 0, 0, 0, 0],
     ammo: "bullet",
@@ -451,7 +453,7 @@ let hybrid = {
   }, {
     position: [1.5, 1, 1.5, 0, 0, Math.PI, 1],
     ammo: "drone",
-    maxChildren: 3,
+    autoShoot: 3,
     stats: combineStats([s.basic, s.drone])
   }]
 };
@@ -539,25 +541,26 @@ let battleship = {
 };
 let overlord = {
   label: "Overlord",
+  maxChildren: 8,
   guns: [{
     position: [1.5, 1, 1.5, 0, 0, 0, 1],
     ammo: "drone",
-    maxChildren: 2,
+    autoShoot: 2,
     stats: combineStats([s.basic, s.drone])
   }, {
     position: [1.5, 1, 1.5, 0, 0, Math.PI, 1],
     ammo: "drone",
-    maxChildren: 2,
+    autoShoot: 2,
     stats: combineStats([s.basic, s.drone])
   }, {
     position: [1.5, 1, 1.5, 0, 0, Math.PI / 2, 1],
     ammo: "drone",
-    maxChildren: 2,
+    autoShoot: 2,
     stats: combineStats([s.basic, s.drone])
   }, {
     position: [1.5, 1, 1.5, 0, 0, -Math.PI / 2, 1],
     ammo: "drone",
-    maxChildren: 2,
+    autoShoot: 2,
     stats: combineStats([s.basic, s.drone])
   }]
 };

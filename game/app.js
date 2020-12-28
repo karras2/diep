@@ -429,19 +429,19 @@ class Gun {
     this.open = data.position[2];
     this.delay = data.position[6];
     this.stats = data.stats;
-    this.maxChildren = data.maxChildren || false;
+    this.autoShoot = data.autoShoot || false;
     this.ammo = data.ammo;
     this.color = data.color || window.colors.gray;
     if (this.color === "me") this.color = window.colors[this.source.color];
     this.reload = (this.stats.reload * this.source.stats.reload) * this.delay;
     this.maxReload = (this.stats.reload * this.source.stats.reload);
     this.prop = data.prop || false;
-    this.gunID = `${entities.indexOf(this.source)}-${this.source.guns.indexOf(this)}`;
   }
   update() {
+    this.gunID = `${entities.indexOf(this.source)}-${this.source.guns.indexOf(this)}`;
     this.reload --;
     if (this.reload <= 0) {
-      if (this.source.shooting || this.source.type === "bullet") this.shoot();
+      if (this.source.shooting || this.source.type === "bullet" || this.autoShoot) this.shoot();
       else this.reload = this.stats.reload * this.delay;
     }
     this.draw();
@@ -469,8 +469,8 @@ class Gun {
   shoot() {
     if (this.prop) return;
     let children = [];
-    for (let o of entities) if (o.master === this.source && o.gunSourceID === this.gunID && o.label === "Drone") children.push(o);
-    if (this.maxChildren) if (children.length >= this.maxChildren) return;
+    for (let o of entities) if (o.master === this.source && o.label === "Drone") children.push(o);
+    if (this.source.maxChildren) if (children.length >= this.source.maxChildren) return;
     this.reload = this.maxReload;
     let o = new Entity({
       x: this.source.x, // nvm
@@ -481,6 +481,8 @@ class Gun {
     o.y += Math.sin(this.angle + this.source.angle) * (this.x * this.source.size);
     o.x += Math.cos(this.angle + this.source.angle) * (0 * this.source.size); 
     o.y += Math.sin(this.angle + this.source.angle) * (0 * this.source.size);
+    o.x += Math.cos(this.angle + this.source.angle) * (this.h * this.source.size);
+    o.y += Math.sin(this.angle + this.source.angle) * (this.h * this.source.size);
     // thats the offset? hm
     // why does it add it 2 times was gonna go for y. yeah
     o.size = ((this.source.size * (this.w / 2)) * 0.9) * this.stats.size;
@@ -768,6 +770,7 @@ let gameLoop = (() => {
       var b = (o.y + o.vy) - (j.y + j.vy);
       var c = Math.sqrt(a * a + b * b);
       if (c < o.size + j.size) Collision.basicCollide(o, j);
+      if (c < o.size + j.size) Collision.firmCollide(o, j);
     }
   }
   

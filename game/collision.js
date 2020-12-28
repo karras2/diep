@@ -30,4 +30,15 @@ let basicCollide = (i, o) => {
   if (o.health.amount <= 0) o.kill();
 };
 
-export { basicCollide }
+let firmCollide = (i, o) => {
+  if (i.collisionArray.includes(o) || o.collisionArray.includes(i)) return;
+  if (i.isDead || o.isDead) return;
+  i.collisionArray.push(o);
+  o.collisionArray.push(i);
+  i.vx *= -0.75;
+  i.vy *= -0.75;
+  o.vx *= -0.75;
+  o.vy *= -0.75;
+};
+
+export { basicCollide, firmCollide }
