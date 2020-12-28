@@ -471,8 +471,8 @@ class Gun {
       y: this.source.y // moveToMasterTarget
     }, this.source.master.master.master); // what?
     o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size); 
-    o.y += Math.sin(this.angle + this.source.angle) * (0 * this.source.size);
-    o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size); 
+    o.y += Math.sin(this.angle + this.source.angle) * (this.x * this.source.size);
+    o.x += Math.cos(this.angle + this.source.angle) * (0 * this.source.size); 
     o.y += Math.sin(this.angle + this.source.angle) * (0 * this.source.size);
     // thats the offset? hm
     // why does it add it 2 times was gonna go for y. yeah
