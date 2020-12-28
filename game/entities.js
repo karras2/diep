@@ -16,7 +16,8 @@ const s = {
   anni: [1.25, 2, 1, 1.5, 1.5, 0.8, 1.5, 2, 0.1],
   battle: [0.5, 1, 0.75, 0.25, 0.25, 2, 1, 10, 2],
   necro: [2, 1, 1, 1, 1.5, 1.25, -10, 10, 2],
-  summoner: [0.5, 1, 0.7, 0.2, 0.2, 1, -10, 10, 5]
+  summoner: [0.5, 1, 0.7, 0.2, 0.2, 1, -10, 10, 5],
+  fover: [0.75, 1, 0.4, 0.3, 0.5, 1, -10, 10, 10]
 };
 
 let combineStats = ((stats) => {
@@ -40,6 +41,7 @@ let square = {
   type: "food",
   color: "square",
   shape: 4,
+  slows: true,
   health: {
     max: 50,
     amount: 50
@@ -53,6 +55,7 @@ let triangle = {
   type: "food",
   color: "triangle",
   shape: 3,
+  slows: true,
   health: {
     max: 75,
     amount: 75
@@ -66,6 +69,7 @@ let pentagon = {
   type: "food",
   color: "pentagon",
   shape: 5,
+  slows: true,
   health: {
     max: 150,
     amount: 150
@@ -79,6 +83,7 @@ let alphaPentagon = {
   type: "food",
   color: "pentagon",
   shape: 5,
+  slows: true,
   health: {
     max: 1000,
     amount: 1000
@@ -681,7 +686,7 @@ let fallenOverlord = {
   maxChildren: 32,
   type: "tank",
   name: "Fallen Overlord",
-  color: "grey",
+  color: "gray",
   boss: true,
   xp: 500000,
   view: 10000,
@@ -699,22 +704,22 @@ let fallenOverlord = {
     position: [1.5, 1, 1.5, 0, 0, 0, 1],
     ammo: "drone",
     autoShoot: 2,
-    stats: combineStats([s.basic, s.drone])
+    stats: combineStats([s.basic, s.fover])
   }, {
     position: [1.5, 1, 1.5, 0, 0, Math.PI, 1],
     ammo: "drone",
     autoShoot: 2,
-    stats: combineStats([s.basic, s.drone])
+    stats: combineStats([s.basic, s.fover])
   }, {
     position: [1.5, 1, 1.5, 0, 0, Math.PI / 2, 1],
     ammo: "drone",
     autoShoot: 2,
-    stats: combineStats([s.basic, s.drone])
+    stats: combineStats([s.basic, s.fover])
   }, {
     position: [1.5, 1, 1.5, 0, 0, -Math.PI / 2, 1],
     ammo: "drone",
     autoShoot: 2,
-    stats: combineStats([s.basic, s.drone])
+    stats: combineStats([s.basic, s.fover])
   }]
 };
 
