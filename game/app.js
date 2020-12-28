@@ -366,6 +366,7 @@ class Entity {
     //this.size += 0.1;
   }
   findTarget() {
+    if (this.isDead) return;
     let target = false;
     let list = [];
     for (let o of entities) {
@@ -373,7 +374,7 @@ class Entity {
       var b = (o.y + o.vy) - (this.y + this.vy);
       var c = Math.sqrt(a * a + b * b);
       if (!o.isDead && o !== this.master && o !== this)
-        if (o.type === "food" && c < (100 * this.master.size)) list.push(o);
+        if (o.type === "food" && c < (50 * this.master.size)) list.push(o);
     }
     let body = this;
     if (list.length > 1) list.sort(function(a, b) {
@@ -385,8 +386,8 @@ class Entity {
       return;
     }
     this.target = {
-      x: this.master.x + (Math.cos(Math.PI * 2) * (this.master.size * 1.5)),
-      y: this.master.y + (Math.sin(Math.PI * 2) * (this.master.size * 1.5))
+      x: this.master.x + (Math.cos(Math.random() * Math.PI * 2) * (this.master.size)),
+      y: this.master.y + (Math.sin(Math.random() * Math.PI * 2) * (this.master.size))
     };
   }
   draw() {

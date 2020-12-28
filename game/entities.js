@@ -240,7 +240,7 @@ let destroyer = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.destroy])
   }],
-  upgrades: ["anni", "skimmer", "rocketeer"]
+  upgrades: ["anni", "hybrid", "skimmer", "rocketeer"]
 };
 let gunner = {
   label: "Gunner",
