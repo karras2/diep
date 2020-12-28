@@ -330,12 +330,13 @@ class Entity {
       if (this.level >= 45) this.level = 45;
       this.size = (25 + (this.level));
       this.stats.speed = 5 - (this.level / 50);
-    } else if (this.boss) {
+    } else if (this.boss || this.isBot) {
       this.findTarget();
       if (this.x < this.target.x) this.vx = 1;
       if (this.x > this.target.x) this.vx = -1;
       if (this.y < this.target.y) this.vy = 1;
       if (this.y > this.target.y) this.vy = -1;
+      if (!this.spin) this.angle = Math.atan2((this.target.y))
     } else if (this.moveToMasterTarget) {
       let angleToGo = Math.atan2(this.master.y - (this.y + this.master.target.y), this.master.x - (this.x + this.master.target.x));//Math.atan2(this.master.y - this.y + player.mouse.y - canvas.height / 2, this.master.x - this.x + player.mouse.x - canvas.width / 2);
       let newVelocity = {
@@ -469,7 +470,7 @@ class Gun {
     ctx.restore();
   }
   shoot() {
-    if (this.prop) return;
+    if (this.prop || this.source.isDead) return;
     let children = [];
     for (let o of entities) if (o.master === this.source && o.label === "Drone") children.push(o);
     if (this.source.maxChildren) if (children.length >= this.source.maxChildren) return;
@@ -524,7 +525,7 @@ let UI = {
     }
     ctx.stroke();
     ctx.closePath();
-    ctx.globalAlpha = 1
+    ctx.globalAlpha = 1;
   },
   map: function() {
     let s = 250;
@@ -552,7 +553,16 @@ let UI = {
     ctx.globalAlpha = 1;
     ctx.restore();
   },
-  leaderboard: function() {},
+  leaderboard: function() {
+    let toDraw = [];
+    for (let o of entities) if (o.type === "tank" && toDraw.length < 10) toDraw.push({
+      name: o.name,
+      xp: o.xp,
+      color: o.color,
+      tank: o.label
+    });
+    UI.lb = toDraw;
+  },
   nameplate: function() {
     ctx.save();
     ctx.translate(innerWidth / 2, innerHeight - 30);
@@ -744,6 +754,7 @@ let UI = {
     this.map();
     this.upgrades();
     this.nameplate();
+    this.leaderboard();
     this.spinAngle += 0.01;
     if (player.body.isDead) this.drawDead();
   }
@@ -858,3 +869,11 @@ window["boss"] = function() {
   let o = new Entity(game.random());
   o.define(Class.summoner);
 };
+
+window["bots"] = function(data) {
+  for (let i = 0; i < data; i ++) {
+    let o = new Entity(game.random());
+    o.define(Class.basic);
+    o.isBot = true;
+  }
+}

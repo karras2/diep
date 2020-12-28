@@ -596,11 +596,11 @@ let summoner = {
   view: 1000,
   spin: 2,
   health: {
-    max: 1000,
-    amount: 1000
+    max: 7500,
+    amount: 7500
   },
   stats: {
-    speed: 2,
+    speed: 1.5,
     fov: 0.75
   },
   size: 150,
