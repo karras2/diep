@@ -275,6 +275,7 @@ class Entity {
     this.vy = 0;
     this.guns = [];
     this.upgrades = [];
+    this.turrets = [];
     this.target = {
       x: 5000,
       y: 5000,
@@ -287,12 +288,17 @@ class Entity {
     let type = JSON.parse(JSON.stringify(tank));
     this.guns = [];
     this.upgrades = [];
+    for (let turret of this.turrets) turret.kill();
+    this.turrets = [];
     for (let key in type) {
       if (key === "guns") {
         for (let gun of type.guns) this.guns.push(new Gun(this, gun));
       } else if (key === "turrets") {
         for (let turret of type.turrets) {
-          let o = new Entity()
+          let o = new Entity({
+            x: this.x,
+            y: this.y
+          }, this);
         }
       } else if (key === "stats") {
         for (let k in type.stats) this.stats[k] = type.stats[k];
