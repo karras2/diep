@@ -51,6 +51,10 @@ let player = {
     let o = new Entity(game.random());
     o.define(Class.basic);
     if (!player.body) o.setTeam();
+    else {
+      o.team = player.body.team;
+      o.color = player.body.color;
+    }
     o.name = localStorage.getItem("playername");
     o.xp = player.body ? Math.floor((player.body.xp > 23500 ? 23500 / 3 : player.body.xp / 3)) : 0;
     player.body = o;

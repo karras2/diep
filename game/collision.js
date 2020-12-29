@@ -28,13 +28,16 @@ let basicCollide = (i, o) => {
 
 let firmCollide = (i, o) => {
   if (i.collisionArray.includes(o) || o.collisionArray.includes(i)) return;
+  if (i === o || i.master === o || o.master === i || o.master === i.master) return;
   if (i.isDead || o.isDead) return;
   i.collisionArray.push(o);
   o.collisionArray.push(i);
-  i.vx *= -0.75;
-  i.vy *= -0.75;
-  o.vx *= -0.75;
-  o.vy *= -0.75;
+  let v1 = JSON.parse(JSON.stringify({ x: o.vx, y: o.vy }));
+  let v2 = JSON.parse(JSON.stringify({ x: i.vx, y: i.vy }));
+  i.vx = -v1.x;
+  i.vy = -v1.y;
+  o.vx = -v2.x;
+  o.vy = -v2.y;
 };
 
 export { basicCollide, firmCollide }
