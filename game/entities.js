@@ -447,11 +447,43 @@ let penta = {
 let spreadshot = {
   label: "Spredshot",
   guns: [{
-    position: [1.8, 0.5, 1, -0.25, 0, 0, 0],
+    position: [1.5, 0.5, 1, -0.25, 0, Math.PI / 20 * 5, (1 / 6) * 5],
     ammo: "bullet",
     stats: combineStats([s.basic])
   }, {
-    position: [21.8, 0.5, 1, 0, 0, 0, 0],
+    position: [1.5, 0.5, 1, 0.25, 0, -Math.PI / 20 * 5, (1 / 6) * 5],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }, {
+    position: [1.6, 0.5, 1, -0.25, 0, Math.PI / 20 * 4, (1 / 6) * 4],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }, {
+    position: [1.6, 0.5, 1, 0.25, 0, -Math.PI / 20 * 4, (1 / 6) * 4],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }, {
+    position: [1.7, 0.5, 1, -0.25, 0, Math.PI / 20 * 3, (1 / 6) * 3],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }, {
+    position: [1.7, 0.5, 1, 0.25, 0, -Math.PI / 20 * 3, (1 / 6) * 3],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }, {
+    position: [1.8, 0.5, 1, -0.25, 0, Math.PI / 20 * 2, (1 / 6) * 2],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }, {
+    position: [1.8, 0.5, 1, 0.25, 0, -Math.PI / 20 * 2, (1 / 6) * 2],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }, {
+    position: [1.9, 0.5, 1, -0.25, 0, Math.PI / 20, (1 / 6) * 1],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }, {
+    position: [1.9, 0.5, 1, 0.25, 0, -Math.PI / 20, (1 / 6) * 1],
     ammo: "bullet",
     stats: combineStats([s.basic])
   }, {
