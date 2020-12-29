@@ -44,7 +44,19 @@ let game = {
       return pos;
     }
   },
-  bases: (() => {} return)
+  bases: [{
+    x: 0,
+    y: 0,
+    w: this.width / 10,
+    h: this.height,
+    t: 1
+  }, {
+    x: (this.width - this.width / 10),
+    y: 0,
+    w: this.width / 10,
+    h: this.height,
+    t: 2
+  }]
 };
 
 window["game"] = game;
