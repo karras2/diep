@@ -57,13 +57,15 @@ let game = {
         break;
       case 2:
         x1 = game.width - game.bases[1].w;
-        if (game.teams > 2) y1 = game.bases[0].h;
+        if (game.teams > 2) y1 = game.height - game.bases[0].h;
         break;
       case 3:
+        y1 = game.height - game.bases[0].h;
         x2 = game.bases[0].w;
         break;
       case 4:
         x1 = game.width - game.bases[1].w;
+        y2 = game.bases[0].h;
         break;
       default:
         break;
@@ -378,8 +380,8 @@ class Entity {
       speed: 5,
       bSpeed: 1,
       fov: 1,
-      bDamage: 2,
-      bPene: 2,
+      bDamage: 1,
+      bPene: 1,
       reload: 0.5
     };
     this.vx = 0;
@@ -1174,7 +1176,6 @@ window["boss"] = function() {
 };
 
 window["bots"] = function(data) {
-  return;
   for (let i = 0; i < data; i ++) {
     let o = new Entity(game.random());
     o.define(Class.basic);
