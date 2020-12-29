@@ -2,6 +2,7 @@ let basicCollide = (i, o) => {
   if (i.collisionArray.includes(o) || o.collisionArray.includes(i)) return;
   if (i === o || i.master === o || o.master === i || o.master === i.master) return;
   if (i.isDead || o.isDead) return;
+  if (i.team === o.team) return;
   i.collisionArray.push(o);
   o.collisionArray.push(i);
   let fasterEntity = o;
@@ -19,8 +20,8 @@ let basicCollide = (i, o) => {
     i.vx = v.x * 0.1;
     i.vy = v.y * 0.1;
   };
-  if (i.team !== o.team) i.health.amount -= o.stats.damage;
-  if (i.team !== o.team) o.health.amount -= i.stats.damage;
+  i.health.amount -= o.stats.damage;
+  o.health.amount -= i.stats.damage;
   if (i.health.amount <= 0) i.kill();
   if (o.health.amount <= 0) o.kill();
 };

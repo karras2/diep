@@ -49,7 +49,8 @@ let player = {
   spawn: function() {
     let o = new Entity(game.random());
     o.define(Class.basic);
-    o.color = "blue";
+    o.team = player.body ? player.body.team : Math.floor(Math.random() * 4) + 1;
+    o.color = ["blue", "red", "green", "purple"][o.team - 1];
     o.name = localStorage.getItem("playername");
     o.xp = player.body ? Math.floor((player.body.xp > 23500 ? 23500 / 3 : player.body.xp / 3)) : 0;
     player.body = o;
@@ -246,7 +247,8 @@ class Entity {
     this.master = master;
     this.view = 50;
     this.angle = 0;
-    this.color = ["blue", "red", "green", "purple"][Math.floor(Math.random()* 4)];
+    this.team = this.master.team || 0;
+    this.color = ["square", "blue", "red", "green", "purple"][this.team];
     this.name = "";
     this.size = 25;
     this.tier = 0;
@@ -340,6 +342,8 @@ class Entity {
       o.name = this.name;
       o.xp = Math.floor((this.xp > 23500 ? 23500 / 3 : this.xp / 3));
       o.isBot = true;
+      o.team = this.team;
+      o.color = this.color;
     }, 5000);
     if (this.type === "food") setTimeout(() => {
       let o = new Entity(game.random());
@@ -932,6 +936,7 @@ UI.init();
       alphaPentagon: 1
     });
     a.define(Class[type]);
+    a.team = 0;
   }
   setTimeout(() => window.bots(5), 1000);
 })();
@@ -982,6 +987,7 @@ window["boss"] = function() {
   if (bossAlive) return;
   let o = new Entity(game.random());
   let bosses = [Class.summoner, Class.fallenOverlord];
+  o.team = 0;
   o.define(bosses[Math.floor(Math.random() * bosses.length)]);
 };
 
@@ -991,7 +997,8 @@ window["bots"] = function(data) {
     o.define(Class.basic);
     let names = ['Alice', 'Bob', 'Carmen', 'David', 'Edith', 'Freddy', 'Gustav', 'Helga', 'Janet', 'Lorenzo', 'Mary', 'Nora', 'Olivia', 'Peter', 'Queen', 'Roger', 'Suzanne', 'Tommy', 'Ursula', 'Vincent', 'Wilhelm', 'Xerxes', 'Yvonne', 'Zachary'];
     o.name = "[BOT] " + names[Math.floor(Math.random() * names.length)];
-    o.color = "red";
+    o.team = Math.floor(Math.random() * 4) + 1;
+    o.color = ["blue", "red", "green", "purple"][o.team - 1];
     o.isBot = true;
   }
 }
