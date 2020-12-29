@@ -299,6 +299,7 @@ class Entity {
             x: this.x,
             y: this.y
           }, this);
+          o.bind(this, turret);
         }
       } else if (key === "stats") {
         for (let k in type.stats) this.stats[k] = type.stats[k];
@@ -310,6 +311,15 @@ class Entity {
         this[key] = type[key];
       }
     }
+  }
+  bind(source, data) {
+    this.x = source.x + (Math.cos(source.angle + data[3]) * data.x * source.size);
+    this.y = source.y + (Math.sin(source.angle + data[3]) * data.y * source.size);
+    this.angle += 0.05; //source.angle + data[3];
+    this.color = "gray";
+    this.master = source;
+    this.size = source.size * 0.5;
+    this.bound = data;
   }
   kill() {
     this.isDead = true;
@@ -344,6 +354,7 @@ class Entity {
   }
   update() {
     this.range --;
+    if (this.bound) this.bind(this.master, this.bound);
     if (this.slows) {
       this.vx = lerp(this.vx, 0, 0.05);
       this.vy = lerp(this.vy, 0, 0.05);
