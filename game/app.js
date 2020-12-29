@@ -386,8 +386,8 @@ class Entity {
       this.findTarget();
       let angleToGo = Math.atan2(this.target.y - this.y, this.target.x - this.x);
       let newVelocity = {
-        x: Math.cos(angleToGo) * this.stats.speed * 0.5, 
-        y: Math.sin(angleToGo) * this.stats.speed * 0.5
+        x: Math.cos(angleToGo) * this.stats.speed, 
+        y: Math.sin(angleToGo) * this.stats.speed
       };
       this.vx = lerp(this.vx, newVelocity.x, 0.1);
       this.vy = lerp(this.vy, newVelocity.y, 0.1);
@@ -401,8 +401,13 @@ class Entity {
     }
     if (this.x + this.vx < 0 || this.x + this.vx > game.width) this.vx *= -0.5;
     if (this.y + this.vy < 0 || this.y + this.vy > game.height) this.vy *= -0.5;
-    this.x += this.vx * this.stats.speed;
-    this.y += this.vy * this.stats.speed;
+    if (!this.moveToTarget) {
+      this.x += this.vx * this.stats.speed;
+      this.y += this.vy * this.stats.speed;
+    } else {
+      this.x += this.vx;
+      this.y += this.vy;
+    }
     this.draw();
     if (this.spin === 1) this.angle += 0.02;
     if (this.spin === 2) this.angle += 0.005;
