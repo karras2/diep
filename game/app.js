@@ -44,6 +44,9 @@ let game = {
       return pos;
     }
   },
+  spawnPlayer: function(o) {
+    
+  },
   bases: ((g) => {
     let out = [];
     if (g.teams === 2) out.push({
@@ -53,7 +56,7 @@ let game = {
       h: g.height,
       t: 1
     }, {
-      x: g.width / 10,
+      x: g.width - (g.width / 10),
       y: 0,
       w: g.width / 10,
       h: g.height,
@@ -671,7 +674,7 @@ let UI = {
     ctx.fillRect(-(player.camera.x * player.camera.ratio) + canvas.width/2, -(player.camera.y * player.camera.ratio) + canvas.height/2, game.width * player.camera.ratio, game.height * player.camera.ratio);
     for (let base of game.bases) {
       ctx.fillStyle = window.colors[["blue", "red", "green", "purple"][base.t - 1]][0];
-      ctx.fillRect((-(player.camera.x * player.camera.ratio) + canvas.width / 2) + base.x, (-(player.camera.y * player.camera.ratio) + canvas.height / 2) + base.y, (base.w * player.camera.ratio), (base.h * player.camera.ratio));
+      ctx.fillRect((-(player.camera.x * player.camera.ratio) + canvas.width / 2) + (base.x * player.camera.ratio), (-(player.camera.y * player.camera.ratio) + canvas.height / 2) + base.y, (base.w * player.camera.ratio), (base.h * player.camera.ratio));
     }
     ctx.lineWidth = 3 * player.camera.ratio;
     ctx.beginPath();
@@ -698,6 +701,10 @@ let UI = {
     ctx.strokeStyle = window.colors.background[1];
     ctx.lineWidth = 5;
     ctx.fillRect(0, 0, s, s);
+    for (let base of game.bases) {
+      ctx.fillStyle = window.colors[["blue", "red", "green", "purple"][base.t - 1]][0];
+      ctx.fillRect(s * (base.x / game.width), s * (base.y / game.height), s * (base.w / game.width), s * (base.h / game.height));
+    }
     ctx.strokeRect(0, 0, s, s);
     ctx.beginPath();
     ctx.arc((player.body.x / game.width) * s, (player.body.y / game.height) * s, (s / 75), 0, Math.PI * 2);

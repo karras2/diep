@@ -851,10 +851,11 @@ let arenaCloser = {
     amount: 10000
   },
   stats: {
-    speed: 10,
-    fov: 1.25
+    speed: 50,
+    damage: 1000,
+    fov: 1.5
   },
-  size: 100,
+  size: 150,
   guns: [{
     position: [1.5, 1, 1, 0, 0, 0, 0],
     ammo: "bullet",
