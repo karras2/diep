@@ -17,7 +17,8 @@ const s = {
   battle: [0.5, 1, 0.75, 0.25, 2, 2, 1, 10, 2],
   necro: [2, 1, 1, 1, 1.5, 1.75, -10, 10, 2],
   summoner: [0.5, 1, 0.7, 0.2, 0.2, 1.75, -10, 10, 5],
-  fover: [0.75, 1, 0.4, 0.3, 0.5, 1.75, -10, 10, 10]
+  fover: [0.75, 1, 0.4, 0.3, 0.5, 1.75, -10, 10, 10],
+  factory: [1, 1, 1, 0.75, 2, 1, 1, 10, 1]
 };
 
 let combineStats = ((stats) => {
@@ -311,7 +312,8 @@ let assassin = {
     position: [3, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
-  }]
+  }],
+  upgrades: ["ranger", "stalker"]
 };
 let hunter = {
   label: "Hunter",
@@ -610,7 +612,7 @@ let factory = {
     position: [1.3, 1, 1.5, 0, 0, 0, 0.5],
     ammo: "minion",
     autoShoot: 2,
-    stats: combineStats([s.basic, s.drone])
+    stats: combineStats([s.basic, s.drone, s.factory])
   }]
 };
 
@@ -659,6 +661,18 @@ let preda = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }]
+};
+let assassin = {
+  label: "Assassin",
+  stats: {
+    fov: 1.3
+  },
+  guns: [{
+    position: [3, 0.9, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }],
+  upgrades: ["ranger", "stalker"]
 };
 
 // Bosses

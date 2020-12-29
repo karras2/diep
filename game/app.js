@@ -386,8 +386,8 @@ class Entity {
       this.findTarget();
       let angleToGo = Math.atan2(this.target.y - this.y, this.target.x - this.x);
       let newVelocity = {
-        x: Math.cos(angleToGo) * this.stats.speed * 5, 
-        y: Math.sin(angleToGo) * this.stats.speed * 5
+        x: Math.cos(angleToGo) * this.stats.speed, 
+        y: Math.sin(angleToGo) * this.stats.speed
       };
       this.vx = lerp(this.vx, newVelocity.x, 0.1);
       this.vy = lerp(this.vy, newVelocity.y, 0.1);
@@ -434,8 +434,8 @@ class Entity {
       return;
     } else if (this.type !== "tank") {
       this.target = {
-        x: this.master.x + (Math.cos(Math.random() * Math.PI * 2) * this.master.size * Math.floor(Math.random() * 3)),
-        y: this.master.y + (Math.sin(Math.random() * Math.PI * 2) * this.master.size * Math.floor(Math.random() * 3)),
+        x: this.master.x + (Math.cos(Math.random() * Math.PI * 2) * this.master.size * Math.floor(Math.random() * 10)),
+        y: this.master.y + (Math.sin(Math.random() * Math.PI * 2) * this.master.size * Math.floor(Math.random() * 10)),
         vx: 0,
         vy: 0
       };
