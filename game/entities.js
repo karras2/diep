@@ -446,22 +446,20 @@ let penta = {
 
 let spreadshot = {
   label: "Spredshot",
-  guns: []
+  guns: [{
+    position: [1.8, 0.5, 1, -0.25, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }, {
+    position: [21.8, 0.5, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }, {
+    position: [2, 1, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic])
+  }]
 };
-for (let i = 5; i > 0; i --) spreadshot.guns.push({
-  position: [1.9 - (0.05 * i), 0.6, 1, 0, 0, (Math.PI / 10) * ((i + 1) * 0.9) - (Math.PI / 10), 1 - (0.2 * i)],
-  ammo: "bullet",
-  stats: combineStats([s.basic, s.twin])
-}, {
-  position: [1.9 - (0.05 * i), 0.6, 1, 0, 0, -(Math.PI / 10) * ((i + 1) * 0.9) + (Math.PI / 10), 1 - (0.2 * i)],
-  ammo: "bullet",
-  stats: combineStats([s.basic, s.twin])
-});
-spreadshot.guns.push({
-  position: [2.1, 1, 1, 0, 0, 0, 0],
-  ammo: "bullet",
-  stats: combineStats([s.basic, s.twin])
-});
 let tripleTwin = {
   label: "Triple Twin",
   guns: []
