@@ -272,22 +272,23 @@ let destroyer = {
 let gunner = {
   label: "Gunner",
   guns: [{
-    position: [1.75, 0.5, 1, 0.8, 0, 0, 0.25],
+    position: [1.6, 0.5, 1, 0.7, 0, 0, 0.25],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
-    position: [1.75, 0.5, 1, -0.8, 0, 0, 0.75],
+    position: [1.6, 0.5, 1, -0.7, 0, 0, 0.75],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
-    position: [2, 0.5, 1, 0.4, 0, 0, 0],
+    position: [1.8, 0.5, 1, 0.35, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
-    position: [2, 0.5, 1, -0.4, 0, 0, 0.5],
+    position: [1.8, 0.5, 1, -0.35, 0, 0, 0.5],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
-  }]
+  }],
+  upgrades: ["autoGunner", "stream", "gunnerTrapper"]
 };
 let trapper = {
   label: "Trapper",
@@ -688,6 +689,46 @@ let stalker = {
     position: [2.8, 1.5, 0.75, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
+  }]
+};
+let gutoGunner = {
+  label: "Auto-Gunner",
+  guns: [{
+    position: [1.6, 0.5, 1, 0.7, 0, 0, 0.25],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin, s.gunner])
+  }, {
+    position: [1.6, 0.5, 1, -0.7, 0, 0, 0.75],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin, s.gunner])
+  }, {
+    position: [1.8, 0.5, 1, 0.35, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin, s.gunner])
+  }, {
+    position: [1.8, 0.5, 1, -0.35, 0, 0, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin, s.gunner])
+  }],
+  turrets: [{
+    position: [0.5, 0, 0, Math.PI, Math.PI * 2, 1],
+    type: basic
+  }]
+};
+let gunnerTrapper = {
+  label: "Gunner-Trapper",
+  guns: [{
+    position: [1.8, 0.5, 1, 0.35, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin, s.gunner])
+  }, {
+    position: [1.8, 0.5, 1, -0.35, 0, 0, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin, s.gunner])
+  }],
+  turrets: [{
+    position: [0.5, 0, 0, Math.PI, Math.PI * 2, 1],
+    type: basic
   }]
 };
 
