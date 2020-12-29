@@ -426,7 +426,7 @@ class Entity {
       var a = (o.x + o.vx) - (this.x + this.vx);
       var b = (o.y + o.vy) - (this.y + this.vy);
       var c = Math.sqrt(a * a + b * b);
-      if (!o.isDead && o !== this.master && o !== this) // chec discod
+      if (!o.isDead && o !== this.master && o !== this)
         if ((o.type === "food" || (o.type === "tank" && o !== this.master)) && c < (this.view * this.master.size) && o.alpha < 0.5) list.push(o);
     }
     let body = this;
