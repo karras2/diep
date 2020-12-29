@@ -521,6 +521,11 @@ class Entity {
       if (this.x + this.vx < 0 || this.x + this.vx > game.width) this.vx *= -0.5;
       if (this.y + this.vy < 0 || this.y + this.vy > game.height) this.vy *= -0.5; 
     }
+    if (this.type !== "food") {
+      for (let base of game.bases) {
+        if ((this.x > base.x && this.x < base.x + base.w) && (this.y > base.y && this.y < base.y + base.h) && this.team !== base.t) this.kill();
+      }
+    }
     if (!this.moveToTarget) {
       this.x += this.vx * this.stats.speed;
       this.y += this.vy * this.stats.speed;
@@ -581,9 +586,9 @@ class Entity {
       if (team) team[1] ++;
     }
     possible = possible.sort(function(a, b) { return a[1] - b[1] });
-    let firstPlayer = true;
-    for (let o of entities) if (o.team < 0 && o.type === "tank") firstPlayer = false;
-    if (firstPlayer) possible = possible.sort(function(a, b) { return 0.5 - Math.random() });
+    let players = 0;
+    for (let o of entities) if (o.type === "tank") players ++;
+    if (players < 2) possible = possible.sort(function(a, b) { return 0.5 - Math.random() });
     this.team = possible[0][0];
     this.color = ["blue", "red", "green", "purple"][this.team - 1];
   }
