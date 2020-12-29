@@ -272,11 +272,11 @@ let destroyer = {
 let gunner = {
   label: "Gunner",
   guns: [{
-    position: [1.6, 0.5, 1, 0.7, 0, 0, 0.25],
+    position: [1.6, 0.5, 1, 0.7, 0, 0, 0.5],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
-    position: [1.6, 0.5, 1, -0.7, 0, 0, 0.75],
+    position: [1.6, 0.5, 1, -0.7, 0, 0, 0.5],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
@@ -284,11 +284,11 @@ let gunner = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
-    position: [1.8, 0.5, 1, -0.35, 0, 0, 0.5],
+    position: [1.8, 0.5, 1, -0.35, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }],
-  upgrades: ["autoGunner", "stream", "gunnerTrapper"]
+  upgrades: ["battery", "stream", "gunnerTrapper"]
 };
 let trapper = {
   label: "Trapper",
@@ -690,28 +690,28 @@ let stalker = {
     stats: combineStats([s.basic, s.sniper])
   }]
 };
-let autoGunner = {
-  label: "Auto-Gunner",
+let battery = {
+  label: "Battery",
   guns: [{
-    position: [1.6, 0.5, 1, 0.7, 0, 0, 0.25],
+    position: [1.5, 0.5, 1, 0.7, 0, 0, 0.999],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
-    position: [1.6, 0.5, 1, -0.7, 0, 0, 0.75],
+    position: [1.5, 0.5, 1, -0.7, 0, 0, 0.999],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
-    position: [1.8, 0.5, 1, 0.35, 0, 0, 0],
+    position: [1.75, 0.5, 1, 0.35, 0, 0, 0.666],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
-    position: [1.8, 0.5, 1, -0.35, 0, 0, 0.5],
+    position: [1.75, 0.5, 1, -0.35, 0, 0, 0.666],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
-  }],
-  turrets: [{
-    position: [0.5, 0, 0, Math.PI, Math.PI * 2, 1],
-    type: basic
+  }, {
+    position: [2, 0.5, 1, 0, 0, 0, 0.333],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.twin, s.gunner])
   }]
 };
 let gunnerTrapper = {
@@ -725,12 +725,12 @@ let gunnerTrapper = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
-    position: [1.65, 1, 1, 0, 0, Math.PI, 0],
+    position: [1.4, 1, 1, 0, 0, Math.PI, 0],
     ammo: "trap",
     stats: combineStats([s.basic, s.trapper]),
     prop: true
   }, {
-    position: [0.5, 1, 1.5, 0, 1.65, Math.PI, 0],
+    position: [0.5, 1, 1.5, 0, 1.35, Math.PI, 0],
     ammo: "trap",
     stats: combineStats([s.basic, s.trapper])
   }]
@@ -821,4 +821,4 @@ let fallenOverlord = {
   }]
 };
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream, ranger, stalker, autoGunner, gunnerTrapper }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream, ranger, stalker, battery, gunnerTrapper }

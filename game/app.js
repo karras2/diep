@@ -330,8 +330,8 @@ class Entity {
   }
   ondead(c) {
     if (c.length) {
-      let o = c[0];
-      o.master.xp += Math.floor(this.xp / 3);
+      let o = c[Math.floor(Math.random() * c.length)];
+      o.master.master.master.xp += Math.floor(this.xp / 3);
     }
     if (this.isBot) setTimeout(() => {
       let o = new Entity(game.random());
