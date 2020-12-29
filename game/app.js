@@ -410,7 +410,7 @@ class Entity {
     }
     if (this.invis) {
       if (Math.abs(this.vx) < 0.5 && Math.abs(this.vy) < 0.5) {
-        if (this.alpha <) this.alpha -= 0.01;
+        if (this.alpha > 0.01) this.alpha -= 0.01;
       } else this.alpha = 1;
     }
     this.draw();
@@ -426,8 +426,8 @@ class Entity {
       var a = (o.x + o.vx) - (this.x + this.vx);
       var b = (o.y + o.vy) - (this.y + this.vy);
       var c = Math.sqrt(a * a + b * b);
-      if (!o.isDead && o !== this.master && o !== this)
-        if ((o.type === "food" || (o.type === "tank" && o !== this.master)) && c < (this.view * this.master.size)) list.push(o);
+      if (!o.isDead && o !== this.master && o !== this) // chec discod
+        if ((o.type === "food" || (o.type === "tank" && o !== this.master)) && c < (this.view * this.master.size) && o.alpha < 0.5) list.push(o);
     }
     let body = this;
     if (list.length > 1) list.sort(function(a, b) {
