@@ -53,12 +53,14 @@ let game = {
     switch (o.team) {
       case 1:
         x2 = game.bases[0].w;
+        if (game.teams > 2) y2 = game.bases[0].h;
         break;
       case 2:
         x1 = game.width - game.bases[1].w;
+        if (game.teams > 2) y1 = game.bases[0].h;
         break;
       case 3:
-        x1 = game.width - game.bases[1].w;
+        x2 = game.bases[0].w;
         break;
       case 4:
         x1 = game.width - game.bases[1].w;
