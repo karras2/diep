@@ -9,16 +9,16 @@ let basicCollide = (i, o) => {
   if (Math.abs(i.vx + i.vy)> Math.abs(o.vx + o.vy)) fasterEntity = i;
   if (fasterEntity === i) {
     let v = JSON.parse(JSON.stringify({ x: i.vx, y: i.vy }));
-    i.vx *= 0.75;
-    i.vy *= 0.75;
-    o.vx = v.x * 0.1;
-    o.vy = v.y * 0.1;
+    if (o.type === "tank" || o.type === "food") {
+      o.vx = v.x / (o.size / i.density);
+      o.vy = v.y / (o.size / i.density); 
+    }
   } else {
     let v = JSON.parse(JSON.stringify({ x: o.vx, y: o.vy }));
-    o.vx *= 0.75;
-    o.vy *= 0.75;
-    i.vx = v.x * 0.1;
-    i.vy = v.y * 0.1;
+    if (i.type === "tank" || i.type === "food") {
+      i.vx = v.x / (i.size / o.density);
+      i.vy = v.y / (i.size / o.density); 
+    }
   };
   i.health.amount -= o.stats.damage;
   o.health.amount -= i.stats.damage;
