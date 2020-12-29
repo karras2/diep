@@ -897,6 +897,7 @@ let gameLoop = (() => {
   
   UI.drawBack();
   for (let o of entities) {
+    o.collisionArray = [];
     ctx.save();
     ctx.translate((o.x - player.camera.x) * player.camera.ratio + canvas.width / 2, (o.y - player.camera.y) * player.camera.ratio + canvas.height / 2);
     o.update();
@@ -907,15 +908,26 @@ let gameLoop = (() => {
   
   
   // Collision update
-  for (let o of entities) o.collisionArray = [];
   for (let o of entities) {
     for (let j of entities) {
-      var a = (o.x + o.vx) - (j.x + j.vx);
-      var b = (o.y + o.vy) - (j.y + j.vy);
-      var c = Math.sqrt(a * a + b * b);
-      if (c < o.size + j.size) {
-        if (o.type === "food" && j.type === "food") Collision.firmCollide(o, j);
-        Collision.basicCollide(o, j);
+      if (getDist({
+        x: o.x + o.vx,
+        y: o.y + o.vy
+      }, {
+        x: j.x + j.vx,
+        y: j.y + j.vy
+      }) < o.size + j.size) {
+        switch (true) {
+          case (o.type === "food" && j.type === "food"):
+            Collision.firmCollide(o, j);
+            break;
+          case ((o.team === j.team) && (o.type === "tank" && j.type === "tank")):
+            Collision.firmCollide(o, j);
+            break;
+          default:
+            Collision.basicCollide(o, j);
+            break;
+        };
       }
     }
   }
