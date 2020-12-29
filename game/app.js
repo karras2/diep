@@ -13,6 +13,7 @@ ctx.lineJoin = "round";
 let game = {
   width: 10000,
   height: 10000,
+  teams: 2,
   mode: "2 Teams",
   random: function() {
     return {
@@ -49,8 +50,7 @@ let player = {
   spawn: function() {
     let o = new Entity(game.random());
     o.define(Class.basic);
-    o.team = player.body ? player.body.team : Math.floor(Math.random() * 4) + 1;
-    o.color = ["blue", "red", "green", "purple"][o.team - 1];
+    if (!player.body) o.setTeam();
     o.name = localStorage.getItem("playername");
     o.xp = player.body ? Math.floor((player.body.xp > 23500 ? 23500 / 3 : player.body.xp / 3)) : 0;
     player.body = o;
@@ -471,7 +471,17 @@ class Entity {
       };
     }
   }
-  setTeam() {}
+  setTeam() {
+    let possible = [];
+    for (let i = 0; i < game.teams; i ++) possible.push([i + 1, 0]);
+    for (let o of entities) {
+      let team = possible.find(r => r[0] === o.team);
+      if (team) team[1] ++;
+    }
+    possible = possible.sort(function(a, b) { return a[1] - b[1] });
+    this.team = possible[0][0];
+    this.color = ["blue", "red", "green", "purple"][this.team - 1];
+  }
   draw() {
     ctx.globalAlpha = this.alpha;
     for (let gun of this.guns) gun.update();
@@ -997,8 +1007,7 @@ window["bots"] = function(data) {
     o.define(Class.basic);
     let names = ['Alice', 'Bob', 'Carmen', 'David', 'Edith', 'Freddy', 'Gustav', 'Helga', 'Janet', 'Lorenzo', 'Mary', 'Nora', 'Olivia', 'Peter', 'Queen', 'Roger', 'Suzanne', 'Tommy', 'Ursula', 'Vincent', 'Wilhelm', 'Xerxes', 'Yvonne', 'Zachary'];
     o.name = "[BOT] " + names[Math.floor(Math.random() * names.length)];
-    o.team = Math.floor(Math.random() * 4) + 1;
-    o.color = ["blue", "red", "green", "purple"][o.team - 1];
+    o.setTeam();
     o.isBot = true;
   }
 }
