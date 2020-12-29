@@ -49,6 +49,7 @@ let game = {
         x2 = game.width,
         y1 = 0,
         y2 = game.height;
+    console.log(o.team);
     switch (o.team) {
       case 1:
         x2 = game.bases[0].w;
@@ -58,11 +59,12 @@ let game = {
         break;
       default:
         break;
-    }
+    };
+    console.log(x1, x2, y1, y2);
     for (let i = 0; i < 1000; i ++) {
       let pos = {
-        x: Math.floor(Math.random() * x2 - x1) + x2,
-        y: Math.floor(Math.random() * y2 - y1) + y2,
+        x: Math.floor(Math.random() * (x2 - x1) ) + x1,
+        y: Math.floor(Math.random() * (y2 - y1) ) + y1,
       };
       for (let o of entities) if (getDist(o, pos) < o.size * 2) continue;
       return pos;
@@ -122,11 +124,11 @@ let player = {
       o.team = player.body.team;
       o.color = player.body.color;
     }
-    let { x, y } = game.spawnPlayer(o);
-    player.x = x;
-    player.y = y;
     o.name = localStorage.getItem("playername");
     o.xp = player.body ? Math.floor((player.body.xp > 23500 ? 23500 / 3 : player.body.xp / 3)) : 0;
+    let { x, y } = game.spawnPlayer(o);
+    o.x = x;
+    o.y = y;
     player.body = o;
   }
 };
@@ -419,6 +421,9 @@ class Entity {
       o.isBot = true;
       o.team = this.team;
       o.color = this.color;
+      let { x, y } = game.spawnPlayer(o);
+      o.x = x;
+      o.y = y;
     }, 5000);
     if (this.type === "food") setTimeout(() => {
       if (this.nestFood) {
@@ -576,6 +581,9 @@ class Entity {
       if (team) team[1] ++;
     }
     possible = possible.sort(function(a, b) { return a[1] - b[1] });
+    let firstPlayer = true;
+    for (let o of entities) if (o.team < 0 && o.type === "tank") firstPlayer = false;
+    if (firstPlayer) possible = possible.sort(function(a, b) { return 0.5 - Math.random() });
     this.team = possible[0][0];
     this.color = ["blue", "red", "green", "purple"][this.team - 1];
   }
@@ -1135,5 +1143,8 @@ window["bots"] = function(data) {
     o.name = "[BOT] " + names[Math.floor(Math.random() * names.length)];
     o.setTeam();
     o.isBot = true;
+    let { x, y } = game.spawnPlayer(o);
+    o.x = x;
+    o.y = y;
   }
 }
