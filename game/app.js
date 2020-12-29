@@ -44,20 +44,25 @@ let game = {
       return pos;
     }
   },
-  bases: [{
-    x: 0,
-    y: 0,
-    w: this.width / 10,
-    h: this.height,
-    t: 1
-  }, {
-    x: (this.width - this.width / 10),
-    y: 0,
-    w: this.width / 10,
-    h: this.height,
-    t: 2
-  }]
+  bases: ((g) => {
+    let out = [];
+    if (g.teams === 2) out.push({
+      x: 0,
+      y: 0,
+      w: g.width / 10,
+      h: g.height,
+      t: 1
+    }, {
+      x: g.width / 10,
+      y: 0,
+      w: g.width / 10,
+      h: g.height,
+      t: 2
+    });
+    game.bases = out;
+  })
 };
+game.bases(game);
 
 window["game"] = game;
 
@@ -664,6 +669,10 @@ let UI = {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = window.colors.background[0];
     ctx.fillRect(-(player.camera.x * player.camera.ratio) + canvas.width/2, -(player.camera.y * player.camera.ratio) + canvas.height/2, game.width * player.camera.ratio, game.height * player.camera.ratio);
+    for (let base of game.bases) {
+      ctx.fillStyle = window.colors[["blue", "red", "green", "purple"][base.t - 1]][0];
+      ctx.fillRect((-(player.camera.x * player.camera.ratio) + canvas.width / 2) + base.x, (-(player.camera.y * player.camera.ratio) + canvas.height / 2) + base.y, (base.w * player.camera.ratio), (base.h * player.camera.ratio));
+    }
     ctx.lineWidth = 3 * player.camera.ratio;
     ctx.beginPath();
     ctx.globalAlpha = 0.05;

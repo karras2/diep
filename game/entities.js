@@ -841,5 +841,25 @@ let fallenOverlord = {
     stats: combineStats([s.basic, s.fover])
   }]
 };
+let arenaCloser = {
+  label: "Arena Closer",
+  type: "tank",
+  color: "square",
+  xp: 500000,
+  health: {
+    max: 10000,
+    amount: 10000
+  },
+  stats: {
+    speed: 10,
+    fov: 1.25
+  },
+  size: 100,
+  guns: [{
+    position: [1.5, 1, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, [0.5, 1, 1, 10, 10, 2, 1, 5, 1]])
+  }]
+};
 
-export { square, triangle, pentagon, alphaPentagon, crasher, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream, ranger, stalker, battery, gunnerTrapper }
+export { square, triangle, pentagon, alphaPentagon, crasher, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream, ranger, stalker, battery, gunnerTrapper, arenaCloser }
