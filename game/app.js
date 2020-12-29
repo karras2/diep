@@ -13,7 +13,7 @@ ctx.lineJoin = "round";
 let game = {
   width: 10000,
   height: 10000,
-  mode: "FFA",
+  mode: "2 Teams",
   random: function() {
     return {
       x: Math.floor(Math.random() * game.width),
@@ -452,7 +452,7 @@ class Entity {
       var b = (o.y + o.vy) - (this.y + this.vy);
       var c = Math.sqrt(a * a + b * b);
       if (!o.isDead && o !== this.master && o !== this)
-        if ((o.type === "food" || (o.type === "tank" && o !== this.master)) && c < (this.view * this.master.size) && o.alpha > 0.5) list.push(o);
+        if ((o.type === "food" || (o.type === "tank" && o !== this.master)) && c < (this.view * this.master.size) && o.alpha > 0.5 && o.team !== this.team) list.push(o);
     }
     let body = this;
     if (list.length > 1) list.sort(function(a, b) {
@@ -471,6 +471,7 @@ class Entity {
       };
     }
   }
+  setTeam() {}
   draw() {
     ctx.globalAlpha = this.alpha;
     for (let gun of this.guns) gun.update();
@@ -938,9 +939,8 @@ UI.init();
     a.define(Class[type]);
     a.team = 0;
   }
-  setTimeout(() => window.bots(5), 1000);
+  setTimeout(() => window.bots(10), 1000);
 })();
-
 
 
 
