@@ -291,6 +291,9 @@ class Entity {
       if (key === "guns") {
         for (let gun of type.guns) this.guns.push(new Gun(this, gun));
       } else if (key === "turrets") {
+        for (let turret of type.turrets) {
+          let o = new Entity()
+        }
       } else if (key === "stats") {
         for (let k in type.stats) this.stats[k] = type.stats[k];
       } else if (key === "moveToTarget") {
