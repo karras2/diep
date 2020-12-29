@@ -21,7 +21,13 @@ let game = {
         x: Math.floor(Math.random() * game.width),
         y: Math.floor(Math.random() * game.height)
       };
-      
+      if (getDist(pos, {
+        x: game.width / 2,
+        y: game.height / 2
+      }) > game.width / 5) {
+        for (let o of entities) if (getDist(o, pos) < o.size * 2) continue;
+        return pos;
+      }
     }
     return {
       x: Math.floor(Math.random() * game.width),
@@ -29,11 +35,16 @@ let game = {
     }
   },
   randomNest: function() {
-    return {
-      x: game.width / 2 + (Math.floor(Math.random() * game.width / 5) - game.width / 10),
-      y: game.height / 2 + (Math.floor(Math.random() * game.width / 5) - game.height / 10),
+    for (let i = 0; i < 1000; i ++) {
+      let pos = {
+        x: game.width / 2 + (Math.floor(Math.random() * game.width / 5) - game.width / 10),
+        y: game.height / 2 + (Math.floor(Math.random() * game.width / 5) - game.height / 10),
+      };
+      for (let o of entities) if (getDist(o, pos) < o.size * 2) continue;
+      return pos;
     }
-  }
+  },
+  bases: (() => {} return)
 };
 
 window["game"] = game;
@@ -958,7 +969,7 @@ let gameLoop = (() => {
       }) < o.size + j.size) {
         switch (true) {
           case (o.type === "food" && j.type === "food"):
-            Collision.firmCollide(o, j);
+            //Collision.firmCollide(o, j);
             break;
           case ((o.team === j.team) && (o.type === "tank" && j.type === "tank")):
             Collision.firmCollide(o, j);
