@@ -19,8 +19,8 @@ let basicCollide = (i, o) => {
     i.vx = v.x * 0.1;
     i.vy = v.y * 0.1;
   };
-  i.health.amount -= o.stats.damage;
-  o.health.amount -= i.stats.damage;
+  if (i.team !== o.team) i.health.amount -= o.stats.damage;
+  if (i.team !== o.team) o.health.amount -= i.stats.damage;
   if (i.health.amount <= 0) i.kill();
   if (o.health.amount <= 0) o.kill();
 };
