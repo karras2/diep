@@ -11,8 +11,8 @@ let ctx = canvas.getContext("2d");
 ctx.lineJoin = "round";
 
 let game = {
-  width: 15000,
-  height: 15000,
+  width: 10000,
+  height: 10000,
   teams: 4,
   mode: "4 Teams",
   random: function() {
@@ -383,7 +383,7 @@ class Entity {
       bSpeed: 1,
       bPene: 1,
       bDmg: 1,
-      reload: 0.5,
+      reload: 0.25,
       mSpeed: 1,
       fov: 1
     };
@@ -1107,7 +1107,7 @@ UI.init();
 
 (() => {
   player.spawn();
-  for (let i = 0; i < 75; i ++) {
+  for (let i = 0; i < 150; i ++) {
     let a = new Entity(game.random());
     let type = chooseChance({
       square: 30,
@@ -1128,7 +1128,8 @@ UI.init();
     a.team = 0;
     a.nestFood = 1;
   }
-  setTimeout(() => window.bots(10), 1000);
+  let botamount = game.teams ? 5 * game.teams : 15;
+  setTimeout(() => window.bots(botamount), 1000);
 })();
 
 
