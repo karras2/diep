@@ -309,7 +309,7 @@ let assassin = {
     fov: 1.3
   },
   guns: [{
-    position: [3, 0.9, 1, 0, 0, 0, 0],
+    position: [2.8, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
   }],
@@ -662,17 +662,33 @@ let preda = {
     stats: combineStats([s.basic, s.sniper])
   }]
 };
-let assassin = {
-  label: "Assassin",
+let ranger = {
+  label: "Ranger",
   stats: {
-    fov: 1.3
+    fov: 1.5
   },
   guns: [{
-    position: [3, 0.9, 1, 0, 0, 0, 0],
+    position: [2.8, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.sniper])
-  }],
-  upgrades: ["ranger", "stalker"]
+  }, {
+    position: [1.5, 1.75, 0.5, 0, 0, 0, 0],
+    ammo: "bullet",
+    prop: true,
+    stats: combineStats([s.basic, s.sniper])
+  }]
+};
+let stalker = {
+  label: "Stalker",
+  stats: {
+    fov: 1.4
+  },
+  invis: true,
+  guns: [{
+    position: [2.8, 1.5, 0.75, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.sniper])
+  }]
 };
 
 // Bosses
@@ -760,4 +776,4 @@ let fallenOverlord = {
   }]
 };
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream }
+export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream, ranger, stalker }

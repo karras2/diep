@@ -408,6 +408,11 @@ class Entity {
       this.x += this.vx;
       this.y += this.vy;
     }
+    if (this.invis) {
+      if (Math.abs(this.vx) < 0.5 && Math.abs(this.vy) < 0.5) {
+        if (this.alpha <) this.alpha -= 0.01;
+      } else this.alpha = 1;
+    }
     this.draw();
     if (this.spin === 1) this.angle += 0.02;
     if (this.spin === 2) this.angle += 0.005;
