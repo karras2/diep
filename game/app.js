@@ -14,6 +14,7 @@ let game = {
   width: 10000,
   height: 10000,
   teams: 4,
+  bossTimer: 1000,
   mode: "4 Teams",
   random: function() {
     for (let i = 0; i < 1000; i ++) {
@@ -662,6 +663,7 @@ class Gun {
     this.y = data.position[4];
     this.w = data.position[1];
     this.h = data.position[0];
+    this.maxHeight = data.position[0];
     this.angle = data.position[5];
     this.open = data.position[2];
     this.delay = data.position[6];
@@ -708,6 +710,9 @@ class Gun {
     ctx.stroke();
     ctx.restore();
   }
+  animate() {
+    
+  }
   shoot() {
     if (this.prop || this.source.isDead) return;
     let children = [];
@@ -735,6 +740,17 @@ class Gun {
     o.health.max = this.stats.pene * this.source.skill.bPene;
     o.health.amount = this.stats.pene * this.source.skill.bPene;
     o.define(Class[this.ammo]);
+    this.animDir = 1;
+    this.h = this.maxHeight;
+    for (let i = 0; i < 20; i ++) setTimeout(() => {
+      if (this.animDir) {
+        this.h -= (this.maxHeight * 0.05);
+        if (this.h <= this.maxHeight * 0.75) this.animDir = 0;
+      } else {
+        this.h += (this.maxHeight * 0.05);
+        if (this.h > this.maxHeight) this.animDir = 1;
+      }
+    }, 50 * i);
   }
 };
 
@@ -1086,7 +1102,8 @@ let gameLoop = (() => {
       }
     }
   }
-  if (Math.random() > 0.99999) window.boss();
+  game.bossTimer --;
+  if (game.bossTimer === 0) window["boss"]();
   
   player.body.vx = lerp(player.body.vx, 0, 0.1);
   player.body.vy = lerp(player.body.vy, 0, 0.1);
@@ -1129,7 +1146,7 @@ UI.init();
     a.nestFood = 1;
   }
   let botamount = game.teams ? 5 * game.teams : 15;
-  setTimeout(() => window.bots(botamount), 1000);
+  setTimeout(() => window.bots(0), 1000);
 })();
 
 
@@ -1179,6 +1196,7 @@ window["boss"] = function() {
   let bosses = [Class.summoner, Class.fallenOverlord];
   o.team = 0;
   o.define(bosses[Math.floor(Math.random() * bosses.length)]);
+  game.bossTimer = 1000;
 };
 
 window["bots"] = function(data) {
