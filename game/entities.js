@@ -94,6 +94,22 @@ let alphaPentagon = {
   },
   xp: 9000,
 };
+let crasher = {
+  label: "Crasher",
+  size: 30,
+  type: "food",
+  color: "crasher",
+  shape: 3,
+  slows: true,
+  health: {
+    max: 100,
+    amount: 100
+  },
+  stats: {
+    damage: 10
+  },
+  xp: 250,
+};
 
 // Ammo
 let bullet = {
@@ -111,7 +127,7 @@ let trap = {
 let drone = {
   label: "Drone",
   type: "bullet",
-  view: 25,
+  view: 15,
   speedMult: 5,
   moveToTarget: true,
   shape: 3,
@@ -126,7 +142,7 @@ necroDrone.shape = 4;
 let minion = {
   label: "Minion",
   type: "bullet",
-  view: 25,
+  view: 10,
   speedMult: 1.5,
   minion: true,
   moveToTarget: true,
@@ -823,4 +839,4 @@ let fallenOverlord = {
   }]
 };
 
-export { square, triangle, pentagon, alphaPentagon, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream, ranger, stalker, battery, gunnerTrapper }
+export { square, triangle, pentagon, alphaPentagon, crasher, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream, ranger, stalker, battery, gunnerTrapper }

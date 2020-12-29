@@ -20,8 +20,16 @@ let game = {
       x: Math.floor(Math.random() * game.width),
       y: Math.floor(Math.random() * game.height)
     }
+  },
+  randomNest: function() {
+    return {
+      x: game.width / 2 + (Math.floor(Math.random() * game.width / 5) - game.width / 10),
+      y: game.height / 2 + (Math.floor(Math.random() * game.width / 5) - game.height / 10),
+    }
   }
 };
+
+window["game"] = game;
 
 let UPGRADETIERS = [15, 30, 45];
 
@@ -351,14 +359,27 @@ class Entity {
       o.color = this.color;
     }, 5000);
     if (this.type === "food") setTimeout(() => {
-      let o = new Entity(game.random());
-      let type = chooseChance({
-        square: 30,
-        triangle: 20,
-        pentagon: 10,
-        alphaPentagon: 1
-      });
-      o.define(Class[type]);
+      if (this.nestFood) {
+        let a = new Entity(game.randomNest());
+        let type = chooseChance({
+          crasher: 30,
+          pentagon: 20,
+          alphaPentagon: 10
+        });
+        a.define(Class[type]);
+        a.team = 0;
+        a.nestFood = 1;
+      } else {
+        let o = new Entity(game.random());
+        let type = chooseChance({
+          square: 30,
+          triangle: 20,
+          pentagon: 10,
+          alphaPentagon: 1
+        });
+        o.define(Class[type]); 
+        o.team = 0;
+      }
     }, 5000);
   }
   update() {
@@ -429,8 +450,10 @@ class Entity {
       this.size += 0.075;
       if (this.alpha < 0) this.alpha = 0;
     }
-    if (this.x + this.vx < 0 || this.x + this.vx > game.width) this.vx *= -0.5;
-    if (this.y + this.vy < 0 || this.y + this.vy > game.height) this.vy *= -0.5;
+    if (this.type === "tank" || this.type === "shape") {
+      if (this.x + this.vx < 0 || this.x + this.vx > game.width) this.vx *= -0.5;
+      if (this.y + this.vy < 0 || this.y + this.vy > game.height) this.vy *= -0.5; 
+    }
     if (!this.moveToTarget) {
       this.x += this.vx * this.stats.speed;
       this.y += this.vy * this.stats.speed;
@@ -959,11 +982,21 @@ UI.init();
     let type = chooseChance({
       square: 30,
       triangle: 20,
-      pentagon: 10,
-      alphaPentagon: 1
+      pentagon: 10
     });
     a.define(Class[type]);
     a.team = 0;
+  }
+  for (let i = 0; i < 25; i ++) {
+    let a = new Entity(game.randomNest());
+    let type = chooseChance({
+      crasher: 30,
+      pentagon: 20,
+      alphaPentagon: 10
+    });
+    a.define(Class[type]);
+    a.team = 0;
+    a.nestFood = 1;
   }
   setTimeout(() => window.bots(10), 1000);
 })();
