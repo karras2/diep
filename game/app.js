@@ -290,6 +290,7 @@ class Entity {
     for (let key in type) {
       if (key === "guns") {
         for (let gun of type.guns) this.guns.push(new Gun(this, gun));
+      } else if (key === "turrets") {
       } else if (key === "stats") {
         for (let k in type.stats) this.stats[k] = type.stats[k];
       } else if (key === "moveToTarget") {
@@ -427,7 +428,7 @@ class Entity {
       var b = (o.y + o.vy) - (this.y + this.vy);
       var c = Math.sqrt(a * a + b * b);
       if (!o.isDead && o !== this.master && o !== this)
-        if ((o.type === "food" || (o.type === "tank" && o !== this.master)) && c < (this.view * this.master.size) && o.alpha < 0.5) list.push(o);
+        if ((o.type === "food" || (o.type === "tank" && o !== this.master)) && c < (this.view * this.master.size) && o.alpha > 0.5) list.push(o);
     }
     let body = this;
     if (list.length > 1) list.sort(function(a, b) {
