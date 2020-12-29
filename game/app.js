@@ -16,6 +16,13 @@ let game = {
   teams: 2,
   mode: "2 Teams",
   random: function() {
+    for (let i = 0; i < 1000; i ++) {
+      let pos = {
+        x: Math.floor(Math.random() * game.width),
+        y: Math.floor(Math.random() * game.height)
+      };
+      
+    }
     return {
       x: Math.floor(Math.random() * game.width),
       y: Math.floor(Math.random() * game.height)
@@ -490,10 +497,17 @@ class Entity {
       if (this.target.type) if (list.includes(this.target)) return;
       this.target = list[0];
       return;
-    } else if (this.type !== "tank") {
+    } else if (this.type !== "tank" || this.type !== "food") {
       this.target = {
         x: this.master.x + (Math.cos(Math.random() * Math.PI * 2) * this.master.size * Math.floor(Math.random() * 10)),
         y: this.master.y + (Math.sin(Math.random() * Math.PI * 2) * this.master.size * Math.floor(Math.random() * 10)),
+        vx: 0,
+        vy: 0
+      };
+    } else {
+      this.target = {
+        x: this.master.x,
+        y: this.master.y,
         vx: 0,
         vy: 0
       };

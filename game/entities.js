@@ -109,6 +109,9 @@ let crasher = {
     damage: 10
   },
   xp: 250,
+  moveToTarget: true,
+  view: 10,
+  speedMult: 5,
 };
 
 // Ammo
