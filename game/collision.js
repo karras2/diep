@@ -20,8 +20,8 @@ let basicCollide = (i, o) => {
       i.vy = v.y * 0.25; 
     }
   };
-  i.health.amount -= o.stats.damage;
-  o.health.amount -= i.stats.damage;
+  i.health.amount -= o.damage;
+  o.health.amount -= i.damage;
   if (i.health.amount <= 0) i.kill();
   if (o.health.amount <= 0) o.kill();
 };

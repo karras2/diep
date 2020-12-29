@@ -374,15 +374,18 @@ class Entity {
       max: 100,
       amount: 100
     };
-    this.stats = {
-      damage: 5,
-      pene: 5,
-      speed: 5,
+    this.damage = 5;
+    this.speed = 7.5;
+    this.skill = {
+      regen: 1,
+      health: 1,
+      damage: 1,
       bSpeed: 1,
-      fov: 1,
-      bDamage: 1,
       bPene: 1,
-      reload: 0.5
+      bDmg: 1,
+      reload: 1,
+      mSpeed: 1,
+      fov: 1
     };
     this.vx = 0;
     this.vy = 0;
@@ -415,8 +418,6 @@ class Entity {
           }, this);
           o.bind(this, turret);
         }
-      } else if (key === "stats") {
-        for (let k in type.stats) this.stats[k] = type.stats[k];
       } else if (key === "moveToTarget") {
         setTimeout(() => {
           this[key] = type[key];
@@ -476,8 +477,7 @@ class Entity {
         let type = chooseChance({
           square: 30,
           triangle: 20,
-          pentagon: 10,
-          alphaPentagon: 1
+          pentagon: 10
         });
         o.define(Class[type]); 
         o.team = 0;
@@ -499,7 +499,7 @@ class Entity {
       let oldHP = JSON.parse(JSON.stringify(this.health));
       this.health.max = (100 + (this.level * 10));
       if (oldHP.max < this.health.max) this.health.amount += this.health.max - oldHP.max;
-      this.stats.speed = 5 - (this.level / 50);
+      this.speed = 7.5 - (this.level / 50);
     } else if (this.boss || this.isBot) {
       this.vx = this.vy = 0;
       this.findTarget();
@@ -516,7 +516,7 @@ class Entity {
         let oldHP = JSON.parse(JSON.stringify(this.health));
         this.health.max = (100 + (this.level * 10));
         if (oldHP.max < this.health.max) this.health.amount += this.health.max - oldHP.max;
-        this.stats.speed = 5 - (this.level / 50);
+        this.speed = 7.5 - (this.level / 50);
       }
       let canUpgrade = false;
       if (this.level >= UPGRADETIERS[this.tier]) canUpgrade = true;
@@ -529,8 +529,8 @@ class Entity {
     } else if (this.moveToMasterTarget) {
       let angleToGo = Math.atan2(this.master.y - (this.y + this.master.target.y), this.master.x - (this.x + this.master.target.x));//Math.atan2(this.master.y - this.y + player.mouse.y - canvas.height / 2, this.master.x - this.x + player.mouse.x - canvas.width / 2);
       let newVelocity = {
-        x: Math.cos(angleToGo) * this.stats.speed, 
-        y: Math.sin(angleToGo) * this.stats.speed
+        x: Math.cos(angleToGo) * this.speed, 
+        y: Math.sin(angleToGo) * this.speed
       };
       this.vx = lerp(this.vx, newVelocity.x, 0.1);
       this.vy = lerp(this.vy, newVelocity.y, 0.1);
@@ -539,8 +539,8 @@ class Entity {
       this.findTarget();
       let angleToGo = Math.atan2(this.target.y - this.y, this.target.x - this.x);
       let newVelocity = {
-        x: Math.cos(angleToGo) * this.stats.speed * this.speedMult, 
-        y: Math.sin(angleToGo) * this.stats.speed * this.speedMult
+        x: Math.cos(angleToGo) * this.speed * this.speedMult, 
+        y: Math.sin(angleToGo) * this.speed * this.speedMult
       };
       this.vx = lerp(this.vx, newVelocity.x, 0.1);
       this.vy = lerp(this.vy, newVelocity.y, 0.1);
@@ -562,8 +562,8 @@ class Entity {
       }
     }
     if (!this.moveToTarget) {
-      this.x += this.vx * this.stats.speed;
-      this.y += this.vy * this.stats.speed;
+      this.x += this.vx * (this.speed * this.skill.mSpeed);
+      this.y += this.vy * (this.speed * this.skill.mSpeed);
     } else {
       this.x += this.vx;
       this.y += this.vy;
@@ -670,8 +670,8 @@ class Gun {
     this.ammo = data.ammo;
     this.color = data.color || window.colors.gray;
     if (this.color === "me") this.color = window.colors[this.source.color];
-    this.reload = (this.stats.reload * this.source.stats.reload) * this.delay;
-    this.maxReload = (this.stats.reload * this.source.stats.reload);
+    this.reload = (this.stats.reload * this.source.skill.reload) * this.delay;
+    this.maxReload = (this.stats.reload * this.source.skill.reload);
     this.prop = data.prop || false;
   }
   update() {
@@ -679,7 +679,7 @@ class Gun {
     this.reload --;
     if (this.reload <= 0) {
       if (this.source.shooting || this.source.type === "bullet" || this.autoShoot) this.shoot();
-      else this.reload = this.stats.reload * this.delay;
+      else this.reload = this.maxReload * this.delay;
     }
     this.draw();
   }
@@ -720,15 +720,15 @@ class Gun {
     o.y += Math.sin(this.angle + this.source.angle) * (0 * this.source.size);
     o.size = ((this.source.size * (this.w / 2)) * 0.9) * this.stats.size;
     let spray = (Math.floor(Math.random() * (this.stats.spray * 2)) - this.stats.spray) / 10;
-    o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);
-    o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);
+    o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.skill.bSpeed);
+    o.vy = Math.sin(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.skill.bSpeed);
     o.color = this.source.color;
     o.angle = this.source.angle + this.angle;
     o.range = this.stats.range;
     o.density = this.stats.density;
-    o.stats.damage = this.stats.dmg * this.source.stats.bDamage;
-    o.health.max = this.stats.pene * this.source.stats.bPene;
-    o.health.amount = this.stats.pene * this.source.stats.bPene;
+    o.damage = this.stats.dmg * this.source.skill.bDmg;
+    o.health.max = this.stats.pene * this.source.skill.bPene;
+    o.health.amount = this.stats.pene * this.source.skill.bPene;
     o.define(Class[this.ammo]);
   }
 };
@@ -1042,7 +1042,7 @@ let gameLoop = (() => {
   player.camera.y = lerp(player.camera.y, player.body.y, 0.05);
   ctx.clearRect(0, 0, innerWidth, innerHeight);
   ctx.save();
-  player.body.fov = lerp(player.body.fov, 0.1 * (player.body.size / 5) * (player.body.stats.fov || 1), 0.01);
+  player.body.fov = lerp(player.body.fov, 0.1 * (player.body.size / 5) * (player.body.skill.fov || 1), 0.01);
   player.camera.ratio = (canvas.width + canvas.height) / 4000 / player.body.fov
   
   UI.drawBack();
