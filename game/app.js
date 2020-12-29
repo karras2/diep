@@ -11,8 +11,8 @@ let ctx = canvas.getContext("2d");
 ctx.lineJoin = "round";
 
 let game = {
-  width: 10000,
-  height: 10000,
+  width: 6500,
+  height: 6500,
   teams: 2,
   mode: "2 Teams",
   random: function() {
@@ -353,9 +353,9 @@ class Entity {
     if (this.type === "food") setTimeout(() => {
       let o = new Entity(game.random());
       let type = chooseChance({
-        square: 4,
-        triangle: 3,
-        pentagon: 2,
+        square: 30,
+        triangle: 20,
+        pentagon: 10,
         alphaPentagon: 1
       });
       o.define(Class[type]);
@@ -570,16 +570,14 @@ class Gun {
     if (this.source.maxChildren) if (children.length >= this.source.maxChildren) return;
     this.reload = this.maxReload;
     let o = new Entity({
-      x: this.source.x, // nvm
-      y: this.source.y // moveToMasterTarget
-    }, this.source.master.master.master); // what?
+      x: this.source.x,
+      y: this.source.y
+    }, this.source.master.master.master);
     o.gunSourceID = this.gunID;
     o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size); 
     o.y += Math.sin(this.angle + this.source.angle) * (this.x * this.source.size);
     o.x += Math.cos(this.angle + this.source.angle) * (0 * this.source.size); 
     o.y += Math.sin(this.angle + this.source.angle) * (0 * this.source.size);
-    // thats the offset? hm
-    // why does it add it 2 times was gonna go for y. yeah
     o.size = ((this.source.size * (this.w / 2)) * 0.9) * this.stats.size;
     let spray = (Math.floor(Math.random() * (this.stats.spray * 2)) - this.stats.spray) / 10;
     o.vx = Math.cos(this.source.angle + this.angle + (Math.PI / 2) + spray) * (this.stats.speed * this.source.stats.bSpeed);
@@ -935,7 +933,7 @@ let gameLoop = (() => {
       }
     }
   }
-  if (Math.random() > 0.975) window.boss();
+  if (Math.random() > 0.99999) window.boss();
   
   player.body.vx = lerp(player.body.vx, 0, 0.1);
   player.body.vy = lerp(player.body.vy, 0, 0.1);
@@ -956,12 +954,12 @@ UI.init();
 
 (() => {
   player.spawn();
-  for (let i = 0; i < 100; i ++) {
+  for (let i = 0; i < 75; i ++) {
     let a = new Entity(game.random());
     let type = chooseChance({
-      square: 4,
-      triangle: 3,
-      pentagon: 2,
+      square: 30,
+      triangle: 20,
+      pentagon: 10,
       alphaPentagon: 1
     });
     a.define(Class[type]);
