@@ -13,8 +13,8 @@ ctx.lineJoin = "round";
 let game = {
   width: 6500,
   height: 6500,
-  teams: 2,
-  mode: "2 Teams",
+  teams: 4,
+  mode: "4 Teams",
   random: function() {
     for (let i = 0; i < 1000; i ++) {
       let pos = {
@@ -57,6 +57,12 @@ let game = {
       case 2:
         x1 = game.width - game.bases[1].w;
         break;
+      case 3:
+        x1 = game.width - game.bases[1].w;
+        break;
+      case 4:
+        x1 = game.width - game.bases[1].w;
+        break;
       default:
         break;
     };
@@ -75,14 +81,39 @@ let game = {
     if (g.teams === 2) out.push({
       x: 0,
       y: 0,
-      w: g.width / 10,
+      w: g.width / 7.5,
       h: g.height,
       t: 1
     }, {
-      x: g.width - (g.width / 10),
+      x: g.width - (g.width / 7.5),
       y: 0,
-      w: g.width / 10,
+      w: g.width / 7.5,
       h: g.height,
+      t: 2
+    });
+    if (g.teams === 4) out.push({
+      x: 0,
+      y: 0,
+      w: g.width / 5,
+      h: g.height / 5,
+      t: 1
+    }, {
+      x: 0,
+      y: g.height - (g.height / 5),
+      w: g.width / 5,
+      h: g.height / 5,
+      t: 3
+    }, {
+      x: g.width - (g.width / 5),
+      y: 0,
+      w: g.width / 5,
+      h: g.height / 5,
+      t: 4
+    }, {
+      x: g.width - (g.width / 5),
+      y: g.height - (g.height / 5),
+      w: g.width / 5,
+      h: g.height / 5,
       t: 2
     });
     game.bases = out;
@@ -711,7 +742,7 @@ let UI = {
     ctx.fillRect(-(player.camera.x * player.camera.ratio) + canvas.width/2, -(player.camera.y * player.camera.ratio) + canvas.height/2, game.width * player.camera.ratio, game.height * player.camera.ratio);
     for (let base of game.bases) {
       ctx.fillStyle = window.colors[["blue", "red", "green", "purple"][base.t - 1]][0];
-      ctx.fillRect((-(player.camera.x * player.camera.ratio) + canvas.width / 2) + (base.x * player.camera.ratio), (-(player.camera.y * player.camera.ratio) + canvas.height / 2) + base.y, (base.w * player.camera.ratio), (base.h * player.camera.ratio));
+      ctx.fillRect((-(player.camera.x * player.camera.ratio) + canvas.width / 2) + (base.x * player.camera.ratio), (-(player.camera.y * player.camera.ratio) + canvas.height / 2) + (base.y * player.camera.ratio), (base.w * player.camera.ratio), (base.h * player.camera.ratio));
     }
     ctx.lineWidth = 3 * player.camera.ratio;
     ctx.beginPath();
@@ -1141,6 +1172,7 @@ window["boss"] = function() {
 };
 
 window["bots"] = function(data) {
+  return;
   for (let i = 0; i < data; i ++) {
     let o = new Entity(game.random());
     o.define(Class.basic);
