@@ -384,7 +384,7 @@ class Entity {
       bSpeed: 1,
       bPene: 1,
       bDmg: 1,
-      reload: 0.25,
+      reload: 1,
       mSpeed: 1,
       fov: 1
     };
@@ -688,6 +688,7 @@ class Gun {
     } else {
       if (this.reload <= 0) this.reload = this.maxReload * this.delay;
     }
+    this.animate();
     this.draw();
   }
   draw() {
@@ -711,7 +712,17 @@ class Gun {
     ctx.restore();
   }
   animate() {
-    
+    if (!this.isAnimating) return;
+    if (this.animDir) {
+      this.h -= (this.maxHeight * 0.05);
+      if (this.h <= this.maxHeight * 0.85) this.animDir = 0;
+    } else {
+      this.h += (this.maxHeight * 0.05);
+      if (this.h >= this.maxHeight) {
+        this.isAnimating = 0;
+        this.h = this.maxHeight;
+      }
+    }
   }
   shoot() {
     if (this.prop || this.source.isDead) return;
@@ -742,15 +753,7 @@ class Gun {
     o.define(Class[this.ammo]);
     this.animDir = 1;
     this.h = this.maxHeight;
-    for (let i = 0; i < 20; i ++) setTimeout(() => {
-      if (this.animDir) {
-        this.h -= (this.maxHeight * 0.05);
-        if (this.h <= this.maxHeight * 0.75) this.animDir = 0;
-      } else {
-        this.h += (this.maxHeight * 0.05);
-        if (this.h > this.maxHeight) this.animDir = 1;
-      }
-    }, 50 * i);
+    this.isAnimating = true;
   }
 };
 
