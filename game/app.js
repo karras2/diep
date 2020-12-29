@@ -11,8 +11,8 @@ let ctx = canvas.getContext("2d");
 ctx.lineJoin = "round";
 
 let game = {
-  width: 6500,
-  height: 6500,
+  width: 15000,
+  height: 15000,
   teams: 4,
   mode: "4 Teams",
   random: function() {
@@ -383,7 +383,7 @@ class Entity {
       bSpeed: 1,
       bPene: 1,
       bDmg: 1,
-      reload: 1,
+      reload: 0.5,
       mSpeed: 1,
       fov: 1
     };
@@ -680,6 +680,11 @@ class Gun {
     if (this.reload <= 0) {
       if (this.source.shooting || this.source.type === "bullet" || this.autoShoot) this.shoot();
       else this.reload = this.maxReload * this.delay;
+    }
+    if (this.source.shooting || this.source.type === "bullet" || this.autoShoot) {
+      if (this.reload <= 0) this.shoot();
+    } else {
+      if (this.reload <= 0) this.reload = this.maxReload * this.delay;
     }
     this.draw();
   }
