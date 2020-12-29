@@ -214,9 +214,7 @@ let machine = {
 };
 let sniper = {
   label: "Sniper",
-  stats: {
-    fov: 1.1
-  },
+  fov: 1.2,
   guns: [{
     position: [2.5, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
@@ -293,7 +291,7 @@ let gunner = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
-    position: [1.6, 0.5, 1, -0.7, 0, 0, 0.5],
+    position: [1.6, 0.5, 1, -0.7, 0, 0, 0.75],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
@@ -301,7 +299,7 @@ let gunner = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }, {
-    position: [1.8, 0.5, 1, -0.35, 0, 0, 0],
+    position: [1.8, 0.5, 1, -0.35, 0, 0, 0.25],
     ammo: "bullet",
     stats: combineStats([s.basic, s.twin, s.gunner])
   }],
@@ -322,9 +320,7 @@ let trapper = {
 };
 let assassin = {
   label: "Assassin",
-  stats: {
-    fov: 1.3
-  },
+  fov: 1.3,
   guns: [{
     position: [2.8, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
@@ -334,9 +330,7 @@ let assassin = {
 };
 let hunter = {
   label: "Hunter",
-  stats: {
-    fov: 1.1
-  },
+  fov: 1.2,
   guns: [{
     position: [2.3, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
@@ -665,9 +659,7 @@ let factory = {
 
 let stream = {
   label: "Stream",
-  stats: {
-    fov: 1.3
-  },
+  fov: 1.3,
   guns: [{
     position: [3, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
@@ -692,9 +684,7 @@ let stream = {
 };
 let preda = {
   label: "Predator",
-  stats: {
-    fov: 1.2
-  },
+  fov: 1.4,
   guns: [{
     position: [2.3, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
@@ -711,9 +701,7 @@ let preda = {
 };
 let ranger = {
   label: "Ranger",
-  stats: {
-    fov: 1.5
-  },
+  fov: 1.5,
   guns: [{
     position: [2.8, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
@@ -727,9 +715,7 @@ let ranger = {
 };
 let stalker = {
   label: "Stalker",
-  stats: {
-    fov: 1.4
-  },
+  fov: 1.4,
   invis: true,
   guns: [{
     position: [2.8, 1.5, 0.75, 0, 0, 0, 0],
