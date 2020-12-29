@@ -275,6 +275,7 @@ class Entity {
     };
     this.vx = 0;
     this.vy = 0;
+    this.density = 1;
     this.guns = [];
     this.upgrades = [];
     this.turrets = [];
@@ -411,8 +412,8 @@ class Entity {
       this.findTarget();
       let angleToGo = Math.atan2(this.target.y - this.y, this.target.x - this.x);
       let newVelocity = {
-        x: Math.cos(angleToGo) * this.stats.speed, 
-        y: Math.sin(angleToGo) * this.stats.speed
+        x: Math.cos(angleToGo) * this.stats.speed * this.speedMult, 
+        y: Math.sin(angleToGo) * this.stats.speed * this.speedMult
       };
       this.vx = lerp(this.vx, newVelocity.x, 0.1);
       this.vy = lerp(this.vy, newVelocity.y, 0.1);
@@ -561,7 +562,7 @@ class Gun {
   shoot() {
     if (this.prop || this.source.isDead) return;
     let children = [];
-    for (let o of entities) if (o.master === this.source && o.label === "Drone") children.push(o);
+    for (let o of entities) if (o.master === this.source && (o.label === "Drone" || o.label === "Minion")) children.push(o);
     if (this.source.maxChildren) if (children.length >= this.source.maxChildren) return;
     this.reload = this.maxReload;
     let o = new Entity({
@@ -582,6 +583,7 @@ class Gun {
     o.color = this.source.color;
     o.angle = this.source.angle + this.angle;
     o.range = this.stats.range;
+    o.density = this.stats.density;
     o.stats.damage = this.stats.dmg * this.source.stats.bDamage;
     o.health.max = this.stats.pene * this.source.stats.bPene;
     o.health.amount = this.stats.pene * this.source.stats.bPene;

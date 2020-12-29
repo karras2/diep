@@ -16,8 +16,8 @@ const s = {
   anni: [1.25, 2, 1, 1.5, 1.5, 0.8, 1.5, 2, 0.1],
   battle: [0.5, 1, 0.75, 0.25, 2, 2, 1, 10, 2],
   necro: [2, 1, 1, 1, 1.5, 1.75, -10, 10, 2],
-  summoner: [0.5, 1, 0.7, 0.2, 0.2, 1.75, -10, 10, 5],
-  fover: [0.75, 1, 0.4, 0.3, 0.5, 1.75, -10, 10, 10],
+  summoner: [0.5, 1, 0.7, 0.2, 0.2, 3, -10, 10, 5],
+  fover: [0.75, 1, 0.4, 0.3, 0.5, 3, -10, 10, 10],
   factory: [1, 1, 1, 0.75, 2, 1, 1, 10, 1]
 };
 
@@ -112,6 +112,7 @@ let drone = {
   label: "Drone",
   type: "bullet",
   view: 25,
+  speedMult: 5,
   moveToTarget: true,
   shape: 3,
   guns: []
@@ -126,6 +127,7 @@ let minion = {
   label: "Minion",
   type: "bullet",
   view: 25,
+  speedMult: 1.5,
   minion: true,
   moveToTarget: true,
   guns: [{
