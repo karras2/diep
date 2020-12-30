@@ -82,6 +82,7 @@ let landingPage = {
     k();
   },
   modeSelector: function() {
+    let ctx = this.ctx;
     let gamemodes = [{
       name: "FFA",
       color: "#EFFFB"
@@ -92,7 +93,13 @@ let landingPage = {
       name: "4 Teams",
       color: "#FFEB8E"
     }];
-    for (let mode of gamemodes)
+    for (let mode of gamemodes) {
+      let x = (gamemodes.indexOf(mode) * 100) + (innerWidth / 2 - (100 * gamemodes.length / 2));
+      let y = 100;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.restore();
+    }
   },
   init: function() {
     document.getElementById("titleText").textContent = "Diep";
