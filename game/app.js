@@ -1027,6 +1027,13 @@ let UI = {
             return 1;
           }
         }
+      } else if (object.type === "skill") {
+        if (x > object.x && x < object.x2) {
+          if (y > object.y && y < object.y2) {
+            player.body.skillUp(Class[object.skillID]);
+            return 1;
+          }
+        }
       }
     }
     return 0;
