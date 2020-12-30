@@ -446,6 +446,34 @@ class Entity {
       entities = entities.filter(r => r !== this);
     }, 1000);
   }
+  skillUp(data) {
+    switch(data) {
+      case 0:
+        this.skill.regen += 3;
+        break;
+      case 1:
+        this.skill.health += 10;
+        break;
+      case 2:
+        this.skill.damage += 5;
+        break;
+      case 3:
+        this.skill.bSpeed += (1 / 7);
+        break;
+      case 4:
+        this.skill.bPene += (1 / 7);
+        break;
+      case 5:
+        this.skill.bDmg += (1 / 7);
+        break;
+      case 6:
+        this.skill.reload -= 0.1;
+        break;
+      case 7:
+        this.skill.mSpeed += 0.5;
+        break;
+    }
+  }
   ondead(c) {
     if (this.hasDoneOndead) return;
     this.hasDoneOndead = true;
@@ -1223,3 +1251,7 @@ window["bots"] = function(data) {
     o.y = y;
   }
 }
+
+window["skill"] = function(data) {
+  player.body.skillUp(data);
+};
