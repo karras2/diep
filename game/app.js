@@ -1256,6 +1256,7 @@ window["bots"] = function(data) {
     let names = ['Alice', 'Bob', 'Carmen', 'David', 'Edith', 'Freddy', 'Gustav', 'Helga', 'Janet', 'Lorenzo', 'Mary', 'Nora', 'Olivia', 'Peter', 'Queen', 'Roger', 'Suzanne', 'Tommy', 'Ursula', 'Vincent', 'Wilhelm', 'Xerxes', 'Yvonne', 'Zachary'];
     o.name = "[BOT] " + names[Math.floor(Math.random() * names.length)];
     o.setTeam();
+    o.xp = 23500;
     o.isBot = true;
     let { x, y } = game.spawnPlayer(o);
     o.x = x;
