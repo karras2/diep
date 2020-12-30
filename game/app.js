@@ -966,34 +966,35 @@ let UI = {
     ctx.restore();
   },
   skills: function() {
+    let s = 150;
     let bar = (x, y, skill, color, completed) => {
       ctx.save();
       ctx.translate(x, y);
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.lineTo(250, 0);
+      ctx.lineTo(s, 0);
       ctx.closePath();
       ctx.strokeStyle = window.colors.black[0];
-      ctx.lineWidth = 30;
+      ctx.lineWidth = 10;
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.lineTo((completed / 7) * 250, 0);
+      ctx.lineTo((completed / 7) * s, 0);
       ctx.closePath();
       ctx.strokeStyle = color[0];
-      ctx.lineWidth = 20;
+      ctx.lineWidth = 7.5;
       ctx.stroke();
       for (let i = 0; i < 7; i ++) {
         ctx.beginPath();
-        ctx.moveTo(250 / 7 * (i + 0.5), -10);
-        ctx.lineTo(250 / 7 * (i + 0.5), 10);
+        ctx.moveTo(s / 7 * (i + 0.5), -3);
+        ctx.lineTo(s / 7 * (i + 0.5), 3);
         ctx.closePath();
         ctx.strokeStyle = window.colors.black[0];
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 2;
         ctx.stroke();
       }
       ctx.beginPath();
-      ctx.arc(285, 0, 15, 0, Math.PI * 2);
+      ctx.arc(s * 1.2, 0, 15, 0, Math.PI * 2);
       ctx.closePath();
       ctx.strokeStyle = color[1];
       ctx.fillStyle = color[0];
@@ -1005,9 +1006,13 @@ let UI = {
       ["Movement Speed"],
       ["Reload"],
       ["Bullet Damage"],
-      ["Bullet Penetration"]
+      ["Bullet Penetration"],
+      ["Bullet Speed"],
+      ["Body Damage"],
+      ["Max Health"],
+      ["Health Regen"]
     ];
-    bar(25, innerHeight - 15, "Suck me", window.colors.red, 1);
+    for (let skill of skillConfig) bar(25, innerHeight - 25 - (20 * (skillConfig.indexOf(skill) + 1)), skill[0], window.colors.red, Math.floor(Math.random() * 8));
   },
   upgrades: function() {
     let s = 100;
