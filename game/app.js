@@ -966,17 +966,37 @@ let UI = {
     ctx.restore();
   },
   skills: function() {
-    let bar = (x, y, skill, color) => {
+    let bar = (x, y, skill, color, completed) => {
       ctx.save();
-      ctx.moveTo(x, y);
+      ctx.translate(x, y);
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.lineTo(150, 0);
+      ctx.lineTo(250, 0);
       ctx.closePath();
-      ctx.strokeStyle = "color";
-      ctx.lineWidth = 10
+      ctx.strokeStyle = window.colors.black[0];
+      ctx.lineWidth = 30;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo((completed / 7) * 250, 0);
+      ctx.closePath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 20;
+      ctx.stroke();
+      for (let i = 0; i < 7; i ++) {
+        ctx.beginPath();
+        ctx.moveTo(250 / 7 * i + 1, -10);
+        ctx.lineTo(250 / 7 * i + 1, 10);
+        ctx.closePath();
+        ctx.strokeStyle = window.colors.black[0];
+        ctx.lineWidth = 5;
+        ctx.stroke();
+      }
       ctx.restore();
     };
+    bar(25, innerHeight - 15, "Suck me", window.colors.red[0], 1);
+    bar(25, innerHeight - 45, "Suck me", window.colors.blue[0], 2);
+    bar(25, innerHeight - 75, "Suck me", window.colors.green[0], 3);
   },
   upgrades: function() {
     let s = 100;
@@ -1110,6 +1130,7 @@ let UI = {
     this.map();
     this.upgrades();
     this.nameplate();
+    this.skills();
     this.leaderboard();
     this.spinAngle += 0.01;
     if (player.body.isDead) this.drawDead();
