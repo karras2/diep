@@ -152,6 +152,7 @@ let player = {
     x: 0,
     y: 0
   },
+  skills: Array(8).fill(0),
   spawn: function() {
     let o = new Entity(game.random());
     o.define(Class.basic);
@@ -166,6 +167,7 @@ let player = {
     o.x = x;
     o.y = y;
     player.body = o;
+    player.skills = Array(8).fill(0);
   }
 };
 
@@ -470,7 +472,7 @@ class Entity {
         this.skill.reload -= 0.1;
         break;
       case 7:
-        this.skill.mSpeed += 0.5;
+        this.skill.mSpeed += 0.1;
         break;
     }
   }
@@ -967,7 +969,7 @@ let UI = {
   },
   skills: function() {
     let s = 150;
-    let bar = (x, y, skill, id, color, completed) => {
+    let bar = (x, y, skill, id, color) => {
       ctx.save();
       ctx.translate(x, y);
       ctx.beginPath();
@@ -979,7 +981,7 @@ let UI = {
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.lineTo((completed / 7) * s, 0);
+      ctx.lineTo((player.skills[id] / 6) * s, 0);
       ctx.closePath();
       ctx.strokeStyle = color[0];
       ctx.lineWidth = 15;
@@ -1013,7 +1015,7 @@ let UI = {
       ["Max Health", 1],
       ["Health Regen", 0]
     ];
-    for (let skill of skillConfig) bar(30, innerHeight - 30 - (25 * skillConfig.indexOf(skill)), skill[0], skill[1], window.colors.red, Math.floor(Math.random() * 8));
+    for (let skill of skillConfig) bar(30, innerHeight - 30 - (25 * skillConfig.indexOf(skill)), skill[0], skill[1], window.colors.red);
   },
   upgrades: function() {
     let s = 100;
@@ -1081,7 +1083,9 @@ let UI = {
       } else if (object.type === "skill") {
         if (x > object.x && x < object.x + object.w) {
           if (y > object.y - object.h && y < object.y + object.h) {
-            player.body.skillUp(Class[object.skillID]);
+            if (player.skills[object.skillID] >= 7) return 1;
+            player.body.skillUp(object.skillID);
+            player.skills[object.skillID] ++;
             return 1;
           }
         }
