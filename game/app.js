@@ -966,7 +966,17 @@ let UI = {
     ctx.restore();
   },
   skills: function() {
-    
+    let bar = (x, y, skill, color) => {
+      ctx.save();
+      ctx.moveTo(x, y);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(150, 0);
+      ctx.closePath();
+      ctx.strokeStyle = "color";
+      ctx.lineWidth = 10
+      ctx.restore();
+    };
   },
   upgrades: function() {
     let s = 100;
@@ -989,7 +999,7 @@ let UI = {
       let mockup = this.mockups.find(r => {
         return r.label === Class[up].label
       }) || this.mockups[0];
-      mockup.color = "blue";
+      mockup.color = player.body.color;
       mockup.size = 20;
       mockup.angle = this.spinAngle;
       mockup.x = x + s / 2;
@@ -1009,12 +1019,12 @@ let UI = {
         upgrade: up
       });
     };
-    let colors = [window.colors.blue, window.colors.green, window.colors.red, window.colors.purple];
+    let colors = [window.colors.blue, window.colors.green, window.colors.red, window.colors.purple, window.colors.crasher];
     let x = 25, y = 25, t = 0, c = 0;
     for (let upgrade of player.body.upgrades) {
       x = (s / 4) + (s * c) + ((s / 4) * (c)),
       y = (s / 4) + (t * s) + ((s / 5) * t);
-      box(x, y, window.colors.blue, upgrade);
+      box(x, y, colors[player.body.upgrades.indexOf(upgrade)], upgrade);
       if (++t % 2 === 0) {
         c ++;
         t = 0;
