@@ -13,9 +13,9 @@ ctx.lineJoin = "round";
 let game = {
   width: 10000,
   height: 10000,
-  teams: 4,
+  teams: 2,
   bossTimer: 1000,
-  mode: "4 Teams",
+  mode: "2 Teams",
   random: function() {
     for (let i = 0; i < 1000; i ++) {
       let pos = {
@@ -963,7 +963,9 @@ let UI = {
     ctx.fillText(name, -(w / 2), -50);
     ctx.restore();
   },
-  skills: function() {},
+  skills: function() {
+    
+  },
   upgrades: function() {
     let s = 100;
     let canUpgrade = false;

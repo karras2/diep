@@ -378,7 +378,8 @@ let tri = {
     position: [1.65, 0.9, 1, 0.1, 0, Math.PI - (Math.PI / 6), 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank, s.thruster])
-  }]
+  }],
+  upgrades: ["booster", "fighter"]
 };
 let overseer = {
   label: "Overseer",
@@ -813,6 +814,54 @@ let triTrapper = {
     stats: combineStats([s.basic, s.trapper])
   }]
 };
+let fighter = {
+  label: "Fighter",
+  guns: [{
+    position: [2, 1, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [1.65, 0.9, 1, -0.1, 0, Math.PI * 1.5, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [1.65, 0.9, 1, 0.1, 0, Math.PI / 2, 0.5],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [1.65, 0.9, 1, -0.1, 0, Math.PI + (Math.PI / 6), 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank, s.thruster])
+  }, {
+    position: [1.65, 0.9, 1, 0.1, 0, Math.PI - (Math.PI / 6), 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank, s.thruster])
+  }]
+};
+let booster = {
+  label: "Booster",
+  guns: [{
+    position: [2, 1, 1, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank])
+  }, {
+    position: [1.5, 0.9, 1, -0.1, 0, Math.PI + (Math.PI / 4), 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank, s.thruster])
+  }, {
+    position: [1.5, 0.9, 1, 0.1, 0, Math.PI - (Math.PI / 4), 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank, s.thruster])
+  }, {
+    position: [1.65, 0.9, 1, -0.1, 0, Math.PI + (Math.PI / 6), 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank, s.thruster])
+  }, {
+    position: [1.65, 0.9, 1, 0.1, 0, Math.PI - (Math.PI / 6), 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.flank, s.thruster])
+  }]
+};
 
 // Bosses
 let summoner = {
@@ -914,4 +963,4 @@ let arenaCloser = {
   }]
 };
 
-export { square, triangle, pentagon, alphaPentagon, crasher, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream, ranger, stalker, battery, gunnerTrapper, megaTrapper, triTrapper, arenaCloser }
+export { square, triangle, pentagon, alphaPentagon, crasher, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream, ranger, stalker, battery, gunnerTrapper, megaTrapper, triTrapper, fighter, booster, arenaCloser }
