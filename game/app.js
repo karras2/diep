@@ -967,7 +967,7 @@ let UI = {
   },
   skills: function() {
     let s = 150;
-    let bar = (x, y, skill, color, completed) => {
+    let bar = (x, y, skill, id, color, completed) => {
       ctx.save();
       ctx.translate(x, y);
       ctx.beginPath();
@@ -975,44 +975,45 @@ let UI = {
       ctx.lineTo(s, 0);
       ctx.closePath();
       ctx.strokeStyle = window.colors.black[0];
-      ctx.lineWidth = 10;
+      ctx.lineWidth = 20;
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(0, 0);
       ctx.lineTo((completed / 7) * s, 0);
       ctx.closePath();
       ctx.strokeStyle = color[0];
-      ctx.lineWidth = 7.5;
+      ctx.lineWidth = 15;
       ctx.stroke();
       for (let i = 0; i < 7; i ++) {
         ctx.beginPath();
-        ctx.moveTo(s / 7 * (i + 0.5), -3);
-        ctx.lineTo(s / 7 * (i + 0.5), 3);
+        ctx.moveTo(s / 7 * (i + 0.5), -7);
+        ctx.lineTo(s / 7 * (i + 0.5), 7);
         ctx.closePath();
         ctx.strokeStyle = window.colors.black[0];
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 5;
         ctx.stroke();
       }
-      ctx.beginPath();
-      ctx.arc(s * 1.2, 0, 15, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.strokeStyle = color[1];
-      ctx.fillStyle = color[0];
-      ctx.fill();
-      ctx.stroke();
       ctx.restore();
+      UI.clickables.push({
+        type: "skill",
+        x: x,
+        y: y,
+        w: s,
+        h: 10,
+        skillID: id
+      });
     };
     let skillConfig = [
-      ["Movement Speed"],
-      ["Reload"],
-      ["Bullet Damage"],
-      ["Bullet Penetration"],
-      ["Bullet Speed"],
-      ["Body Damage"],
-      ["Max Health"],
-      ["Health Regen"]
+      ["Movement Speed", 7],
+      ["Reload", 6],
+      ["Bullet Damage", 5],
+      ["Bullet Penetration", 4],
+      ["Bullet Speed", 3],
+      ["Body Damage", 2],
+      ["Max Health", 1],
+      ["Health Regen", 0]
     ];
-    for (let skill of skillConfig) bar(25, innerHeight - 25 - (20 * (skillConfig.indexOf(skill) + 1)), skill[0], window.colors.red, Math.floor(Math.random() * 8));
+    for (let skill of skillConfig) bar(30, innerHeight - 30 - (25 * skillConfig.indexOf(skill)), skill[0], skill[1], window.colors.red, Math.floor(Math.random() * 8));
   },
   upgrades: function() {
     let s = 100;
@@ -1078,8 +1079,8 @@ let UI = {
           }
         }
       } else if (object.type === "skill") {
-        if (x > object.x && x < object.x2) {
-          if (y > object.y && y < object.y2) {
+        if (x > object.x && x < object.x + object.w) {
+          if (y > object.y - object.h && y < object.y + object.h) {
             player.body.skillUp(Class[object.skillID]);
             return 1;
           }
