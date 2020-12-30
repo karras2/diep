@@ -790,6 +790,8 @@ class Gun {
     this.animDir = 1;
     this.h = this.maxHeight;
     this.isAnimating = true;
+    this.source.vx += Math.cos((this.source.angle + this.angle) - Math.PI / 2) * this.stats.recoil;
+    this.source.vy += Math.sin((this.source.angle + this.angle) - Math.PI / 2) * this.stats.recoil;
   }
 };
 

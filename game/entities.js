@@ -1,6 +1,6 @@
 const s = {
   // reload, recoil, size, dmg, pene, speed, range, density, spray
-  basic: [30, 1, 1, 15, 15, 2, 75, 150, 1],
+  basic: [30, 0.1, 1, 15, 15, 2, 75, 150, 1],
   drone: [4, 0, 1, 1, 3, 1.5, -10, 10, 0.1],
   twin: [1.5, 0.8, 1, 1, 1, 1, 1, 1, 1],
   mach: [0.5, 1.125, 1, 1, 1, 1, 0.9, 5],
@@ -845,11 +845,11 @@ let booster = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank])
   }, {
-    position: [1.5, 0.9, 1, -0.1, 0, Math.PI + (Math.PI / 4), 0],
+    position: [1.5, 0.9, 1, -0.1, 0, Math.PI + (Math.PI / 4), 0.5],
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank, s.thruster])
   }, {
-    position: [1.5, 0.9, 1, 0.1, 0, Math.PI - (Math.PI / 4), 0],
+    position: [1.5, 0.9, 1, 0.1, 0, Math.PI - (Math.PI / 4), 0.5],
     ammo: "bullet",
     stats: combineStats([s.basic, s.flank, s.thruster])
   }, {
