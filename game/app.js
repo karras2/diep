@@ -981,15 +981,15 @@ let UI = {
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.lineTo((player.skills[id] / 6) * s, 0);
+      ctx.lineTo((player.skills[id] / 7) * s, 0);
       ctx.closePath();
       ctx.strokeStyle = color[0];
       ctx.lineWidth = 15;
       ctx.stroke();
-      for (let i = 0; i < 7; i ++) {
+      for (let i = 0; i < 6; i ++) {
         ctx.beginPath();
-        ctx.moveTo(s / 7 * (i + 0.5), -7);
-        ctx.lineTo(s / 7 * (i + 0.5), 7);
+        ctx.moveTo(s / 6 * (i + 0.5), -7);
+        ctx.lineTo(s / 6 * (i + 0.5), 7);
         ctx.closePath();
         ctx.strokeStyle = window.colors.black[0];
         ctx.lineWidth = 5;
@@ -1006,9 +1006,9 @@ let UI = {
       });
     };
     let skillConfig = [
-      ["Movement Speed", 7],
-      ["Reload", 6],
-      ["Bullet Damage", 5],
+      ["Movement Speed", 7, "#41ffff"],
+      ["Reload", 6, "#88ff41"],
+      ["Bullet Damage", 5, "#ff"],
       ["Bullet Penetration", 4],
       ["Bullet Speed", 3],
       ["Body Damage", 2],
