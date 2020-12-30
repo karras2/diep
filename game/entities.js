@@ -210,7 +210,7 @@ let machine = {
     ammo: "bullet",
     stats: combineStats([s.basic, s.mach])
   }],
-  upgrades: ["destroyer", "gunner"]
+  upgrades: ["destroyer", "gunner", "sprayer"]
 };
 let sniper = {
   label: "Sniper",
@@ -363,6 +363,18 @@ let quad = {
     stats: combineStats([s.basic, s.flank])
   }],
   upgrades: ["octo"]
+};
+let sprayer = {
+  label: "Sprayer",
+  guns: [{
+    position: [2, 1, 1.75, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.mach])
+  }, {
+    position: [2, 1, 1.75, 0, 0, 0, 0],
+    ammo: "bullet",
+    stats: combineStats([s.basic, s.mach])
+  }]
 };
 let tri = {
   label: "Tri-Angle",

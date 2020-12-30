@@ -983,7 +983,7 @@ let UI = {
       ctx.moveTo(0, 0);
       ctx.lineTo((player.skills[id] / 7) * s, 0);
       ctx.closePath();
-      ctx.strokeStyle = color[0];
+      ctx.strokeStyle = color;
       ctx.lineWidth = 15;
       ctx.stroke();
       for (let i = 0; i < 6; i ++) {
@@ -1008,14 +1008,14 @@ let UI = {
     let skillConfig = [
       ["Movement Speed", 7, "#41ffff"],
       ["Reload", 6, "#88ff41"],
-      ["Bullet Damage", 5, "#ff"],
-      ["Bullet Penetration", 4],
-      ["Bullet Speed", 3],
-      ["Body Damage", 2],
-      ["Max Health", 1],
-      ["Health Regen", 0]
+      ["Bullet Damage", 5, "#ff7979"],
+      ["Bullet Penetration", 4, "#ffed3f"],
+      ["Bullet Speed", 3, "#71b4ff"],
+      ["Body Damage", 2, "#c980ff"],
+      ["Max Health", 1, "#ff73ff"],
+      ["Health Regen", 0, "#e69f6c"]
     ];
-    for (let skill of skillConfig) bar(30, innerHeight - 30 - (25 * skillConfig.indexOf(skill)), skill[0], skill[1], window.colors.red);
+    for (let skill of skillConfig) bar(30, innerHeight - 30 - (25 * skillConfig.indexOf(skill)), skill[0], skill[1], skill[2]);
   },
   upgrades: function() {
     let s = 100;
@@ -1026,10 +1026,12 @@ let UI = {
       ctx.save();
       ctx.globalAlpha = 0.75;
       ctx.translate(x, y);
-      ctx.fillStyle = color[0];
+      ctx.fillStyle = color;
       ctx.fillRect(0, 0, s, s);
-      ctx.fillStyle = color[1];
+      ctx.fillStyle = "#000000";
+      ctx.globalAlpha = 0.25;
       ctx.fillRect(0, s / 2, s, s / 2);
+      ctx.globalAlpha = 0.75;
       ctx.strokeStyle = "#555555";
       ctx.lineWidth = 5;
       ctx.strokeRect(0, 0, s, s);
@@ -1058,7 +1060,7 @@ let UI = {
         upgrade: up
       });
     };
-    let colors = [window.colors.blue, window.colors.green, window.colors.red, window.colors.purple, window.colors.crasher];
+    let colors = ["#41ffff", "#88ff41", "#ff7979", "#ffed3f", "#c980ff", "#ff73ff", "#e69f6c"];
     let x = 25, y = 25, t = 0, c = 0;
     for (let upgrade of player.body.upgrades) {
       x = (s / 4) + (s * c) + ((s / 4) * (c)),
