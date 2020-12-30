@@ -980,23 +980,34 @@ let UI = {
       ctx.moveTo(0, 0);
       ctx.lineTo((completed / 7) * 250, 0);
       ctx.closePath();
-      ctx.strokeStyle = color;
+      ctx.strokeStyle = color[0];
       ctx.lineWidth = 20;
       ctx.stroke();
       for (let i = 0; i < 7; i ++) {
         ctx.beginPath();
-        ctx.moveTo(250 / 7 * i + 1, -10);
-        ctx.lineTo(250 / 7 * i + 1, 10);
+        ctx.moveTo(250 / 7 * (i + 0.5), -10);
+        ctx.lineTo(250 / 7 * (i + 0.5), 10);
         ctx.closePath();
         ctx.strokeStyle = window.colors.black[0];
         ctx.lineWidth = 5;
         ctx.stroke();
       }
+      ctx.beginPath();
+      ctx.arc(285, 0, 15, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.strokeStyle = color[1];
+      ctx.fillStyle = color[0];
+      ctx.fill();
+      ctx.stroke();
       ctx.restore();
     };
-    bar(25, innerHeight - 15, "Suck me", window.colors.red[0], 1);
-    bar(25, innerHeight - 45, "Suck me", window.colors.blue[0], 2);
-    bar(25, innerHeight - 75, "Suck me", window.colors.green[0], 3);
+    let skillConfig = [
+      ["Movement Speed"],
+      ["Reload"],
+      ["Bullet Damage"],
+      ["Bullet Penetration"]
+    ];
+    bar(25, innerHeight - 15, "Suck me", window.colors.red, 1);
   },
   upgrades: function() {
     let s = 100;
