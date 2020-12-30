@@ -367,7 +367,7 @@ let quad = {
 let sprayer = {
   label: "Sprayer",
   guns: [{
-    position: [2, 1, 1.75, 0, 0, 0, 0],
+    position: [2.25, 0.75, 1, 0, 0, 0, 0],
     ammo: "bullet",
     stats: combineStats([s.basic, s.mach])
   }, {
@@ -975,4 +975,4 @@ let arenaCloser = {
   }]
 };
 
-export { square, triangle, pentagon, alphaPentagon, crasher, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, summoner, fallenOverlord, preda, stream, ranger, stalker, battery, gunnerTrapper, megaTrapper, triTrapper, fighter, booster, arenaCloser }
+export { square, triangle, pentagon, alphaPentagon, crasher, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, sprayer, summoner, fallenOverlord, preda, stream, ranger, stalker, battery, gunnerTrapper, megaTrapper, triTrapper, fighter, booster, arenaCloser }

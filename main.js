@@ -81,6 +81,19 @@ let landingPage = {
     }
     k();
   },
+  modeSelector: function() {
+    let gamemodes = [{
+      name: "FFA",
+      color: "#EFFFB"
+    }, {
+      name: "2 Teams",
+      color: "#FF8E8E"
+    }, {
+      name: "4 Teams",
+      color: "#FFEB8E"
+    }];
+    for (let mode of gamemodes)
+  },
   init: function() {
     document.getElementById("titleText").textContent = "Diep";
     this.ctx = this.canvas.getContext("2d");
