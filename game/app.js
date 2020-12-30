@@ -447,23 +447,28 @@ class Entity {
     }, 1000);
   }
   ondead(c) {
+    if (this.hasDoneOndead) return;
+    this.hasDoneOndead = true;
     if (c.length) {
       let o = c[c.length - 1];
       o.master.master.master.xp += Math.floor(this.xp / 3);
     }
-    if (this.isBot) setTimeout(() => {
-      let o = new Entity(game.random());
-      o.define(Class.basic);
-      o.color = this.color;
-      o.name = this.name;
-      o.xp = Math.floor((this.xp > 23500 ? 23500 / 3 : this.xp / 3));
-      o.isBot = true;
-      o.team = this.team;
-      o.color = this.color;
-      let { x, y } = game.spawnPlayer(o);
-      o.x = x;
-      o.y = y;
-    }, 5000);
+    if (this.isBot) {
+      setTimeout(() => {
+        let o = new Entity(game.random());
+        o.define(Class.basic);
+        o.color = this.color;
+        o.name = this.name;
+        o.xp = Math.floor((this.xp > 23500 ? 23500 / 3 : this.xp / 3));
+        o.isBot = true;
+        o.team = this.team;
+        o.color = this.color;
+        let { x, y } = game.spawnPlayer(o);
+        o.x = x;
+        o.y = y;
+      }, 5000);
+      return;
+    }
     if (this.type === "food") setTimeout(() => {
       if (this.nestFood) {
         let a = new Entity(game.randomNest());
@@ -1152,7 +1157,7 @@ UI.init();
     a.nestFood = 1;
   }
   let botamount = game.teams ? 5 * game.teams : 15;
-  setTimeout(() => window.bots(0), 1000);
+  setTimeout(() => window.bots(botamount), 1000);
 })();
 
 
