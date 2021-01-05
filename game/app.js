@@ -178,6 +178,11 @@ window.addEventListener("resize", () => {
   ctx.lineJoin = "round";
 });
 
+window.addEventListener('beforeunload', function(e) {
+  e.preventDefault();
+  e.returnValue = '';
+});
+
 document.addEventListener("keydown", (event) => {
   switch(event.keyCode) {
     case 87: case 38:
@@ -1317,7 +1322,3 @@ window["bots"] = function(data) {
     o.y = y;
   }
 }
-
-window["skill"] = function(data) {
-  player.body.skillUp(data);
-};
