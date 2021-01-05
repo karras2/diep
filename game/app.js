@@ -536,7 +536,7 @@ class Entity {
       this.vx = lerp(this.vx, 0, 0.05);
       this.vy = lerp(this.vy, 0, 0.05);
     }
-    if (this.type === "tank" && this.health.amount < this.health.max) this.health.amount += 0.1;
+    if (this.type === "tank" && this.health.amount < this.health.max) this.health.amount += 0.1 + this.skill.regen;
     if (this.type === "tank" && !this.boss && !this.isBot) {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
