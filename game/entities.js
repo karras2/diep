@@ -1,6 +1,6 @@
 const s = {
   // reload, recoil, size, dmg, pene, speed, range, density, spray
-  basic: [30, 0.1, 1, 15, 15, 2, 75, 150, 1],
+  basic: [30, 0.1, 1, 15, 15, 2.5, 75, 150, 1],
   drone: [4, 0, 1, 1, 3, 1.5, -10, 10, 0.1],
   twin: [1.5, 0.8, 1, 1, 1, 1, 1, 1, 1],
   mach: [0.5, 1.125, 1, 0.75, 0.75, 1, 0.9, 5],
@@ -677,23 +677,23 @@ let stream = {
   guns: [{
     position: [3, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.sniper])
+    stats: combineStats([s.basic, s.mach, s.gunner])
   }, {
     position: [2.7, 0.9, 1, 0, 0, 0, 0.2],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.sniper])
+    stats: combineStats([s.basic, s.mach, s.gunner])
   }, {
     position: [2.4, 0.9, 1, 0, 0, 0, 0.4],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.sniper])
+    stats: combineStats([s.basic, s.mach, s.gunner])
   }, {
     position: [2.1, 0.9, 1, 0, 0, 0, 0.6],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.sniper])
+    stats: combineStats([s.basic, s.mach, s.gunner])
   }, {
     position: [1.8, 0.9, 1, 0, 0, 0, 0.8],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.sniper])
+    stats: combineStats([s.basic, s.mach, s.gunner])
   }]
 };
 let preda = {

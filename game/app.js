@@ -166,6 +166,8 @@ let player = {
     let { x, y } = game.spawnPlayer(o);
     o.x = x;
     o.y = y;
+    player.camera.x = x;
+    player.camera.y = y;
     player.body = o;
     player.skills = Array(8).fill(0);
   }
@@ -465,7 +467,7 @@ class Entity {
         this.skill.damage += 5;
         break;
       case 3:
-        this.skill.bSpeed += (1 / 7);
+        this.skill.bSpeed += (1.25 / 7);
         break;
       case 4:
         this.skill.bPene += (1 / 7);
@@ -1166,13 +1168,13 @@ let UI = {
 };
 
 let gameLoop = (() => {
-  requestAnimationFrame(gameLoop);
+  setTimeout(gameLoop, 1);
   if (!player.body) return;
-  player.camera.x = lerp(player.camera.x, player.body.x, 0.05);
-  player.camera.y = lerp(player.camera.y, player.body.y, 0.05);
+  player.camera.x = lerp(player.camera.x, player.body.x, 0.075);
+  player.camera.y = lerp(player.camera.y, player.body.y, 0.075);
   ctx.clearRect(0, 0, innerWidth, innerHeight);
   ctx.save();
-  player.body.fov = lerp(player.body.fov, 0.1 * (player.body.size / 5) * (player.body.skill.fov || 1), 0.01);
+  player.body.fov = lerp(player.body.fov, 0.1 * (player.body.size / 5) * (player.body.skill.fov || 1), 0.02);
   player.camera.ratio = (canvas.width + canvas.height) / 4000 / player.body.fov
   
   UI.drawBack();
