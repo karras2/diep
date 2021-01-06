@@ -529,7 +529,8 @@ let hybrid = {
   guns: [{
     position: [2, 1.4, 1, 0, 0, 0, 0],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.destroy])
+    stats: combineStats([s.basic, s.destroy]),
+    ignoreMaxChildren: 1,
   }, {
     position: [1.5, 1, 1.5, 0, 0, Math.PI, 1],
     ammo: "drone",

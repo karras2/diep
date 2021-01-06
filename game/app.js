@@ -313,7 +313,6 @@ let drawPoly = (s, r, c, a = 0, ui = false) => {
       break;
     case s < 0: {
       ctx.beginPath();
-      r *= 1.25;
       a += s % 2 ? 0 : Math.PI / s;
       let dip = 1 - 6 / s / s;
       s = -s;
@@ -453,7 +452,7 @@ class Entity {
     this.ondead(this.collisionArray);
     setTimeout(() => {
       entities = entities.filter(r => r !== this);
-    }, 1000);
+    }, 250);
   }
   skillUp(data) {
     switch(data) {
@@ -593,8 +592,8 @@ class Entity {
     };
     if (this.range === 0) this.kill();
     if (this.isDead) {
-      this.alpha -= 0.025;
-      this.size += 0.075;
+      this.alpha -= 0.1;
+      this.size += 0.1;
       if (this.alpha < 0) this.alpha = 0;
     }
     if (this.type === "tank" || this.type === "shape") {
@@ -719,6 +718,7 @@ class Gun {
     this.reload = (this.stats.reload * this.source.skill.reload) * this.delay;
     this.maxReload = (this.stats.reload * this.source.skill.reload);
     this.prop = data.prop || false;
+    this.ignoreMaxChildren = data.ignoreMaxChildren || false;
   }
   update() {
     this.maxReload = this.stats.reload * this.source.skill.reload;
@@ -773,7 +773,7 @@ class Gun {
     if (this.prop || this.source.isDead) return;
     let children = [];
     for (let o of entities) if (o.master === this.source && (o.label === "Drone" || o.label === "Minion")) children.push(o);
-    if (this.source.maxChildren) if (children.length >= this.source.maxChildren) return;
+    if (this.source.maxChildren) if (children.length >= this.source.maxChildren && !this.ignoreMaxChildren) return;
     this.reload = this.maxReload;
     let o = new Entity({
       x: this.source.x,
