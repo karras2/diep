@@ -13,9 +13,9 @@ ctx.lineJoin = "round";
 let game = {
   width: 10000,
   height: 10000,
-  teams: 2,
+  teams: 4,
   bossTimer: 1000,
-  mode: "2 Teams",
+  mode: "4 Teams",
   random: function() {
     for (let i = 0; i < 1000; i ++) {
       let pos = {
@@ -816,9 +816,11 @@ let UI = {
     ctx.fillStyle = window.colors.background[0];
     ctx.fillRect(-(player.camera.x * player.camera.ratio) + canvas.width/2, -(player.camera.y * player.camera.ratio) + canvas.height/2, game.width * player.camera.ratio, game.height * player.camera.ratio);
     for (let base of game.bases) {
+      ctx.globalAlpha = 0.25;
       ctx.fillStyle = window.colors[["blue", "red", "green", "purple"][base.t - 1]][0];
       ctx.fillRect((-(player.camera.x * player.camera.ratio) + canvas.width / 2) + (base.x * player.camera.ratio), (-(player.camera.y * player.camera.ratio) + canvas.height / 2) + (base.y * player.camera.ratio), (base.w * player.camera.ratio), (base.h * player.camera.ratio));
     }
+    ctx.globalAlpha = 1;
     ctx.lineWidth = 3 * player.camera.ratio;
     ctx.beginPath();
     ctx.globalAlpha = 0.05;
@@ -836,7 +838,7 @@ let UI = {
     ctx.globalAlpha = 1;
   },
   map: function() {
-    let s = 250;
+    let s = 175;
     ctx.save();
     ctx.globalAlpha = 0.75;
     ctx.translate((innerWidth * 0.975) - s, (innerHeight * 0.975) - s);
@@ -922,23 +924,23 @@ let UI = {
     ctx.save();
     ctx.translate(innerWidth / 2, innerHeight - 30);
     ctx.beginPath();
-    ctx.moveTo(-300, 0);
-    ctx.lineTo(300, 0);
+    ctx.moveTo(-200, 0);
+    ctx.lineTo(200, 0);
     ctx.closePath();
     ctx.lineWidth = 30;
     ctx.strokeStyle = "#000000";
     ctx.stroke();
     ctx.beginPath();
     let perCent = (player.body.level / 45) * 600;
-    ctx.moveTo(-300, 0);
-    ctx.lineTo(-300 + perCent, 0);
+    ctx.moveTo(-200, 0);
+    ctx.lineTo(-200 + perCent, 0);
     ctx.closePath();
     ctx.lineWidth = 22.5;
     ctx.strokeStyle = "#f1ea59";
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(-200, -32.5);
-    ctx.lineTo(200, -32.5);
+    ctx.moveTo(-150, -32.5);
+    ctx.lineTo(150, -32.5);
     ctx.closePath();
     ctx.lineWidth = 25;
     ctx.strokeStyle = "#000000";
@@ -946,8 +948,8 @@ let UI = {
     ctx.beginPath();
     let topScore = UI.lb[0] ? UI.lb[0].xp : 1;
     let perCent2 = ((player.body.xp / topScore) >= 1 ? 1 : (player.body.xp / topScore)) * 400;
-    ctx.moveTo(-200, -32.5);
-    ctx.lineTo(-200 + perCent2, -32.5);
+    ctx.moveTo(-150, -32.5);
+    ctx.lineTo(-150 + perCent2, -32.5);
     ctx.closePath();
     ctx.lineWidth = 17.5;
     ctx.strokeStyle = window.colors.healthBar[0];
