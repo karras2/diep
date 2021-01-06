@@ -18,7 +18,8 @@ const s = {
   necro: [2, 1, 1, 1, 1.5, 1.75, -10, 1, 2],
   summoner: [0.5, 1, 0.7, 0.2, 0.2, 3, -10, 1, 5],
   fover: [0.75, 1, 0.4, 0.3, 0.5, 3, -10, 1, 10],
-  factory: [1, 1, 1, 0.75, 2, 1, 1, 10, 1]
+  factory: [1, 1, 1, 0.75, 2, 1, 1, 10, 1],
+  stream: [3, 1, 0.9, 0.5, 1.5, 1.25, 1.25, 5, 0.01]
 };
 
 let combineStats = ((stats) => {
@@ -672,28 +673,28 @@ let factory = {
 };
 
 let stream = {
-  label: "Stream",
-  fov: 1.3,
+  label: "Streamliner",
+  fov: 1.5,
   guns: [{
     position: [3, 0.9, 1, 0, 0, 0, 0],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.mach, s.gunner])
+    stats: combineStats([s.basic, s.mach, s.gunner, s.stream])
   }, {
     position: [2.7, 0.9, 1, 0, 0, 0, 0.2],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.mach, s.gunner])
+    stats: combineStats([s.basic, s.mach, s.gunner, s.stream])
   }, {
     position: [2.4, 0.9, 1, 0, 0, 0, 0.4],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.mach, s.gunner])
+    stats: combineStats([s.basic, s.mach, s.gunner, s.stream])
   }, {
     position: [2.1, 0.9, 1, 0, 0, 0, 0.6],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.mach, s.gunner])
+    stats: combineStats([s.basic, s.mach, s.gunner, s.stream])
   }, {
     position: [1.8, 0.9, 1, 0, 0, 0, 0.8],
     ammo: "bullet",
-    stats: combineStats([s.basic, s.mach, s.gunner])
+    stats: combineStats([s.basic, s.mach, s.gunner, s.stream])
   }]
 };
 let preda = {

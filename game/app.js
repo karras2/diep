@@ -536,7 +536,7 @@ class Entity {
       this.vx = lerp(this.vx, 0, 0.05);
       this.vy = lerp(this.vy, 0, 0.05);
     }
-    if (this.type === "tank" && this.health.amount < this.health.max) this.health.amount += 0.1 + this.skill.regen;
+    if (this.type === "tank" && this.health.amount < this.health.max) this.health.amount += 0.1 * this.skill.regen;
     if (this.type === "tank" && !this.boss && !this.isBot) {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
@@ -841,7 +841,7 @@ let UI = {
     let s = 175;
     ctx.save();
     ctx.globalAlpha = 0.75;
-    ctx.translate((innerWidth * 0.975) - s, (innerHeight * 0.975) - s);
+    ctx.translate((innerWidth - 20) - s, (innerHeight - 20) - s);
     ctx.fillStyle = window.colors.background[0];
     ctx.strokeStyle = window.colors.background[1];
     ctx.lineWidth = 5;
@@ -931,7 +931,7 @@ let UI = {
     ctx.strokeStyle = "#000000";
     ctx.stroke();
     ctx.beginPath();
-    let perCent = (player.body.level / 45) * 600;
+    let perCent = (player.body.level / 45) * 400;
     ctx.moveTo(-200, 0);
     ctx.lineTo(-200 + perCent, 0);
     ctx.closePath();
@@ -947,7 +947,7 @@ let UI = {
     ctx.stroke();
     ctx.beginPath();
     let topScore = UI.lb[0] ? UI.lb[0].xp : 1;
-    let perCent2 = ((player.body.xp / topScore) >= 1 ? 1 : (player.body.xp / topScore)) * 400;
+    let perCent2 = ((player.body.xp / topScore) >= 1 ? 1 : (player.body.xp / topScore)) * 300;
     ctx.moveTo(-150, -32.5);
     ctx.lineTo(-150 + perCent2, -32.5);
     ctx.closePath();
@@ -1223,8 +1223,8 @@ let gameLoop = (() => {
   player.body.angle = Math.atan2((player.mouse.y - canvas.height / 2), (player.mouse.x - canvas.width / 2)) - Math.PI / 2;
   player.body.shooting = player.mouse.a || player.inputs.e;
   player.body.target = {
-    x: -(player.mouse.x - canvas.width / 2) * (player.body.size - 10),
-    y: -(player.mouse.y - canvas.height / 2) * (player.body.size - 10)
+    x: (-(player.mouse.x - canvas.width / 2) * (player.body.size - 10)) - (player.body.x - player.camera.x),
+    y: (-(player.mouse.y - canvas.height / 2) * (player.body.size - 10)) - (player.body.y - player.camera.y)
   };
   if (player.inputs.w) player.body.vy -= 0.1; 
   if (player.inputs.a) player.body.vx -= 0.1;
