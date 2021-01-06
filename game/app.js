@@ -432,7 +432,7 @@ class Entity {
       } else if (key === "moveToTarget") {
         setTimeout(() => {
           this[key] = type[key];
-        }, 100);
+        }, 250);
       } else {
         this[key] = type[key];
       }

@@ -1,7 +1,7 @@
 const s = {
   // reload, recoil, size, dmg, pene, speed, range, density, spray
   basic: [30, 0.1, 1, 15, 15, 2.5, 75, 150, 1],
-  drone: [4, 0, 1, 1, 3, 1.5, -10, 10, 0.1],
+  drone: [4, 0, 1, 1, 3, 1.5, -10, 0.001, 0.1],
   twin: [1.5, 0.8, 1, 1, 1, 1, 1, 1, 1],
   mach: [0.5, 1.125, 1, 0.75, 0.75, 1, 0.9, 5],
   sniper: [1.125, 1, 1,  1, 1.5, 1.5, 1.25, 1, 0.5],
@@ -14,12 +14,12 @@ const s = {
   skimmerMissile: [0.75, 1, 1, 1.25, 1.25, 1, 0.5, 10, 0.5],
   trapper: [0.75, 1, 1.5, 0.3, 4, 2, 2, 100, 2],
   anni: [1.25, 2, 1, 1.5, 1.5, 0.8, 1.5, 2, 0.1],
-  battle: [0.5, 1, 0.75, 0.25, 2, 2, 1, 1, 2],
+  battle: [1, 1, 0.7, 0.25, 1, 1, 1, 0.001, 1],
   necro: [2, 1, 1, 1, 1.5, 1.75, -10, 1, 2],
   summoner: [0.5, 1, 0.7, 0.2, 0.2, 3, -10, 1, 5],
   fover: [0.75, 1, 0.4, 0.3, 0.5, 3, -10, 1, 10],
-  factory: [1, 1, 1, 0.75, 2, 1, 1, 10, 1],
-  stream: [3, 1, 0.9, 0.5, 1.5, 1.25, 1.25, 5, 0.01]
+  factory: [1, 1, 1, 0.75, 2, 1, 1, 2, 1],
+  stream: [3, 1, 0.9, 0.5, 1.5, 1.25, 1.25, 2, 0.01]
 };
 
 let combineStats = ((stats) => {
@@ -136,6 +136,7 @@ let drone = {
 let swarm = JSON.parse(JSON.stringify(drone));
 swarm.label = "Swarm";
 swarm.view = 50;
+swarm.speedMult *= 1.25;
 let necroDrone = JSON.parse(JSON.stringify(drone));
 necroDrone.label = "Drone";
 necroDrone.shape = 4;
