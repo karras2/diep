@@ -280,6 +280,7 @@ let drawPoly = (s, r, c, a = 0, ui = false) => {
   ctx.lineWidth = 5 * player.camera.ratio;
   ctx.fillStyle = c[0];
   ctx.strokeStyle = c[1];
+  s = 10000;
   if (typeof s === "string") {
     let path = new Path2D(s);
     ctx.save();
@@ -339,6 +340,22 @@ let drawPoly = (s, r, c, a = 0, ui = false) => {
       ctx.stroke();
     }
     break;
+    case s === 10000:
+      let omegaShape = [];
+      for (let i = 1; i < 11; i ++) {
+        let x = -Math.cos((Math.PI * 2) / 10 * i) * (i % 2 === 0 ? 1.5 : 1),
+            y = -Math.sin((Math.PI * 2) / 10 * i) * (i % 2 === 0 ? 1.5 : 1);
+        omegaShape.push([x, y]);
+      }
+      ctx.beginPath();
+      for (let [x, y] of omegaShape) {
+        ctx.lineTo(x * r, y * r);
+      }
+      ctx.lineWidth = ui ? r * 0.25 : (5 * player.camera.ratio);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      break;
     case (s < 17 && s > 2):
       ctx.beginPath();
       let angle = 0;
