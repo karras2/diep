@@ -280,7 +280,6 @@ let drawPoly = (s, r, c, a = 0, ui = false) => {
   ctx.lineWidth = 5 * player.camera.ratio;
   ctx.fillStyle = c[0];
   ctx.strokeStyle = c[1];
-  s = 10000;
   if (typeof s === "string") {
     let path = new Path2D(s);
     ctx.save();
