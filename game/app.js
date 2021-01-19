@@ -558,7 +558,7 @@ class Entity {
       let oldLvl = this.level;
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
-      if (this.level > oldLvl) this.skillPoints += (this.level - oldLvl);
+      if (this.level > oldLvl) for (let i = oldLvl; i < this.level; i ++) if (i % 2 === 0) this.skillPoints ++;//this.skillPoints += (this.level - oldLvl);
       this.size = (25 + (this.level));
       let oldHP = JSON.parse(JSON.stringify(this.health));
       this.health.max = (100 + (this.level * 10));
@@ -566,6 +566,8 @@ class Entity {
       this.speed = 7.5 - (this.level / 50);
     } else if (this.boss || this.isBot) {
       //this.vx = this.vy = 0;
+      this.vx = lerp(this.vx, 0, 0.1);
+      this.vy = lerp(this.vy, 0, 0.1);
       this.findTarget();
       if (this.x < (this.target.x - this.size + this.target.size * 1.5)) this.vx += 0.1// * (this.speed * this.skill.mSpeed);
       if (this.x > (this.target.x + this.size + this.target.size * 1.5)) this.vx -= 0.1// * (this.speed * this.skill.mSpeed);

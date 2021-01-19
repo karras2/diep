@@ -10,14 +10,14 @@ let basicCollide = (i, o) => {
   if (fasterEntity === i) {
     let v = JSON.parse(JSON.stringify({ x: i.vx, y: i.vy }));
     if (o.type === "tank" || o.type === "food") {
-      o.vx = v.x * (0.025 / o.size * (i.density * o.density));
-      o.vy = v.y * (0.025 / o.size * (i.density * o.density)); 
+      o.vx = v.x * (0.05 / o.size * (i.density * o.density));
+      o.vy = v.y * (0.05 / o.size * (i.density * o.density)); 
     }
   } else {
     let v = JSON.parse(JSON.stringify({ x: o.vx, y: o.vy }));
     if (i.type === "tank" || i.type === "food") {
-      i.vx = v.x * (0.025 / i.size * (i.density * o.density));
-      i.vy = v.y * (0.025 / i.size * (i.density * o.density)); 
+      i.vx = v.x * (0.05 / i.size * (i.density * o.density));
+      i.vy = v.y * (0.05 / i.size * (i.density * o.density)); 
     }
   };
   i.health.amount -= o.damage;
