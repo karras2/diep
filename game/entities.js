@@ -223,7 +223,6 @@ let observer = {
   label: "Observer",
   fov: 2
 };
-let t = 0;
 let mothership = {
   label: "Mothership",
   size: 50,
@@ -233,15 +232,14 @@ let mothership = {
     max: 7000,
     amount: 7000
   },
-  guns: Array(16).fill({}).map(r => {
-    return {
-      position: [1.5, 0.5, 1, 0, 0, (Math.PI * 2) / 16 * t, t / 16],
-      ammo: "drone",
-      autoShoot: 3,
-      stats: combineStats([s.basic, s.drone]),
-    }
-  })
+  guns: []
 };
+for (let i = 0; i < 16; i ++) mothership.guns.push({
+  position: [1.5, 0.5, 1, 0, 0, (Math.PI * 2) / 16 * i, i / 16],
+  ammo: "drone",
+  autoShoot: 3,
+  stats: combineStats([s.basic, s.drone])
+});
 
 // LvL 15
 let twin = {
@@ -1030,4 +1028,4 @@ let arenaCloser = {
   }]
 };
 
-export { square, triangle, pentagon, alphaPentagon, crasher, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, sprayer, summoner, fallenOverlord, preda, stream, ranger, stalker, battery, gunnerTrapper, megaTrapper, triTrapper, fighter, booster, arenaCloser, dev, bosses, observer, misc }
+export { square, triangle, pentagon, alphaPentagon, crasher, bullet, trap, drone, necroDrone, minion, swarm, rocket, missile, basic, twin, machine, sniper, flank, triple, double, destroyer, gunner, trapper, assassin, hunter, quad, tri, triplet, penta, spreadshot, tripleTwin, anni, hybrid, skimmer, rocketeer, overseer, overlord, necromancer, factory, octo, battleship, sprayer, summoner, fallenOverlord, preda, stream, ranger, stalker, battery, gunnerTrapper, megaTrapper, triTrapper, fighter, booster, arenaCloser, dev, bosses, observer, misc, mothership }
