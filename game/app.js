@@ -1358,6 +1358,8 @@ window["boss"] = function() {
   o.team = 0;
   o.define(bosses[Math.floor(Math.random() * bosses.length)]);
   game.bossTimer = 1000;
+  let build = [1, 7, 7, 4, 5, 5, 4, 7];
+  for (let skill of build) for (let i = 0; i < skill; i ++) o.skillUp(build.indexOf(skill));
 };
 
 window["bots"] = function(data) {
