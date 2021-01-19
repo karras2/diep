@@ -567,10 +567,10 @@ class Entity {
     } else if (this.boss || this.isBot) {
       this.vx = this.vy = 0;
       this.findTarget();
-      if (this.x < (this.target.x - this.size + this.target.size * 1.5)) this.vx = 1;
-      if (this.x > (this.target.x + this.size + this.target.size * 1.5)) this.vx = -1;
-      if (this.y < (this.target.y - this.size + this.target.size * 1.5)) this.vy = 1;
-      if (this.y > (this.target.y + this.size + this.target.size * 1.5)) this.vy = -1;
+      if (this.x < (this.target.x - this.size + this.target.size * 1.5)) this.vx += 0.1;
+      if (this.x > (this.target.x + this.size + this.target.size * 1.5)) this.vx -= 0.1;
+      if (this.y < (this.target.y - this.size + this.target.size * 1.5)) this.vy += 0.1;
+      if (this.y > (this.target.y + this.size + this.target.size * 1.5)) this.vy -= 0.1;
       if (this.isBot) this.angle = Math.atan2((this.target.y + this.target.vy) - this.y, (this.target.x + this.target.vx) - this.x) - Math.PI / 2;
       this.shooting = true;
       if (this.isBot) {
