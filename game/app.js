@@ -1364,14 +1364,16 @@ window["boss"] = function() {
 
 window["mothership"] = function(t) {
   let o = new Entity(game.random());
-  o.team = t;
-  o.color = ["blue", "green", "red", "purple"][t];
+  o.setTeam();
+  o.define(Class.basic);
   o.define(Class.mothership);
-  o.isBot = true;
+  o.boss = true;
+  o.size = 75;
   let { x, y } = game.spawnPlayer(o);
   o.x = x;
   o.y = y;
   for (let i = 0; i < 8; i ++) for (let j = 0; j < 7; j ++) o.skillUp(i);
+  o.skill.mSpeed = 1.5;
 };
 
 window["bots"] = function(data) {
