@@ -613,10 +613,10 @@ class Entity {
       if (this.alpha < 0) this.alpha = 0;
     }
     if (this.type === "tank" || this.type === "shape") {
-      this.vx -= Math.min(this.x - this.realSize + 50, 0) * 0.1;
-      this.vx -= Math.max(this.x + this.realSize - 50 - game.width, 0) * 0.1;
-      this.vy -= Math.min(this.y - this.realSize + 50, 0) * 0.1;
-      this.vy -= Math.max(this.y + this.realSize - 50 - game.height, 0) * c.ROOM_BOUND_FORCE / roomSpeed
+      this.vx -= Math.min(this.x - this.size + 50, 0) * 0.001;
+      this.vx -= Math.max(this.x + this.size - 50 - game.width, 0) * 0.001;
+      this.vy -= Math.min(this.y - this.size + 50, 0) * 0.001;
+      this.vy -= Math.max(this.y + this.size - 50 - game.height, 0) * 0.001;
     }
     if (this.type !== "food") {
       for (let base of game.bases) {

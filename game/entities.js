@@ -2,7 +2,7 @@ const s = {
   // reload, recoil, size, dmg, pene, speed, range, density, spray
   basic: [30, 0.1, 1, 15, 15, 2.5, 75, 150, 1],
   drone: [4, 0, 1, 1, 3, 1.5, -10, 0.001, 0.1],
-  twin: [1.5, 0.8, 1, 1, 1, 1, 1, 1, 1],
+  twin: [1.5, 0.5, 1, 1, 1, 1, 1, 1, 1],
   mach: [0.5, 1.125, 1, 0.75, 0.75, 1, 0.9, 5],
   sniper: [1.125, 1, 1,  1, 1.5, 1.5, 1.25, 1, 0.5],
   flank: [1.2, 1, 1, 0.9, 0.9, 0.9, 1, 1, 1],
@@ -19,7 +19,9 @@ const s = {
   summoner: [0.5, 1, 0.7, 0.2, 0.2, 3, -10, 1, 5],
   fover: [0.75, 1, 0.4, 0.3, 0.5, 3, -10, 1, 10],
   factory: [1, 1, 1, 0.75, 2, 1, 1, 2, 1],
-  stream: [3, 1, 0.9, 0.5, 1.5, 1.25, 1.25, 2, 0.01]
+  stream: [3, 1, 0.9, 0.5, 1.5, 1.25, 1.25, 2, 0.01],
+  spread: [2, 0.5, 1, 0.6, 0.6, 1, 1, 1, 1],
+  spreadMain: [1, 1.5, 1, 1.5, 1.5, 1, 1, 1, 1]
 };
 
 let combineStats = ((stats) => {
@@ -459,47 +461,47 @@ let spreadshot = {
   guns: [{
     position: [1.5, 0.5, 1, -0.25, 0, Math.PI / 20 * 5, (1 / 6) * 5],
     ammo: "bullet",
-    stats: combineStats([s.basic])
+    stats: combineStats([s.basic, s.twin, s.spread])
   }, {
     position: [1.5, 0.5, 1, 0.25, 0, -Math.PI / 20 * 5, (1 / 6) * 5],
     ammo: "bullet",
-    stats: combineStats([s.basic])
+    stats: combineStats([s.basic, s.twin, s.spread])
   }, {
     position: [1.6, 0.5, 1, -0.25, 0, Math.PI / 20 * 4, (1 / 6) * 4],
     ammo: "bullet",
-    stats: combineStats([s.basic])
+    stats: combineStats([s.basic, s.twin, s.spread])
   }, {
     position: [1.6, 0.5, 1, 0.25, 0, -Math.PI / 20 * 4, (1 / 6) * 4],
     ammo: "bullet",
-    stats: combineStats([s.basic])
+    stats: combineStats([s.basic, s.twin, s.spread])
   }, {
     position: [1.7, 0.5, 1, -0.25, 0, Math.PI / 20 * 3, (1 / 6) * 3],
     ammo: "bullet",
-    stats: combineStats([s.basic])
+    stats: combineStats([s.basic, s.twin, s.spread])
   }, {
     position: [1.7, 0.5, 1, 0.25, 0, -Math.PI / 20 * 3, (1 / 6) * 3],
     ammo: "bullet",
-    stats: combineStats([s.basic])
+    stats: combineStats([s.basic, s.twin, s.spread])
   }, {
     position: [1.8, 0.5, 1, -0.25, 0, Math.PI / 20 * 2, (1 / 6) * 2],
     ammo: "bullet",
-    stats: combineStats([s.basic])
+    stats: combineStats([s.basic, s.twin, s.spread])
   }, {
     position: [1.8, 0.5, 1, 0.25, 0, -Math.PI / 20 * 2, (1 / 6) * 2],
     ammo: "bullet",
-    stats: combineStats([s.basic])
+    stats: combineStats([s.basic, s.twin, s.spread])
   }, {
     position: [1.9, 0.5, 1, -0.25, 0, Math.PI / 20, (1 / 6) * 1],
     ammo: "bullet",
-    stats: combineStats([s.basic])
+    stats: combineStats([s.basic, s.twin, s.spread])
   }, {
     position: [1.9, 0.5, 1, 0.25, 0, -Math.PI / 20, (1 / 6) * 1],
     ammo: "bullet",
-    stats: combineStats([s.basic])
+    stats: combineStats([s.basic, s.twin, s.spread])
   }, {
     position: [2, 1, 1, 0, 0, 0, 0],
     ammo: "bullet",
-    stats: combineStats([s.basic])
+    stats: combineStats([s.basic, s.twin, s.spread, s.spreadMain])
   }]
 };
 let tripleTwin = {
