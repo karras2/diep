@@ -815,8 +815,8 @@ class Gun {
     this.animDir = 1;
     this.h = this.maxHeight;
     this.isAnimating = true;
-    this.source.vx += Math.cos((this.source.angle + this.angle) - Math.PI / 2) * this.stats.recoil;
-    this.source.vy += Math.sin((this.source.angle + this.angle) - Math.PI / 2) * this.stats.recoil;
+    for (let i = 0; i < 10; i ++) setTimeout(() => this.source.vx += Math.cos((this.source.angle + this.angle) - Math.PI / 2) * this.stats.recoil / 2, 50 * i);
+    for (let i = 0; i < 10; i ++) setTimeout(() => this.source.vy += Math.sin((this.source.angle + this.angle) - Math.PI / 2) * this.stats.recoil / 2, 50 * i);
   }
 };
 
@@ -885,7 +885,7 @@ let UI = {
   },
   leaderboard: function() {
     let toDraw = [];
-    for (let o of entities) if (o.type === "tank" || o.boss) toDraw.push({
+    for (let o of entities) if (o.type === "tank" && !o.boss) toDraw.push({
       name: o.name,
       xp: o.xp,
       color: o.color,
@@ -895,6 +895,11 @@ let UI = {
     if (toDraw.length > 10) toDraw.length = 10;
     UI.lb = toDraw;
     ctx.save();
+    let text = "Scoreboard:";
+    let w = ctx.measureText(text).width;
+    ctx.fillStyle = "#ffffff";
+    ctx.strokeStyle = "#000000";
+    ctx.
     ctx.translate((innerWidth * 0.975) - 200, (innerHeight * 0.1));
     for (let i = 0; i < UI.lb.length; i ++) {
       ctx.save();
@@ -1333,7 +1338,8 @@ window["bots"] = function(data) {
     let o = new Entity(game.random());
     o.define(Class.basic);
     let names = ['Alice', 'Bob', 'Carmen', 'David', 'Edith', 'Freddy', 'Gustav', 'Helga', 'Janet', 'Lorenzo', 'Mary', 'Nora', 'Olivia', 'Peter', 'Queen', 'Roger', 'Suzanne', 'Tommy', 'Ursula', 'Vincent', 'Wilhelm', 'Xerxes', 'Yvonne', 'Zachary'];
-    o.name = "[BOT] " + names[Math.floor(Math.random() * names.length)];
+    let letters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+    o.name = Math.random() > 0.5 ? names[Math.floor(Math.random() * names.length)] : Array(Math.floor(Math.random() * 15) + 1).fill("").map(r => { return letters[Math.floor(Math.random() * letters.length)] }).join("");;
     o.setTeam();
     o.xp = 23500;
     o.isBot = true;
