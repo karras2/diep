@@ -613,8 +613,10 @@ class Entity {
       if (this.alpha < 0) this.alpha = 0;
     }
     if (this.type === "tank" || this.type === "shape") {
-      if (this.x + this.vx < 0 || this.x + this.vx > game.width) this.vx *= -0.5;
-      if (this.y + this.vy < 0 || this.y + this.vy > game.height) this.vy *= -0.5; 
+      this.vx -= Math.min(this.x - this.realSize + 50, 0) * 0.1;
+      this.vx -= Math.max(this.x + this.realSize - 50 - game.width, 0) * 0.1;
+      this.vy -= Math.min(this.y - this.realSize + 50, 0) * 0.1;
+      this.vy -= Math.max(this.y + this.realSize - 50 - game.height, 0) * c.ROOM_BOUND_FORCE / roomSpeed
     }
     if (this.type !== "food") {
       for (let base of game.bases) {
@@ -896,11 +898,14 @@ let UI = {
     UI.lb = toDraw;
     ctx.save();
     let text = "Scoreboard:";
+    ctx.font = "40px Ubuntu";
     let w = ctx.measureText(text).width;
     ctx.fillStyle = "#ffffff";
     ctx.strokeStyle = "#000000";
-    ctx.
-    ctx.translate((innerWidth * 0.975) - 200, (innerHeight * 0.1));
+    ctx.lineWidth = 2;
+    ctx.fillText(text, innerWidth * 0.975 - w * 1, innerHeight * 0.05);
+    ctx.strokeText(text, innerWidth * 0.975 - w * 1, innerHeight * 0.05);
+    ctx.translate((innerWidth * 0.975) - 200, (innerHeight * 0.075));
     for (let i = 0; i < UI.lb.length; i ++) {
       ctx.save();
       ctx.translate(0, (20 * i) + (10 * i));
@@ -1279,7 +1284,7 @@ UI.init();
     a.team = 0;
     a.nestFood = 1;
   }
-  let botamount = game.teams ? 5 * game.teams : 15;
+  let botamount = 0//game.teams ? 5 * game.teams : 15;
   setTimeout(() => window.bots(botamount), 1000);
 })();
 
