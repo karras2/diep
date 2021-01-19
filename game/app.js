@@ -938,7 +938,7 @@ let UI = {
       }) || this.mockups[0];
       mockup.color = user.color;
       mockup.size = 7.5;
-      mockup.angle = Math.PI - (Math.PI / 4);
+      mockup.angle = Math.PI + Math.PI / 4;
       mockup.x = -40;
       mockup.y = 0;
       UI.entity(mockup);
@@ -1031,6 +1031,13 @@ let UI = {
         ctx.stroke();
       }
       ctx.restore();
+      ctx.font = "15px Ubuntu";
+      let w = ctx.measureText(skill).width;
+      ctx.fillStyle = "#ffffff";
+      ctx.strokeStyle = "#000000";
+      ctx.lineWidth = 1;
+      ctx.fillText(skill, x + w / 2, y);
+      ctx.strokeText(skill, x + w / 2, y);
       UI.clickables.push({
         type: "skill",
         x: x,
