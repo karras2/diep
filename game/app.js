@@ -1362,6 +1362,18 @@ window["boss"] = function() {
   for (let skill of build) for (let i = 0; i < skill; i ++) o.skillUp(build.indexOf(skill));
 };
 
+window["mothership"] = function(t) {
+  let o = new Entity(game.random());
+  o.team = t;
+  o.color = ["blue", "green", "red", "purple"][t];
+  o.define(Class.mothership);
+  o.isBot = true;
+  let { x, y } = game.spawnPlayer(o);
+  o.x = x;
+  o.y = y;
+  for (let i = 0; i < 8; i ++) for (let j = 0; j < 7; j ++) o.skillUp(i);
+};
+
 window["bots"] = function(data) {
   for (let i = 0; i < data; i ++) {
     let o = new Entity(game.random());

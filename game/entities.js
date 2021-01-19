@@ -232,6 +232,7 @@ let mothership = {
     max: 7000,
     amount: 7000
   },
+  xp: 100000,
   guns: []
 };
 for (let i = 0; i < 16; i ++) mothership.guns.push({
