@@ -1035,9 +1035,9 @@ let UI = {
       let w = ctx.measureText(skill).width;
       ctx.fillStyle = "#ffffff";
       ctx.strokeStyle = "#000000";
-      ctx.lineWidth = 1;
-      ctx.fillText(skill, x + w / 2, y);
-      ctx.strokeText(skill, x + w / 2, y);
+      ctx.lineWidth = 2;
+      ctx.strokeText(skill, x + s / 2 - w / 2, y + 5);
+      ctx.fillText(skill, x + s / 2 - w / 2, y + 5);
       UI.clickables.push({
         type: "skill",
         x: x,
@@ -1058,6 +1058,11 @@ let UI = {
       ["Health Regen", 0, "#e69f6c"]
     ];
     for (let skill of skillConfig) bar(30, innerHeight - 30 - (25 * skillConfig.indexOf(skill)), skill[0], skill[1], skill[2]);
+    let t = player.body.points;
+    ctx.font = "20px Ubuntu";
+    ctx.strokeText(t, 0, 0);
+    ctx.fillText(t, 0, 0);
+    
   },
   upgrades: function() {
     let s = 100;
