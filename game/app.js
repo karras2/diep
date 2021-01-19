@@ -389,6 +389,7 @@ class Entity {
     this.size = 25;
     this.tier = 0;
     this.range = -10;
+    this.skillPoints = 0;
     this.xp = 0;
     this.level = 0;
     this.alpha = 1;
@@ -471,6 +472,7 @@ class Entity {
     }, 250);
   }
   skillUp(data) {
+    this.skillPoints --;
     switch(data) {
       case 0:
         this.skill.regen += 3;
@@ -553,8 +555,10 @@ class Entity {
     }
     if (this.type === "tank" && this.health.amount < this.health.max) this.health.amount += 0.1 * this.skill.regen;
     if (this.type === "tank" && !this.boss && !this.isBot) {
+      let oldLvl = this.level;
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
+      if (this.level > oldLvl) this.skillPoints += (this.level - oldLvl);
       this.size = (25 + (this.level));
       let oldHP = JSON.parse(JSON.stringify(this.health));
       this.health.max = (100 + (this.level * 10));
@@ -570,8 +574,10 @@ class Entity {
       if (this.isBot) this.angle = Math.atan2((this.target.y + this.target.vy) - this.y, (this.target.x + this.target.vx) - this.x) - Math.PI / 2;
       this.shooting = true;
       if (this.isBot) {
-        this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
-        if (this.level >= 45) this.level = 45;
+        let oldLvl = this.level;
+      this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
+      if (this.level >= 45) this.level = 45;
+      if (this.level > oldLvl) this.skillPoints += (this.level - oldLvl);
         this.size = (25 + (this.level));
         let oldHP = JSON.parse(JSON.stringify(this.health));
         this.health.max = (100 + (this.level * 10));
@@ -1058,10 +1064,10 @@ let UI = {
       ["Health Regen", 0, "#e69f6c"]
     ];
     for (let skill of skillConfig) bar(30, innerHeight - 30 - (25 * skillConfig.indexOf(skill)), skill[0], skill[1], skill[2]);
-    let t = player.body.points;
+    let t = "x" + player.body.skillPoints;
     ctx.font = "20px Ubuntu";
-    ctx.strokeText(t, 0, 0);
-    ctx.fillText(t, 0, 0);
+    ctx.strokeText(t, 180, innerHeight - 30 - (25 * skillConfig.length));
+    ctx.fillText(t, 180, innerHeight - 30 - (25 * skillConfig.length));
     
   },
   upgrades: function() {
@@ -1200,7 +1206,7 @@ let UI = {
     this.map();
     this.upgrades();
     this.nameplate();
-    this.skills();
+    if (player.body.skillPoints) this.skills();
     this.leaderboard();
     this.spinAngle += 0.01;
     if (player.body.isDead) this.drawDead();
