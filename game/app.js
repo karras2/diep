@@ -574,10 +574,12 @@ class Entity {
       if (this.isBot) this.angle = Math.atan2((this.target.y + this.target.vy) - this.y, (this.target.x + this.target.vx) - this.x) - Math.PI / 2;
       this.shooting = true;
       if (this.isBot) {
+        if (this.level < 45) this.xp += 1;
         let oldLvl = this.level;
-      this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
-      if (this.level >= 45) this.level = 45;
-      if (this.level > oldLvl) this.skillPoints += (this.level - oldLvl);
+        this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
+        if (this.level >= 45) this.level = 45;
+        if (this.level > oldLvl) this.skillPoints += (this.level - oldLvl);
+        if (this.skillPoints) this.skillUp(Math.floor(Math.random() * 8));
         this.size = (25 + (this.level));
         let oldHP = JSON.parse(JSON.stringify(this.health));
         this.health.max = (100 + (this.level * 10));
@@ -1302,7 +1304,7 @@ UI.init();
     a.team = 0;
     a.nestFood = 1;
   }
-  let botamount = 0//game.teams ? 5 * game.teams : 15;
+  let botamount = game.teams ? 2 * game.teams : 15;
   setTimeout(() => window.bots(botamount), 1000);
 })();
 
@@ -1364,7 +1366,7 @@ window["bots"] = function(data) {
     let letters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
     o.name = Math.random() > 0.5 ? names[Math.floor(Math.random() * names.length)] : Array(Math.floor(Math.random() * 15) + 1).fill("").map(r => { return letters[Math.floor(Math.random() * letters.length)] }).join("");;
     o.setTeam();
-    o.xp = 23500;
+    o.xp = 0;
     o.isBot = true;
     let { x, y } = game.spawnPlayer(o);
     o.x = x;
