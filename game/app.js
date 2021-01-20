@@ -400,6 +400,7 @@ class Entity {
       max: 100,
       amount: 100
     };
+    this.SIZE = 0;
     this.damage = 5;
     this.speed = 7.5;
     this.skill = {
@@ -559,7 +560,7 @@ class Entity {
       this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
       if (this.level >= 45) this.level = 45;
       if (this.level > oldLvl) for (let i = oldLvl; i < this.level; i ++) if (i % 2 === 0 || [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 45].includes(i)) this.skillPoints ++;//this.skillPoints += (this.level - oldLvl);
-      this.size = (25 + (this.level));
+      this.size = (25 + (this.level)) + this.SIZE;
       let oldHP = JSON.parse(JSON.stringify(this.health));
       this.health.max = (100 + (this.level * 10));
       if (oldHP.max < this.health.max) this.health.amount += this.health.max - oldHP.max;
@@ -582,7 +583,7 @@ class Entity {
         if (this.level >= 45) this.level = 45;
         if (this.level > oldLvl) this.skillPoints += (this.level - oldLvl);
         if (this.skillPoints) this.skillUp(Math.floor(Math.random() * 8));
-        this.size = (25 + (this.level));
+        this.size = (25 + (this.level)) + this.SIZE;
         let oldHP = JSON.parse(JSON.stringify(this.health));
         this.health.max = (100 + (this.level * 10));
         if (oldHP.max < this.health.max) this.health.amount += this.health.max - oldHP.max;

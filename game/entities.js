@@ -225,9 +225,9 @@ let observer = {
 };
 let mothership = {
   label: "Mothership",
-  size: 50,
+  SIZE: 100,
   shape: 16,
-  maxChildren: 16,
+  maxChildren: 32,
   health: {
     max: 7000,
     amount: 7000
