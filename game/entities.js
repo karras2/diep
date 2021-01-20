@@ -1,9 +1,9 @@
 const s = {
   // reload, recoil, size, dmg, pene, speed, range, density, spray
   basic: [30, 0.1, 1, 15, 15, 2.5, 75, 50, 1],
-  drone: [4, 0, 1, 1, 3, 1.5, -10, 1, 0.1],
+  drone: [4, 0, 1, 1, 3, 0.75, -10, 1, 0.1],
   twin: [1.5, 0.5, 1, 1, 1, 1, 1, 1, 1],
-  mach: [0.5, 1.125, 1, 0.75, 0.75, 1, 0.9, 5],
+  mach: [0.6, 0.75, 1, 0.75, 0.75, 1, 0.9, 1, 2],
   sniper: [1.125, 1, 1,  1, 1.5, 1.5, 1.25, 1, 0.5],
   flank: [1.2, 1, 1, 0.9, 0.9, 0.9, 1, 1, 1],
   thruster: [1, 1.5, 1, 0.5, 0.5, 0.75, 0.5, 0.5, 1.5],
@@ -130,7 +130,7 @@ let drone = {
   label: "Drone",
   type: "bullet",
   view: 15,
-  speedMult: 5,
+  speedMult: 4,
   moveToTarget: true,
   shape: 3,
   guns: []

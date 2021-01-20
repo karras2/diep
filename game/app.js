@@ -576,7 +576,7 @@ class Entity {
       if (this.isBot) this.angle = Math.atan2((this.target.y + this.target.vy) - this.y, (this.target.x + this.target.vx) - this.x) - Math.PI / 2;
       this.shooting = true;
       if (this.isBot) {
-        if (this.level < 45) this.xp += 1;
+        if (this.level < 45) this.xp += 10;
         let oldLvl = this.level;
         this.level = Math.floor(Math.pow(this.xp, 1 / 2.64));
         if (this.level >= 45) this.level = 45;
