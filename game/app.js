@@ -10,6 +10,10 @@ canvas.height = innerHeight;
 let ctx = canvas.getContext("2d");
 ctx.lineJoin = "round";
 
+function some(obj, cb) {
+    return Object.values(obj).some(cb);
+}
+
 let game = {
     width: 10000,
     height: 10000,
@@ -26,8 +30,9 @@ let game = {
                     x: game.width / 2,
                     y: game.height / 2
                 }) > game.width / 5) {
-                for (let o of entities)
-                    if (getDist(o, pos) < o.size * 2) continue;
+                if (some(entities, o => getDist(o, pos) < o.size * 2)) {
+                continue;
+            }
                 return pos;
             }
         }
@@ -42,8 +47,9 @@ let game = {
                 x: game.width / 2 + (Math.floor(Math.random() * game.width / 5) - game.width / 10),
                 y: game.height / 2 + (Math.floor(Math.random() * game.width / 5) - game.height / 10),
             };
-            for (let o of entities)
-                if (getDist(o, pos) < o.size * 2) continue;
+            if (some(entities, o => getDist(o, pos) < o.size * 2)) {
+                continue;
+            }
             return pos;
         }
     },
@@ -79,8 +85,9 @@ let game = {
                 x: Math.floor(Math.random() * (x2 - x1)) + x1,
                 y: Math.floor(Math.random() * (y2 - y1)) + y1,
             };
-            for (let o of entities)
-                if (getDist(o, pos) < o.size * 2) continue;
+            if (some(entities, o => getDist(o, pos) < o.size * 2)) {
+                continue;
+            }
             return pos;
         }
     },
@@ -485,7 +492,7 @@ class Entity {
         this.isDead = true;
         this.ondead(this.collisionArray);
         setTimeout(() => {
-            entities = entities.filter(r => r !== this);
+            delete entities[this.id];
         }, 250);
     }
     skillUp(data) {
@@ -676,7 +683,8 @@ class Entity {
         if (this.isDead) return;
         let target = false;
         let list = [];
-        for (let o of entities) {
+        for (let id in entities) {
+            const o = entities[id];
             var a = (o.x + o.vx) - (this.x + this.vx);
             var b = (o.y + o.vy) - (this.y + this.vy);
             var c = Math.sqrt(a * a + b * b);
@@ -711,7 +719,8 @@ class Entity {
     setTeam() {
         let possible = [];
         for (let i = 0; i < game.teams; i++) possible.push([i + 1, 0]);
-        for (let o of entities) {
+        for (let id in entities) {
+            const o = entities[id];
             let team = possible.find(r => r[0] === o.team);
             if (team) team[1]++;
         }
@@ -719,8 +728,10 @@ class Entity {
             return a[1] - b[1]
         });
         let players = 0;
-        for (let o of entities)
+        for (let id in entities) {
+            const o = entities[id];
             if (o.type === "tank") players++;
+        }
         if (players < 2) possible = possible.sort(function(a, b) {
             return 0.5 - Math.random()
         });
@@ -778,7 +789,6 @@ class Gun {
     }
     update() {
         this.maxReload = this.stats.reload * this.source.skill.reload;
-        this.gunID = `${entities.indexOf(this.source)}-${this.source.guns.indexOf(this)}`;
         this.reload --;
         if (this.source.shooting || this.source.type === "bullet" || this.autoShoot) {
             if (this.reload <= 0) {
@@ -833,8 +843,10 @@ class Gun {
     shoot() {
         if (this.prop || this.source.isDead) return;
         let children = [];
-        for (let o of entities)
+        for (let id in entities) {
+            let o = entities[id];
             if (o.master === this.source && (o.label === "Drone" || o.label === "Minion")) children.push(o);
+        }
         if (this.source.maxChildren)
             if (children.length >= this.source.maxChildren && !this.ignoreMaxChildren) return;
         this.reload = this.maxReload;
@@ -842,7 +854,6 @@ class Gun {
             x: this.source.x,
             y: this.source.y
         }, this.source.master.master.master);
-        o.gunSourceID = this.gunID;
         o.x += Math.cos(this.angle + this.source.angle) * (this.x * this.source.size);
         o.y += Math.sin(this.angle + this.source.angle) * (this.x * this.source.size);
         //o.x += Math.cos(this.angle + this.source.angle) * (this.h * this.source.size); 
@@ -919,7 +930,8 @@ let UI = {
         ctx.closePath();
         ctx.fillStyle = "#000000";
         ctx.fill();
-        for (let o of entities)
+        for (let id in entities) {
+            const o = entities[id];
             if (o.type === "tank" || o.boss) {
                 if (o === player.body) continue;
                 ctx.beginPath();
@@ -928,18 +940,21 @@ let UI = {
                 ctx.fillStyle = window.colors[o.color][0];
                 ctx.fill();
             }
+        }
         ctx.globalAlpha = 1;
         ctx.restore();
     },
     leaderboard: function() {
         let toDraw = [];
-        for (let o of entities)
+        for (let id in entities) {
+            const o = entities[id];
             if (o.type === "tank" && !o.boss) toDraw.push({
                 name: o.name,
                 xp: o.xp,
                 color: o.color,
                 tank: o.label
             });
+        }
         toDraw.sort(function(a, b) {
             return b.xp - a.xp
         });
@@ -1246,7 +1261,7 @@ let UI = {
             });
             o.define(Class[tank]);
             this.mockups.push(o);
-            entities = entities.filter(r => r !== o);
+            delete entities[o.id];
         }
         console.log(this.mockups);
     },
@@ -1273,7 +1288,8 @@ let gameLoop = (() => {
     player.camera.ratio = (canvas.width + canvas.height) / 4000 / player.body.fov
 
     UI.drawBack();
-    for (let o of entities) {
+    for (let id in entities) {
+        const o = entities[id];
         o.collisionArray = [];
         ctx.save();
         ctx.translate((o.x - player.camera.x) * player.camera.ratio + canvas.width / 2, (o.y - player.camera.y) * player.camera.ratio + canvas.height / 2);
@@ -1285,8 +1301,10 @@ let gameLoop = (() => {
 
 
     // Collision update
-    for (let o of entities) {
-        for (let j of entities) {
+    for (let id in entities) {
+        const o = entities[id];
+        for (let id2 in entities) {
+            const j = entities[id2];
             if (getDist({
                     x: o.x + o.vx,
                     y: o.y + o.vy
@@ -1396,8 +1414,10 @@ window["xp"] = function(data) {
 
 window["boss"] = function() {
     let bossAlive = false;
-    for (let o of entities)
+    for (let id in entities) {
+            const o = entities[id];
         if (o.boss) bossAlive = true;
+    }
     if (bossAlive) return;
     let o = new Entity(game.random());
     let bosses = [Class.summoner, Class.fallenOverlord];
