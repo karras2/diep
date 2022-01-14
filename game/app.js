@@ -388,8 +388,9 @@ let drawPoly = (s, r, c, a = 0, ui = false) => {
     ctx.restore();
 };
 
-let entities = [];
+let entities = {};
 
+let id = 0;
 class Entity {
     constructor(pos, master = this) {
         this.x = pos.x;
@@ -397,6 +398,7 @@ class Entity {
         this.master = master;
         this.view = 50;
         this.angle = 0;
+        this.id = id ++;
         this.team = this.master.team || 0;
         this.color = ["square", "blue", "red", "green", "purple"][this.team];
         this.name = "";
@@ -440,7 +442,7 @@ class Entity {
             vx: 0,
             vy: 0
         };
-        entities.push(this);
+        entities[this.id] = this;
     }
     define(tank) {
         let type = JSON.parse(JSON.stringify(tank));
@@ -777,16 +779,21 @@ class Gun {
     update() {
         this.maxReload = this.stats.reload * this.source.skill.reload;
         this.gunID = `${entities.indexOf(this.source)}-${this.source.guns.indexOf(this)}`;
-        this.reload--;
-        if (this.reload <= 0) {
-            if (this.source.shooting || this.source.type === "bullet" || this.autoShoot) this.shoot();
-            else this.reload = this.maxReload * this.delay;
-        }
+        this.reload --;
         if (this.source.shooting || this.source.type === "bullet" || this.autoShoot) {
-            if (this.reload <= 0) this.shoot();
-        } else {
-            if (this.reload <= 0) this.reload = this.maxReload * this.delay;
+            if (this.reload <= 0) {
+                this.shoot();
+            }
+        } else if (this.reload <= this.maxReload * this.delay) {
+            this.reload = this.maxReload * this.delay;
         }
+        /*if (this.body.shooting || this.properties.alwaysShoot) {
+            if (this.reloadTime <= 0) {
+                this.shoot();
+            }
+        } else if (this.reloadTime <= this.properties.stats.reload * this.delay) {
+            this.reloadTime = this.properties.stats.reload * this.delay;
+        }*/
         this.animate();
         this.draw();
     }
@@ -1256,7 +1263,7 @@ let UI = {
 };
 
 let gameLoop = (() => {
-    setTimeout(gameLoop, 1);
+    setTimeout(gameLoop, 1000 / 60);
     if (!player.body) return;
     player.camera.x = lerp(player.camera.x, player.body.x, 0.075);
     player.camera.y = lerp(player.camera.y, player.body.y, 0.075);
